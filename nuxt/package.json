@@ -1,0 +1,22 @@
+{
+  "name": "seek-and-deploy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/sitemap": "^7.4.3",
+    "nuxt": "3.17.7",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "sass": "1.58.3"
+  }
+}
