@@ -51,7 +51,7 @@ const store = useSiteStore();
   &.slide-0 {
     .logo {
       svg {
-        opacity: 0.8;
+        opacity: 1;
 
         &:nth-child(1) {
           transform: none;
@@ -71,11 +71,11 @@ const store = useSiteStore();
     svg {
       position: absolute;
       top: 0px;
-      right: 0px;
-      bottom: 0px;
       left: 0px;
+      width: 100%;
+      height: 100%;
       fill: $white;
-      transition: transform $speed-666 $evil-ease, opacity $speed-666 cubic-bezier(0.175, 0.885, 0.320, 1.275);
+      transition: transform $speed-666 $evil-ease, opacity $speed-666 $evil-ease;
       opacity: 0.2;
 
       &:nth-child(1) {

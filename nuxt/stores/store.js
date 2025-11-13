@@ -5,6 +5,7 @@ export const useSiteStore = defineStore('site', {
     accessibility: false,
     loading: true,
     menuOpen: false,
+    titleSlideMsg: 'We fight for the user.',
     slideNum: 0
   }),
   actions: {
@@ -16,6 +17,9 @@ export const useSiteStore = defineStore('site', {
     },
     setSlideNum(n) {
     	this.slideNum = n;
+    },
+    setTitleSlideMsg(t) {
+      this.titleSlideMsg = t;
     }
   }
 })

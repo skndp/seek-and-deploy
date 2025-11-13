@@ -29,11 +29,13 @@ const clones = ref(null);
 // Mounted
 onMounted(() => {
   document.addEventListener('scrollsnapchange', onScrollSnapChange);
+  document.addEventListener('scrollsnapchange', updateTitleSlideMsg);
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
   document.removeEventListener('scrollsnapchange', onScrollSnapChange);
+  document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
 });
 
 // Methods
@@ -54,6 +56,7 @@ function scroll(y) {
   }, 0);
 }
 
+// slide change
 function onScrollSnapChange (e) {
   if(!e.snapTargetBlock) return;
 
@@ -78,5 +81,11 @@ function onScrollSnapChange (e) {
   }
 
   store.setSlideNum(index);
+}
+
+// update cover slide message to contact on 1st slide change
+function updateTitleSlideMsg() {
+  document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
+  store.setTitleSlideMsg('Pick up the reciever, we\'ll make you a believer.');
 }
 </script>

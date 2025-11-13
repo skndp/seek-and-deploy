@@ -3,6 +3,7 @@
   <div>
     <NuxtPage />
   </div>
+  <Menu />
 </template>
 
 <script setup>

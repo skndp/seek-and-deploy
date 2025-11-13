@@ -1,11 +1,15 @@
 <template>
   <section class="cover-slide">
     <span class="title">{{ title }}</span>
-    <span class="copy">We fight for the user.</span>
+    <span class="copy">{{ store.titleSlideMsg }}</span>
   </section>
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
+
 // Props
 const props = defineProps({
   title: {
@@ -40,9 +44,10 @@ const props = defineProps({
   .copy {
     position: absolute;
     bottom: 0px;
-    left: 8%;
+    left: 7.142%;
     margin-bottom: 7.142%;
     color: $white;
+    line-height: 1.4em;
   }
 }
 </style>
