@@ -1,11 +1,11 @@
 <template>
+  <Background />
   <div>
     <NuxtPage />
   </div>
 </template>
 
 <script setup>
-
 // Mounted
 onMounted(() => {
   window.addEventListener('resize', onResize);

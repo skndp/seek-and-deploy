@@ -1,40 +1,87 @@
 <template>
-  <section class="placeholder">
-    <div class="card">
-      <p>{{ title }}</p>
+  <section :class="['background', `slide-${store.slideNum}`]">
+    <div class="particles">
+
+    </div>
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="12.31 543.06 63.58 594.27 363.93 294.31 261.37 294.31 12.31 543.06"/>
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="72.53 221.88 0 294.31 363.93 294.31 436.46 221.88 72.53 221.88"/>
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="340.23 56.94 288.96 5.73 72.53 221.88 175.07 221.88 340.23 56.94"/>
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="527.49 336.22 527.49 233.78 166.78 594.02 269.35 594.02 527.49 336.22"/>
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="600 521.57 341.89 521.57 269.35 594.02 600 594.02 600 521.57"/>
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+        <polygon points="527.49 521.57 600 521.57 600 161.37 527.49 233.78 527.49 521.57"/>
+      </svg>
     </div>
   </section>
 </template>
 
 <script setup>
-// Props
-const props = defineProps({
-  title: {
-    type: String,
-    required: false
-  }
-});
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 </script>
 
 <style lang='scss'>
-.placeholder {
-  position: relative;
+.background {
+  position: fixed;
+  top: 0px;
+  left: 0px;
   width: 100%;
-  height: 100vh;
-  display: flex;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  height: 100svh;
+  z-index: -1;
+  perspective: 1200px;
+  transform-style: preserve-3d;
 
-  .card {
-    position: relative;
-    margin: span(1);
-    box-shadow: 0px 0px 0px 1px $gray;
-    margin: span(1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+  &.slide-0 {
+    .logo {
+      svg {
+        opacity: 0.8;
+
+        &:nth-child(1) {
+          transform: none;
+        }
+      }
+    }
+  }
+
+  .logo {
+    position: absolute;
+    bottom: 0%;
+    right: 7.142%;
+    margin-bottom: 7.142%;
+    width: 33%;
+    aspect-ratio: 1/1;
+    
+    svg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      fill: $white;
+      transition: transform $speed-666 $evil-ease, opacity $speed-666 cubic-bezier(0.175, 0.885, 0.320, 1.275);
+      opacity: 0.2;
+
+      &:nth-child(1) {
+        transform: translate3d(100px, 100px, -2000px) rotateX(10deg) rotateY(35deg) rotateZ(45deg);
+      }
+    }
   }
 }
-
 </style>

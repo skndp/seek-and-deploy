@@ -1,14 +1,16 @@
 <template>
   <div class="page">
     <div class="slides" ref="slides">
-      <Placeholder title="LOGO EXPLOSION (intro/contact)" />
+      <CoverSlide title="Seek and Deploy" />
+      <Placeholder title="Manifesto" />
       <Placeholder title="Who We Are" />
       <Placeholder title="What We Did" />
       <Placeholder title="Awards We Won" />
       <Placeholder title="Here We Are" />
     </div>
     <div class="clones" ref="clones">
-      <Placeholder title="LOGO EXPLOSION (intro/contact)" />
+      <CoverSlide title="Seek and Deploy" />
+      <Placeholder title="Manifesto" />
       <Placeholder title="Who We Are" />
       <Placeholder title="What We Did" />
       <Placeholder title="Awards We Won" />
@@ -18,6 +20,9 @@
 </template>
 
 <script setup>
+import { useSiteStore } from '~/stores/store';
+
+const store = useSiteStore();
 const slides = ref(null);
 const clones = ref(null);
 
@@ -28,36 +33,50 @@ onMounted(() => {
 
 // Before Unmount
 onBeforeUnmount(() => {
-  window.removeEventListener('scrollsnapchange', onScrollSnapChange);
+  document.removeEventListener('scrollsnapchange', onScrollSnapChange);
 });
 
 // Methods
 function scroll(y) {
+  // ignore snap change
+  document.removeEventListener('scrollsnapchange', onScrollSnapChange);
+  
+  // scroll
   window.scrollTo({
     'top': y,
     'left': 0,
     'behavior': 'instant'
   });
+
+  // listen to snap change
+  setTimeout(() => {
+    document.addEventListener('scrollsnapchange', onScrollSnapChange);
+  }, 0);
 }
 
 function onScrollSnapChange (e) {
+  if(!e.snapTargetBlock) return;
+
   const p = e.snapTargetBlock.parentElement;
 
+  let index = 0,
+      top = 0;
+
+  // back at top, set scroll to clone top
   if(p === slides.value) {
-    const index = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
+    index = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
 
     if(index === 0) {
-      const top = clones.value.children[0].offsetTop;
-
-      // back at top, set scroll to clone top
+      top = clones.value.children[0].offsetTop;
       scroll(top);
     } 
+  // in a clone, set scroll to corresponding slide
   } else if(p === clones.value) {
-    const index = Array.from(clones.value.children).indexOf(e.snapTargetBlock),
-          top = index === 0 ? clones.value.children[index].offsetTop : slides.value.children[index].offsetTop;
-
-    // in a clone, set scroll to corresponding slide
+    index = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
+    top = index === 0 ? clones.value.children[index].offsetTop : slides.value.children[index].offsetTop;
     scroll(top);
   }
+
+  store.setSlideNum(index);
 }
 </script>

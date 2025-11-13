@@ -96,7 +96,8 @@ export default defineNuxtConfig({
   //
   modules: [
     '@nuxtjs/sitemap',
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@pinia/nuxt'
   ],
   //
   // Googley Fonts
