@@ -1,5 +1,5 @@
 <template>
-  <section :class="['background', `slide-${store.slideNum}`]">
+  <section :class="['background', store.slidePrevState, store.slideActiveState, store.slideNextState]">
     <div class="particles">
 
     </div>
@@ -48,7 +48,8 @@ const store = useSiteStore();
   perspective: 1200px;
   transform-style: preserve-3d;
 
-  &.slide-0 {
+  &.slide-0-next,
+  &.slide-0-active {
     .logo {
       svg {
         opacity: 1;

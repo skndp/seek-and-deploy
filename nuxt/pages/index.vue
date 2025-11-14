@@ -25,35 +25,59 @@ import { useSiteStore } from '~/stores/store';
 const store = useSiteStore();
 const slides = ref(null);
 const clones = ref(null);
+let slideIndex = 0;
 
 // Mounted
 onMounted(() => {
+  document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
   document.addEventListener('scrollsnapchange', onScrollSnapChange);
   document.addEventListener('scrollsnapchange', updateTitleSlideMsg);
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
+  document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
   document.removeEventListener('scrollsnapchange', onScrollSnapChange);
   document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
 });
 
 // Methods
 function scroll(y) {
-  // ignore snap change
+  // ignore snap events
+  document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
   document.removeEventListener('scrollsnapchange', onScrollSnapChange);
   
-  // scroll
-  window.scrollTo({
-    'top': y,
-    'left': 0,
-    'behavior': 'instant'
-  });
-
-  // listen to snap change
   setTimeout(() => {
+    // scroll
+    window.scrollTo({
+      'top': y,
+      'left': 0,
+      'behavior': 'instant'
+    });
+
+    // listen to snap events
+    document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
     document.addEventListener('scrollsnapchange', onScrollSnapChange);
   }, 0);
+}
+
+// slide starting to change
+function onScrollSnapChanging(e) {
+  if(!e.snapTargetBlock) return;
+
+  const p = e.snapTargetBlock.parentElement;
+  let nextIndex = 0;
+
+  store.setSlideActiveState('');
+  store.setSlidePrevState(`slide-${slideIndex}-prev`);
+
+  if(p === slides.value) {
+    nextIndex = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
+  } else if(p === clones.value) {
+    nextIndex = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
+  }
+
+  store.setSlideNextState(`slide-${nextIndex}-next`);
 }
 
 // slide change
@@ -62,25 +86,26 @@ function onScrollSnapChange (e) {
 
   const p = e.snapTargetBlock.parentElement;
 
-  let index = 0,
-      top = 0;
+  let top = 0;
 
   // back at top, set scroll to clone top
   if(p === slides.value) {
-    index = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
+    slideIndex = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
 
-    if(index === 0) {
+    if(slideIndex === 0) {
       top = clones.value.children[0].offsetTop;
       scroll(top);
     } 
   // in a clone, set scroll to corresponding slide
   } else if(p === clones.value) {
-    index = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
-    top = index === 0 ? clones.value.children[index].offsetTop : slides.value.children[index].offsetTop;
+    slideIndex = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
+    top = slideIndex === 0 ? clones.value.children[slideIndex].offsetTop : slides.value.children[slideIndex].offsetTop;
     scroll(top);
   }
 
-  store.setSlideNum(index);
+  store.setSlidePrevState('');
+  store.setSlideNextState('');
+  store.setSlideActiveState(`slide-${slideIndex}-active`);
 }
 
 // update cover slide message to contact on 1st slide change

@@ -1,5 +1,5 @@
 <template>
-  <section :class="['menu', `slide-${store.slideNum}`]">
+  <section :class="['menu', store.slidePrevState, store.slideActiveState, store.slideNextState]">
     <div class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
         <polygon points="395.9 434.9 533.53 297.45 490.8 254.78 250 495.26 467.81 495.26 260.25 702.55 302.99 745.22 613.72 434.9 395.9 434.9"/>
@@ -7,12 +7,7 @@
       </svg>
     </div>
     <div class="ticks">
-      <div :class="['tick', {'active': store.slideNum === 0}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 1}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 2}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 3}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 4}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 5}]"></div>
+      <div v-for="(n, index) in 5" :class="['tick', {'active': store.slideNextState === `slide-${n}-next` || store.slideActiveState === `slide-${n}-active`}]" :key="n" @click="setActiveSlide(n)"></div>
     </div>
     <div class="mail">
 
@@ -27,6 +22,11 @@
 import { useSiteStore } from '~/stores/store';
 
 const store = useSiteStore();
+
+// Methods
+function setActiveSlide(n) {
+  console.log(n);
+}
 </script>
 
 <style lang='scss'>
@@ -64,26 +64,29 @@ const store = useSiteStore();
   height: 100svh;
   flex-direction: column;
 
-  &.slide-0 {
+  &.slide-0-next,
+  &.slide-0-active {
     .logo {
       opacity: 0;
+      pointer-events: none;
     }
 
-    // TODO
     .ticks {
       .tick {
-        opacity: 0 !important;
+        opacity: 0;
+        transform: translate(0px, 20px);
+        pointer-events: none;
 
-        @for $i from 1 through 6 {
+        @for $i from 1 through 5 {
           &:nth-child(#{$i}) {
-            transition: transform $speed-666 #{($i - 1) * 111}ms ease-in, opacity $speed-666 #{($i - 1) * 111}ms ease-in;
+            transition: transform $speed-666 #{444 - (($i - 1) * 111)}ms ease, opacity $speed-666 #{444 - (($i - 1) * 111)}ms ease;
           }
         }
       }
     }
 
     .mail {
-      animation: bounce 2s ease infinite;
+      animation: bounce 2s ease;
     }
   }
 
@@ -111,38 +114,30 @@ const store = useSiteStore();
     
     .tick {
       position: relative;
-      width: 30px;
+      width: 40px;
       height: 40px;
-      opacity: 0.666;
 
       &:before {
         content: "";
         display: block;
         position: absolute;
         top: 8px;
-        left: 12px;
+        left: 17px;
         width: 6px;
         height: 24px;
-        background-color: $white;
+        background-color: $gray;
       }
 
       &.active,
       &:hover {
         cursor: pointer;
 
-        &:after {
-          content: "";
-          display: block;
-          position: absolute;
-          bottom: 14px;
-          left: 6px;
-          width: 18px;
-          height: 6px;
+        &:before {
           background-color: $white;
         }
       }
 
-      @for $i from 1 through 6 {
+      @for $i from 1 through 5 {
         &:nth-child(#{$i}) {
           transition: transform $speed-666 #{($i - 1) * 111}ms ease-out, opacity $speed-666 #{($i - 1) * 111}ms ease-out;
         }

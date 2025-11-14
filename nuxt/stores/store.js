@@ -6,7 +6,9 @@ export const useSiteStore = defineStore('site', {
     loading: true,
     menuOpen: false,
     titleSlideMsg: 'We fight for the user.',
-    slideNum: 0
+    slidePrevState: '',
+    slideActiveState: 'slide-0-active',
+    slideNextState: ''
   }),
   actions: {
     setLoaderComplete() {
@@ -15,8 +17,14 @@ export const useSiteStore = defineStore('site', {
     setMenu(bool) {
       this.menuOpen = bool;
     },
-    setSlideNum(n) {
-    	this.slideNum = n;
+    setSlidePrevState(s) {
+    	this.slidePrevState = s;
+    },
+    setSlideActiveState(s) {
+    	this.slideActiveState = s;
+    },
+    setSlideNextState(s) {
+    	this.slideNextState = s;
     },
     setTitleSlideMsg(t) {
       this.titleSlideMsg = t;
