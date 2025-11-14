@@ -83,7 +83,7 @@ const store = useSiteStore();
     }
 
     .mail {
-      animation: bounce 2s ease 2;
+      animation: bounce 2s ease;
     }
   }
 
