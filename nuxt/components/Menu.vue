@@ -1,5 +1,5 @@
 <template>
-  <section :class="['menu', `slide-${store.slideNum}`]">
+  <section :class="['menu', store.slidePrevState, store.slideActiveState, store.slideNextState]">
     <div class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
         <polygon points="395.9 434.9 533.53 297.45 490.8 254.78 250 495.26 467.81 495.26 260.25 702.55 302.99 745.22 613.72 434.9 395.9 434.9"/>
@@ -7,12 +7,11 @@
       </svg>
     </div>
     <div class="ticks">
-      <div :class="['tick', {'active': store.slideNum === 0}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 1}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 2}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 3}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 4}]"></div>
-      <div :class="['tick', {'active': store.slideNum === 5}]"></div>
+      <div :class="['tick', {'active': store.slideNextState === 'slide-1-next' || store.slideActiveState === 'slide-1-active'}]"></div>
+      <div :class="['tick', {'active': store.slideNextState === 'slide-2-next' || store.slideActiveState === 'slide-2-active'}]"></div>
+      <div :class="['tick', {'active': store.slideNextState === 'slide-3-next' || store.slideActiveState === 'slide-3-active'}]"></div>
+      <div :class="['tick', {'active': store.slideNextState === 'slide-4-next' || store.slideActiveState === 'slide-4-active'}]"></div>
+      <div :class="['tick', {'active': store.slideNextState === 'slide-5-next' || store.slideActiveState === 'slide-5-active'}]"></div>
     </div>
     <div class="mail">
 
@@ -64,7 +63,8 @@ const store = useSiteStore();
   height: 100svh;
   flex-direction: column;
 
-  &.slide-0 {
+  &.slide-0-next,
+  &.slide-0-active {
     .logo {
       opacity: 0;
     }
@@ -72,7 +72,7 @@ const store = useSiteStore();
     // TODO
     .ticks {
       .tick {
-        opacity: 0 !important;
+        opacity: 0;
 
         @for $i from 1 through 6 {
           &:nth-child(#{$i}) {
@@ -83,7 +83,7 @@ const store = useSiteStore();
     }
 
     .mail {
-      animation: bounce 2s ease infinite;
+      animation: bounce 2s ease 2;
     }
   }
 
@@ -111,33 +111,25 @@ const store = useSiteStore();
     
     .tick {
       position: relative;
-      width: 30px;
+      width: 40px;
       height: 40px;
-      opacity: 0.666;
 
       &:before {
         content: "";
         display: block;
         position: absolute;
         top: 8px;
-        left: 12px;
+        left: 17px;
         width: 6px;
         height: 24px;
-        background-color: $white;
+        background-color: $gray;
       }
 
       &.active,
       &:hover {
         cursor: pointer;
 
-        &:after {
-          content: "";
-          display: block;
-          position: absolute;
-          bottom: 14px;
-          left: 6px;
-          width: 18px;
-          height: 6px;
+        &:before {
           background-color: $white;
         }
       }
