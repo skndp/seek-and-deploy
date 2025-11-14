@@ -92,8 +92,6 @@ function onScrollSnapChange (e) {
   if(p === slides.value) {
     slideIndex = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
 
-    console.log(slideIndex);
-
     if(slideIndex === 0) {
       top = clones.value.children[0].offsetTop;
       scroll(top);

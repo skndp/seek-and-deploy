@@ -7,11 +7,7 @@
       </svg>
     </div>
     <div class="ticks">
-      <div :class="['tick', {'active': store.slideNextState === 'slide-1-next' || store.slideActiveState === 'slide-1-active'}]"></div>
-      <div :class="['tick', {'active': store.slideNextState === 'slide-2-next' || store.slideActiveState === 'slide-2-active'}]"></div>
-      <div :class="['tick', {'active': store.slideNextState === 'slide-3-next' || store.slideActiveState === 'slide-3-active'}]"></div>
-      <div :class="['tick', {'active': store.slideNextState === 'slide-4-next' || store.slideActiveState === 'slide-4-active'}]"></div>
-      <div :class="['tick', {'active': store.slideNextState === 'slide-5-next' || store.slideActiveState === 'slide-5-active'}]"></div>
+      <div v-for="(n, index) in 5" :class="['tick', {'active': store.slideNextState === `slide-${n}-next` || store.slideActiveState === `slide-${n}-active`}]" :key="n" @click="setActiveSlide(n)"></div>
     </div>
     <div class="mail">
 
@@ -26,6 +22,11 @@
 import { useSiteStore } from '~/stores/store';
 
 const store = useSiteStore();
+
+// Methods
+function setActiveSlide(n) {
+  console.log(n);
+}
 </script>
 
 <style lang='scss'>
@@ -67,16 +68,18 @@ const store = useSiteStore();
   &.slide-0-active {
     .logo {
       opacity: 0;
+      pointer-events: none;
     }
 
-    // TODO
     .ticks {
       .tick {
         opacity: 0;
+        transform: translate(0px, 20px);
+        pointer-events: none;
 
-        @for $i from 1 through 6 {
+        @for $i from 1 through 5 {
           &:nth-child(#{$i}) {
-            transition: transform $speed-666 #{($i - 1) * 111}ms ease-in, opacity $speed-666 #{($i - 1) * 111}ms ease-in;
+            transition: transform $speed-666 #{444 - (($i - 1) * 111)}ms ease, opacity $speed-666 #{444 - (($i - 1) * 111)}ms ease;
           }
         }
       }
@@ -134,7 +137,7 @@ const store = useSiteStore();
         }
       }
 
-      @for $i from 1 through 6 {
+      @for $i from 1 through 5 {
         &:nth-child(#{$i}) {
           transition: transform $speed-666 #{($i - 1) * 111}ms ease-out, opacity $speed-666 #{($i - 1) * 111}ms ease-out;
         }
