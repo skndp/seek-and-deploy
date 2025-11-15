@@ -43,7 +43,7 @@ const store = useSiteStore();
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 100svh;
+  height: 100vh;
   z-index: -1;
   perspective: 1200px;
   transform-style: preserve-3d;
@@ -64,11 +64,11 @@ const store = useSiteStore();
   .logo {
     position: absolute;
     bottom: 0%;
-    right: 7.142%;
-    margin-bottom: 7.142%;
+    right: $space-64;
+    margin-bottom: $space-64;
     width: 33%;
     aspect-ratio: 1/1;
-    
+
     svg {
       position: absolute;
       top: 0px;
@@ -82,6 +82,20 @@ const store = useSiteStore();
       &:nth-child(1) {
         transform: translate3d(100px, 100px, -2000px) rotateX(10deg) rotateY(35deg) rotateZ(45deg);
       }
+    }
+  }
+
+  @include respond-to($tablet) {
+    .logo {
+      right: $space-96;
+      margin-bottom: $space-96;
+    }
+  }
+
+  @include respond-to($macbook) {
+    .logo {
+      right: $space-128;
+      margin-bottom: $space-128;
     }
   }
 }

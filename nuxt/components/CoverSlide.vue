@@ -1,7 +1,12 @@
 <template>
   <section class="cover-slide">
-    <span class="title">{{ title }}</span>
-    <span class="copy">{{ store.titleSlideMsg }}</span>
+    <div class="inner gutter">
+      <h2 class="title h1 pad-t">{{ title }}</h2>
+      <div class="copy-blocks">
+        <p class="copy">{{ store.titleSlideMsg }}</p>
+        <p class="copy">&nbsp;</p> <!-- Eithe empty, or have message like "No terms. No polices. Stay metal." or "No robots. Just dudes. Drinking beers." -->
+      </div>
+    </div>
   </section>
 </template>
 
@@ -24,30 +29,34 @@ const props = defineProps({
   position: relative;
   width: 100%;
   height: 100vh;
+  overflow: hidden;
   display: flex;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
-  .title {
-    position: absolute;
-    top: 0px;
-    left: 7.142%;
-    margin-top: 7.142%;
-    font: normal normal 400 96px/1.2em $lexend;
-    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.16);
-    background-image: linear-gradient(0deg,rgba(200, 200, 200, 1) 0%, rgba(255, 255, 255, 1) 66%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .copy {
-    position: absolute;
-    bottom: 0px;
-    left: 7.142%;
-    margin-bottom: 7.142%;
-    color: $white;
-    line-height: 1.4em;
+    height: $space-64;
+    display: flex;
+    align-items: center;
+  }
+
+  @include respond-to($tablet) {
+    .copy {
+      height: $space-96;
+    }
+  }
+
+  @include respond-to($macbook) {
+    .copy {
+      height: $space-64;
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <section class="placeholder">
-    <div class="card">
-      <p>{{ title }}</p>
+    <div class="gutter">
+      <h2 class="h2">{{ title }}</h2>
     </div>
   </section>
 </template>
@@ -21,20 +21,8 @@ const props = defineProps({
   position: relative;
   width: 100%;
   height: 100vh;
-  display: flex;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-
-  .card {
-    position: relative;
-    margin: span(1);
-    box-shadow: 0px 0px 0px 1px $gray;
-    margin: span(1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-  }
 }
 
 </style>

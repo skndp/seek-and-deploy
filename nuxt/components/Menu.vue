@@ -1,20 +1,16 @@
 <template>
   <section :class="['menu', store.slidePrevState, store.slideActiveState, store.slideNextState]">
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
-        <polygon points="395.9 434.9 533.53 297.45 490.8 254.78 250 495.26 467.81 495.26 260.25 702.55 302.99 745.22 613.72 434.9 395.9 434.9"/>
-        <path d="M388.99,745.02h361.01v-360.54l-361.01,360.54ZM534.91,684.65l154.67-154.47v154.47h-154.67Z"/>
-      </svg>
-    </div>
+    <div class="icon --logo" />
     <div class="ticks">
-      <div v-for="(n, index) in 5" :class="['tick', {'active': store.slideNextState === `slide-${n}-next` || store.slideActiveState === `slide-${n}-active`}]" :key="n" @click="setActiveSlide(n)"></div>
+      <button
+        v-for="(n, index) in 5"
+        :class="['tick', {'active': store.slideNextState === `slide-${n}-next` || store.slideActiveState === `slide-${n}-active`}]"
+        :key="n"
+        @click="setActiveSlide(n)"
+      />
     </div>
-    <div class="mail">
-
-    </div>
-    <div class="down">
-
-    </div>
+    <NuxtLink class="icon --mail" to="mailto:hello@seekanddeploy.com" target="_blank" aria-label="Email: hello@seekanddeploy.com" />
+    <button class="icon --down" aria-label="Next Section" />
   </section>
 </template>
 
@@ -55,18 +51,19 @@ function setActiveSlide(n) {
 }
 
 .menu {
-  box-sizing: border-box;
-  display: flex;
   position: fixed;
   top: 0px;
   left: 0px;
-  width: 7.142%;
-  height: 100svh;
+  width: $space-64;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   &.slide-0-next,
   &.slide-0-active {
-    .logo {
+    .--logo {
       opacity: 0;
       pointer-events: none;
     }
@@ -74,58 +71,92 @@ function setActiveSlide(n) {
     .ticks {
       .tick {
         opacity: 0;
-        transform: translate(0px, 20px);
+        transform: translateY(-$space-16);
         pointer-events: none;
 
         @for $i from 1 through 5 {
           &:nth-child(#{$i}) {
-            transition: transform $speed-666 #{444 - (($i - 1) * 111)}ms ease, opacity $speed-666 #{444 - (($i - 1) * 111)}ms ease;
+            transition: transform $speed-666 #{444 - (($i - 1) * 111)}ms $ease-out, opacity $speed-666 #{444 - (($i - 1) * 111)}ms $ease-out;
           }
         }
       }
     }
 
-    .mail {
+    .--mail {
       animation: bounce 2s ease;
     }
   }
 
-  .logo {
+  .icon {
+    position: relative;
     width: 100%;
     aspect-ratio: 1/1;
-    flex-grow: 0;
-    transition: opacity $speed-666 linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
-    svg {
-      width: 100%;
-      height: 100%;
-      fill: $white;
+    &:after {
+      content: '';
+      aspect-ratio: 1/1;
+      display: flex;
+    }
+
+    &.--logo {
+      transition: opacity $speed-666 $ease-out;
+
+      &:after {
+        width: 66.666%;
+        @include logo($white, 0);
+      }
+    }
+
+    &.--mail {
+      margin-top: auto;
+
+      &:after {
+        width: $space-24;
+        @include mail-icon($white, 2);
+      }
+    }
+
+    &.--down {
+      &:after {
+        width: $space-24;
+        @include down-arrow($white, 2);
+      }
     }
   }
 
   .ticks {
-    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 0px;
     width: 100%;
-    margin-top: -8px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    
+    transform: translateY(-50%);
+
     .tick {
       position: relative;
-      width: 40px;
-      height: 40px;
+      width: $space-40;
+      height: $space-40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transform: translateY(0px);
 
       &:before {
         content: "";
-        display: block;
-        position: absolute;
-        top: 8px;
-        left: 17px;
-        width: 6px;
-        height: 24px;
+        width: 2px;
+        height: $space-24;
         background-color: $gray;
+        display: flex;
+        transition: background-color $speed-333 $ease-out;
       }
 
       &.active,
@@ -139,65 +170,41 @@ function setActiveSlide(n) {
 
       @for $i from 1 through 5 {
         &:nth-child(#{$i}) {
-          transition: transform $speed-666 #{($i - 1) * 111}ms ease-out, opacity $speed-666 #{($i - 1) * 111}ms ease-out;
+          transition: transform $speed-666 #{($i - 1) * 111}ms $ease-out, opacity $speed-666 #{($i - 1) * 111}ms $ease-out;
         }
       }
     }
   }
 
-  .mail {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    flex-grow: 0;
-    cursor: pointer;
+  @include respond-to($tablet) {
+    width: $space-96;
 
-    &:before {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0px;
-      left: 50%;
-      width: 24px;
-      height: 18px;
-      border: 3px solid $white;
-      transform: translate(-50%, 0);
+    .icon {
+      &.--mail {
+        &:after {
+          width: $space-32;
+        }
+      }
+
+      &.--down {
+        &:after {
+          width: $space-32;
+          @include down-arrow($white, 3);
+        }
+      }
     }
 
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 11px;
-      left: 50%;
-      width: 16px;
-      height: 16px;
-      margin-top: -3px;
-      border-right: 3px solid $white;
-      border-bottom: 3px solid $white;
-      transform: translate(-50%, 0) rotate(45deg);
+    .ticks {
+      .tick {
+        &:before {
+          width: 3px;
+        }
+      }
     }
   }
 
-  .down {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    flex-grow: 0;
-    cursor: pointer;
-
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 12px;
-      height: 12px;
-      border-right: 6px solid $white;
-      border-bottom: 6px solid $white;
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
+  @include respond-to($macbook) {
+    width: $space-128;
   }
 }
 </style>

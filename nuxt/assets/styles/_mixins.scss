@@ -28,8 +28,22 @@
 // Logos, icons, etc
 // --------------------------------------------
 
-@mixin example($fill) {
-  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 0 0" xml:space="preserve" fill="#{svgColorMaker($fill)}"><path d=""/></svg>');
+@mixin logo($color, $width) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#{svgColorMaker($color)}" stroke="#{svgColorMaker($color)}" stroke-width="#{$width}px"><path vector-effect="non-scaling-stroke" d="M11.003,12.875l6.606-6.598-2.051-2.048L4,15.772h10.455l-9.963,9.95,2.052,2.048,14.915-14.895h-10.455ZM10.672,27.761h17.328V10.455L10.672,27.761ZM17.676,24.863l7.424-7.415v7.415h-7.424Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+@mixin mail-icon($color, $width) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="none" stroke="#{svgColorMaker($color)}" stroke-width="#{$width}px" stroke-linecap="round"><path vector-effect="non-scaling-stroke" d="M27.314,7l-11.314,11.314L4.686,7M27.314,7H4.686v18h22.627V7Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+@mixin down-arrow($color, $width) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="none" stroke="#{svgColorMaker($color)}" stroke-width="#{$width}px"><path vector-effect="non-scaling-stroke" d="M27.314,10.343l-11.314,11.314L4.686,10.343"/></svg>');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: contain;

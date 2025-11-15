@@ -43,7 +43,7 @@ body {
 // --------------------------------------------
 
 .page {
-  min-height: 100svh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 
@@ -83,22 +83,38 @@ a {
 // --------------------------------------------
 
 .gutter {
-  margin: 0 span(1);
+  margin: 0 $space-64;
+
+  @include respond-to($tablet) {
+    margin: 0 $space-96;
+  }
+
+  @include respond-to($macbook) {
+    margin: 0 $space-128;
+  }
 }
 
 .pad-t {
-  padding-top: span(2);
+  padding-top: $space-64;
 
   @include respond-to($tablet) {
-    padding-top: span(1);
+    padding-top: $space-96;
+  }
+
+  @include respond-to($tablet) {
+    padding-top: $space-128;
   }
 }
 
 .pad-b {
-  padding-bottom: span(2);
+  padding-bottom: $space-64;
 
   @include respond-to($tablet) {
-    padding-bottom: span(1);
+    padding-bottom: $space-96;
+  }
+
+  @include respond-to($tablet) {
+    padding-bottom: $space-128;
   }
 }
 
