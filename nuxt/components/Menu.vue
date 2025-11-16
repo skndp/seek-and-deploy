@@ -71,7 +71,7 @@ function setActiveSlide(n) {
     .ticks {
       .tick {
         opacity: 0;
-        transform: translateY(-$space-16);
+        transform: translateY($space-16);
         pointer-events: none;
 
         @for $i from 1 through 5 {
