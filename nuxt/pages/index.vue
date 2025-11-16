@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="slides" ref="slides">
+    <div :class="['slides', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="slides">
       <CoverSlide title="Seek and Deploy" />
       <Placeholder title="Manifesto" />
       <Placeholder title="Who We Are" />
@@ -8,7 +8,7 @@
       <Placeholder title="Awards We Won" />
       <Placeholder title="Here We Are" />
     </div>
-    <div class="clones" ref="clones">
+    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clones">
       <CoverSlide title="Seek and Deploy" />
       <Placeholder title="Manifesto" />
       <Placeholder title="Who We Are" />
