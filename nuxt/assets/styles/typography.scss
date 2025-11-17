@@ -39,11 +39,16 @@ body {
   line-height: 1.25em;
 }
 
+.fs-sm {
+  @include fluid-type($min, $max, 10px, 14px);
+  line-height: 1.1em;
+}
+
 .h1 {
   font-family: $lexend;
   @include fluid-type($min, $max, 24px, 96px);
   font-weight: 400;
-  line-height: 1em;
+  line-height: 1.4em;
   text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.16);
   background-image: linear-gradient(0deg,rgba(200, 200, 200, 1) 0%, rgba(255, 255, 255, 1) 66%);
   -webkit-background-clip: text;
@@ -52,25 +57,13 @@ body {
 }
 
 .h2 {
-  height: $space-64;
   font-family: $lexend;
   @include fluid-type($min, $max, 20px, 64px);
   font-weight: 400;
-  line-height: 1em;
+  line-height: 1.4em;
   text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.16);
   background-image: linear-gradient(0deg,rgba(200, 200, 200, 1) 0%, rgba(255, 255, 255, 1) 66%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-
-  @include respond-to($tablet) {
-    height: $space-96;
-  }
-
-  @include respond-to($macbook) {
-    height: $space-128;
-  }
 }

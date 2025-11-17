@@ -13,7 +13,7 @@
 <script setup>
 const goHome = () => {
   clearError({ redirect: '/' })
-  
+
   // Then hard reload (so we see the site loader, clean slate)
   setTimeout(() => {
     window.location.href = '/';
@@ -36,5 +36,4 @@ const goHome = () => {
     }
   }
 }
-
 </style>
