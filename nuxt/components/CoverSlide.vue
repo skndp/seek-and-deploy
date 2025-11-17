@@ -2,10 +2,11 @@
   <section class="slide cover-slide">
     <div class="inner">
       <div class="gutter">
-        <h2 class="title h1 pad-t">{{ title }}</h2>
+        <h1 class="title h1 pad-t">{{ title }}</h1>
         <div class="copy-blocks">
-          <p class="copy"><span>{{ store.titleSlideMsg }}</span></p>
-          <p v-if="store.introSlide" class="copy fs-sm gray"><span>Go ahead. Scroll down.</span></p>
+          <p v-if="store.initialSlide" class="copy"><span>We fight for the user.</span></p>
+          <p v-else class="copy"><span>Pick up the reciever, we’ll make you a believer.</span></p>
+          <p v-if="store.initialSlide" class="copy fs-sm gray"><span>Go ahead. Scroll down.</span></p>
           <p v-else class="copy fs-sm gray"><span>No terms. No polices. Stay metal.</span></p>
         </div>
       </div>

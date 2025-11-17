@@ -28,7 +28,7 @@ function setActiveSlide(number) {
 
 function setNextSlide() {
   if (!store.changingSlides) {
-    let nextIndex = store.slideIndex < 5 ? store.slideIndex + 1 : 0;
+    let nextIndex = store.slideIndex + 1;
     store.setSlideIndex(nextIndex);
   }
 }
