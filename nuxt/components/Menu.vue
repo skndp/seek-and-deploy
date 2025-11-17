@@ -124,7 +124,7 @@ function setActiveSlide(n) {
 
       &:after {
         width: $space-24;
-        @include mail-icon($white, 2);
+        @include mail-icon($white, 1.666);
       }
     }
 
@@ -191,6 +191,7 @@ function setActiveSlide(n) {
       &.--mail {
         &:after {
           width: $space-32;
+          @include mail-icon($white, 2.333);
         }
       }
 
@@ -198,14 +199,6 @@ function setActiveSlide(n) {
         &:after {
           width: $space-32;
           @include down-arrow($white, 3);
-        }
-      }
-    }
-
-    .ticks {
-      .tick {
-        &:before {
-          width: 3px;
         }
       }
     }

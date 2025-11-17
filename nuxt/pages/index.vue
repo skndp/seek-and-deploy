@@ -1,31 +1,68 @@
 <template>
   <div class="page">
-    <div :class="['slides', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="slides">
+    <div :class="['slides', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="slidesRef">
       <CoverSlide title="Seek and Deploy" />
-      <Placeholder title="001 — Manifesto" />
-      <Placeholder title="002 — Who We Are" />
-      <Placeholder title="003 — What We Did" />
-      <Placeholder title="004 — Awards We Won" />
-      <Placeholder title="005 — Here We Are" />
+      <template v-for="(slide, index) in slides">
+        <component
+          :is="slide.component"
+          :id="slide.id"
+          :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
+        />
+      </template>
     </div>
-    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clones">
+    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
       <CoverSlide title="Seek and Deploy" />
-      <Placeholder title="001 — Manifesto" />
-      <Placeholder title="002 — Who We Are" />
-      <Placeholder title="003 — What We Did" />
-      <Placeholder title="004 — Awards We Won" />
-      <Placeholder title="005 — Here We Are" />
+      <template v-for="(slide, index) in slides">
+        <component
+          :is="slide.component"
+          :id="slide.id"
+          :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useSiteStore } from '~/stores/store';
+import Manifesto from '~/components/Manifesto.vue'
+import Team from '~/components/Team.vue'
+import Work from '~/components/Work.vue'
+import Awards from '~/components/Awards.vue'
+import Contact from '~/components/Contact.vue'
 
 const store = useSiteStore();
-const slides = ref(null);
-const clones = ref(null);
+const slidesRef = ref(null);
+const clonesRef = ref(null);
 let slideIndex = 0;
+
+const slides = [
+  {
+    component: Manifesto,
+    id: "manifesto",
+    title: "Manifesto"
+  },
+  {
+    component: Team,
+    id: "team",
+    title: "Who We Are"
+  },
+  {
+    component: Work,
+    id: "work",
+    title: "What We Did"
+  },
+  {
+    component: Awards,
+    id: "awards",
+    title: "Awards We Won"
+  },
+  {
+    component: Contact,
+    id: "contact",
+    title: "Here We Are"
+  }
+];
 
 // Mounted
 onMounted(() => {
@@ -71,10 +108,10 @@ function onScrollSnapChanging(e) {
   store.setSlideActiveState('');
   store.setSlidePrevState(`slide-${slideIndex}-prev`);
 
-  if(p === slides.value) {
-    nextIndex = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
-  } else if(p === clones.value) {
-    nextIndex = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
+  if(p === slidesRef.value) {
+    nextIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
+  } else if(p === clonesRef.value) {
+    nextIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
   }
 
   store.setSlideNextState(`slide-${nextIndex}-next`);
@@ -89,17 +126,17 @@ function onScrollSnapChange (e) {
   let top = 0;
 
   // back at top, set scroll to clone top
-  if(p === slides.value) {
-    slideIndex = Array.from(slides.value.children).indexOf(e.snapTargetBlock);
+  if(p === slidesRef.value) {
+    slideIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
 
     if(slideIndex === 0) {
-      top = clones.value.children[0].offsetTop;
+      top = clonesRef.value.children[0].offsetTop;
       scroll(top);
     }
   // in a clone, set scroll to corresponding slide
-  } else if(p === clones.value) {
-    slideIndex = Array.from(clones.value.children).indexOf(e.snapTargetBlock);
-    top = slideIndex === 0 ? clones.value.children[slideIndex].offsetTop : slides.value.children[slideIndex].offsetTop;
+} else if(p === clonesRef.value) {
+    slideIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
+    top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
     scroll(top);
   }
 
@@ -119,3 +156,66 @@ function updateTitleSlideMsg() {
   store.setTitleSlideMsg('Pick up the reciever, we\'ll make you a believer.');
 }
 </script>
+
+<style lang='scss'>
+section.slide {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  .inner {
+    height: 100%;
+    margin-left: $space-64;
+    display: flex;
+    flex-grow: 1;
+
+    .gutter {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
+      h2 {
+        color: $gray;
+        height: $space-64;
+        display: flex;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  @include respond-to($tablet) {
+    .inner {
+      margin-left: $space-96;
+
+      .gutter {
+        h2 {
+          height: $space-96;
+        }
+      }
+    }
+  }
+
+  @include respond-to($macbook) {
+    .inner {
+      margin-left: $space-128;
+
+      .gutter {
+        h2 {
+          height: $space-128;
+        }
+      }
+    }
+  }
+}
+</style>

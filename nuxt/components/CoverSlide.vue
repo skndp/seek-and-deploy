@@ -43,49 +43,53 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-  }
 
-  .gutter {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+    .gutter {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-  .copy {
-    height: $space-64;
-    display: flex;
-    align-items: center;
+      .copy {
+        height: $space-64;
+        display: flex;
+        align-items: center;
 
-    &.fs-sm {
-      color: $gray;
-    }
+        &.fs-sm {
+          color: $gray;
+        }
 
-    span {
-      margin-top: -0.04em;
+        span {
+          margin-top: -0.04em;
+        }
+      }
     }
   }
 
   @include respond-to($tablet) {
     .inner {
       margin-left: $space-96;
-    }
 
-    .copy {
-      height: $space-96;
+      .gutter {
+        .copy {
+          height: $space-96;
+        }
+      }
     }
   }
 
   @include respond-to($macbook) {
     .inner {
       margin-left: $space-128;
-    }
 
-    .copy {
-      height: $space-128;
+      .gutter {
+        .copy {
+          height: $space-128;
 
-      &:first-child {
-        margin-bottom: -$space-32;
+          &:first-child {
+            margin-bottom: -$space-32;
+          }
+        }
       }
     }
   }

@@ -30,12 +30,12 @@ body {
 
 ::selection {
   background: $yellow;
-  color: $white;
+  color: $black;
 }
 
 ::-moz-selection {
   background: $yellow;
-  color: $white;
+  color: $black;
 }
 
 // --------------------------------------------
@@ -95,26 +95,26 @@ a {
 }
 
 .pad-t {
-  padding-top: $space-64;
+  padding-top: $space-32;
 
   @include respond-to($tablet) {
-    padding-top: $space-96;
+    padding-top: $space-48;
   }
 
   @include respond-to($tablet) {
-    padding-top: $space-128;
+    padding-top: $space-64;
   }
 }
 
 .pad-b {
-  padding-bottom: $space-64;
+  padding-bottom: $space-32;
 
   @include respond-to($tablet) {
-    padding-bottom: $space-96;
+    padding-bottom: $space-48;
   }
 
   @include respond-to($tablet) {
-    padding-bottom: $space-128;
+    padding-bottom: $space-64;
   }
 }
 
