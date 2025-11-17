@@ -100,11 +100,15 @@ function scroll(y) {
 
 // slide starting to change
 function onScrollSnapChanging(e) {
-  if(!e.snapTargetBlock) return;
+  if (!e.snapTargetBlock) {
+    store.setChangingSlides(false);
+    return false;
+  }
 
   const p = e.snapTargetBlock.parentElement;
   let nextIndex = 0;
 
+  store.setChangingSlides(true);
   store.setSlideActiveState('');
   store.setSlidePrevState(`slide-${slideIndex}-prev`);
 
@@ -119,22 +123,25 @@ function onScrollSnapChanging(e) {
 
 // slide change
 function onScrollSnapChange (e) {
-  if(!e.snapTargetBlock) return;
+  if (!e.snapTargetBlock) {
+    store.setChangingSlides(false);
+    return false;
+  }
 
   const p = e.snapTargetBlock.parentElement;
 
   let top = 0;
 
-  // back at top, set scroll to clone top
   if(p === slidesRef.value) {
+    // back at top, set scroll to clone top
     slideIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
 
     if(slideIndex === 0) {
       top = clonesRef.value.children[0].offsetTop;
       scroll(top);
     }
-  // in a clone, set scroll to corresponding slide
-} else if(p === clonesRef.value) {
+  } else if(p === clonesRef.value) {
+    // in a clone, set scroll to corresponding slide
     slideIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
     top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
     scroll(top);
@@ -143,11 +150,15 @@ function onScrollSnapChange (e) {
   store.setSlidePrevState('');
   store.setSlideNextState('');
   store.setSlideActiveState(`slide-${slideIndex}-active`);
+  store.setSlideIndex(slideIndex);
 
   if (store.introSlide) {
-    console.log(store.introSlide);
     store.setIntroSlide(false);
   }
+
+  setTimeout(() => {
+    store.setChangingSlides(false);
+  }, 27);
 }
 
 // update cover slide message to contact on 1st slide change
@@ -155,6 +166,19 @@ function updateTitleSlideMsg() {
   document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
   store.setTitleSlideMsg('Pick up the reciever, we\'ll make you a believer.');
 }
+
+// Watcher
+watch(() => store.slideIndex, (newVal, oldVal) => {
+    if (slidesRef.value) {
+      const slides = slidesRef.value.querySelectorAll('.slide');
+      const slide = slides[newVal]; // offset by 1 for the cover slide...
+
+      if (slide) {
+        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+)
 </script>
 
 <style lang='scss'>
@@ -180,7 +204,6 @@ section.slide {
       flex-grow: 1;
 
       h2 {
-        color: $gray;
         height: $space-64;
         display: flex;
         align-items: center;

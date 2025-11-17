@@ -1,12 +1,12 @@
 <template>
-  <section class="cover-slide">
+  <section class="slide cover-slide">
     <div class="inner">
       <div class="gutter">
         <h2 class="title h1 pad-t">{{ title }}</h2>
         <div class="copy-blocks">
           <p class="copy"><span>{{ store.titleSlideMsg }}</span></p>
-          <p v-if="store.introSlide" class="copy fs-sm"><span>Go ahead. Scroll down.</span></p>
-          <p v-else class="copy fs-sm"><span>No terms. No polices. Stay metal.</span></p>
+          <p v-if="store.introSlide" class="copy fs-sm gray"><span>Go ahead. Scroll down.</span></p>
+          <p v-else class="copy fs-sm gray"><span>No terms. No polices. Stay metal.</span></p>
         </div>
       </div>
     </div>
@@ -38,26 +38,15 @@ const props = defineProps({
   scroll-snap-stop: always;
 
   .inner {
-    height: 100%;
-    margin-left: $space-64;
-    display: flex;
     flex-direction: column;
-    flex-grow: 1;
 
     .gutter {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
       justify-content: space-between;
 
       .copy {
         height: $space-64;
         display: flex;
         align-items: center;
-
-        &.fs-sm {
-          color: $gray;
-        }
 
         span {
           margin-top: -0.04em;
@@ -68,8 +57,6 @@ const props = defineProps({
 
   @include respond-to($tablet) {
     .inner {
-      margin-left: $space-96;
-
       .gutter {
         .copy {
           height: $space-96;
@@ -80,8 +67,6 @@ const props = defineProps({
 
   @include respond-to($macbook) {
     .inner {
-      margin-left: $space-128;
-
       .gutter {
         .copy {
           height: $space-128;

@@ -3,14 +3,14 @@
     <div class="icon --logo" />
     <div class="ticks">
       <button
-        v-for="(n, index) in 5"
-        :class="['tick', {'active': store.slideNextState === `slide-${n}-next` || store.slideActiveState === `slide-${n}-active`}]"
-        :key="n"
-        @click="setActiveSlide(n)"
+        v-for="(number, index) in 5"
+        :class="['tick', {'active': store.slideNextState === `slide-${number}-next` || store.slideActiveState === `slide-${number}-active`}]"
+        :key="index"
+        @click="setActiveSlide(number)"
       />
     </div>
     <NuxtLink class="icon --mail" to="mailto:hello@seekanddeploy.com" target="_blank" aria-label="Email: hello@seekanddeploy.com" />
-    <button class="icon --down" aria-label="Next Section" />
+    <button class="icon --down" aria-label="Next Section" @click="setNextSlide" />
   </section>
 </template>
 
@@ -20,8 +20,17 @@ import { useSiteStore } from '~/stores/store';
 const store = useSiteStore();
 
 // Methods
-function setActiveSlide(n) {
-  console.log(n);
+function setActiveSlide(number) {
+  if (!store.changingSlides) {
+    store.setSlideIndex(number);
+  }
+}
+
+function setNextSlide() {
+  if (!store.changingSlides) {
+    let nextIndex = store.slideIndex < 5 ? store.slideIndex + 1 : 0;
+    store.setSlideIndex(nextIndex);
+  }
 }
 </script>
 
@@ -78,7 +87,7 @@ function setActiveSlide(n) {
     .ticks {
       .tick {
         opacity: 0;
-        transform: translateY($space-16);
+        transform: translateY(50%);
         pointer-events: none;
 
         @for $i from 1 through 5 {
@@ -165,6 +174,10 @@ function setActiveSlide(n) {
         background-color: $gray;
         display: flex;
         transition: background-color $speed-333 $ease-out;
+      }
+
+      &.active {
+        pointer-events: none;
       }
 
       &.active,
