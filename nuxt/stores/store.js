@@ -2,20 +2,15 @@ import { defineStore } from 'pinia';
 
 export const useSiteStore = defineStore('site', {
   state: () => ({
-    accessibility: false,
-    loading: true,
-    menuOpen: false,
+    introSlide: true,
     titleSlideMsg: 'We fight for the user.',
     slidePrevState: '',
     slideActiveState: 'slide-0-active',
     slideNextState: ''
   }),
   actions: {
-    setLoaderComplete() {
-      this.loading = false;
-    },
-    setMenu(bool) {
-      this.menuOpen = bool;
+    setIntroSlide(s) {
+    	this.introSlide = s;
     },
     setSlidePrevState(s) {
     	this.slidePrevState = s;

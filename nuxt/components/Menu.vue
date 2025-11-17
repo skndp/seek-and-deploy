@@ -56,13 +56,20 @@ function setActiveSlide(n) {
   left: 0px;
   width: $space-64;
   height: 100vh;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: rgba($gray, 1);
+  box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: border-right-color $speed-666 $ease-out;
 
   &.slide-0-next,
   &.slide-0-active {
+    border-right-color: rgba($black, 0);
+
     .--logo {
       opacity: 0;
       pointer-events: none;
@@ -91,6 +98,7 @@ function setActiveSlide(n) {
     position: relative;
     width: 100%;
     aspect-ratio: 1/1;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -164,7 +172,7 @@ function setActiveSlide(n) {
         cursor: pointer;
 
         &:before {
-          background-color: $white;
+          background-color: $yellow;
         }
       }
 
@@ -205,6 +213,12 @@ function setActiveSlide(n) {
 
   @include respond-to($macbook) {
     width: $space-128;
+
+    .icon {
+      &.--mail {
+        margin-bottom: -$space-32;
+      }
+    }
   }
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <section class="placeholder">
-    <div class="gutter">
-      <h2 class="h2">{{ title }}</h2>
+    <div class="inner">
+      <div class="gutter">
+        <h2 class="fs-sm">{{ title }}</h2>
+      </div>
     </div>
   </section>
 </template>
@@ -23,6 +25,37 @@ const props = defineProps({
   height: 100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+
+  .inner {
+    margin-left: $space-64;
+  }
+
+  h2 {
+    color: $gray;
+    height: $space-64;
+    display: flex;
+    align-items: center;
+  }
+
+  @include respond-to($tablet) {
+    .inner {
+      margin-left: $space-96;
+    }
+
+    h2 {
+      height: $space-96;
+    }
+  }
+
+  @include respond-to($macbook) {
+    .inner {
+      margin-left: $space-128;
+    }
+
+    h2 {
+      height: $space-128;
+    }
+  }
 }
 
 </style>

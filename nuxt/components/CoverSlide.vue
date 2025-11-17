@@ -1,10 +1,13 @@
 <template>
   <section class="cover-slide">
-    <div class="inner gutter">
-      <h2 class="title h1 pad-t">{{ title }}</h2>
-      <div class="copy-blocks">
-        <p class="copy">{{ store.titleSlideMsg }}</p>
-        <p class="copy">&nbsp;</p> <!-- Eithe empty, or have message like "No terms. No polices. Stay metal." or "No robots. Just dudes. Drinking beers." -->
+    <div class="inner">
+      <div class="gutter">
+        <h2 class="title h1 pad-t">{{ title }}</h2>
+        <div class="copy-blocks">
+          <p class="copy"><span>{{ store.titleSlideMsg }}</span></p>
+          <p v-if="store.introSlide" class="copy fs-sm"><span>Go ahead. Scroll down.</span></p>
+          <p v-else class="copy fs-sm"><span>No terms. No polices. Stay metal.</span></p>
+        </div>
       </div>
     </div>
   </section>
@@ -36,6 +39,14 @@ const props = defineProps({
 
   .inner {
     height: 100%;
+    margin-left: $space-64;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .gutter {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,17 +56,37 @@ const props = defineProps({
     height: $space-64;
     display: flex;
     align-items: center;
+
+    &.fs-sm {
+      color: $gray;
+    }
+
+    span {
+      margin-top: -0.04em;
+    }
   }
 
   @include respond-to($tablet) {
+    .inner {
+      margin-left: $space-96;
+    }
+
     .copy {
       height: $space-96;
     }
   }
 
   @include respond-to($macbook) {
+    .inner {
+      margin-left: $space-128;
+    }
+
     .copy {
-      height: $space-64;
+      height: $space-128;
+
+      &:first-child {
+        margin-bottom: -$space-32;
+      }
     }
   }
 }

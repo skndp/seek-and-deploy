@@ -29,12 +29,12 @@ body {
 }
 
 ::selection {
-  background: $gray;
+  background: $yellow;
   color: $white;
 }
 
 ::-moz-selection {
-  background: $gray;
+  background: $yellow;
   color: $white;
 }
 
@@ -83,14 +83,14 @@ a {
 // --------------------------------------------
 
 .gutter {
-  margin: 0 $space-64;
+  margin: 0 $space-32;
 
   @include respond-to($tablet) {
-    margin: 0 $space-96;
+    margin: 0 $space-48;
   }
 
   @include respond-to($macbook) {
-    margin: 0 $space-128;
+    margin: 0 $space-64;
   }
 }
 
