@@ -279,7 +279,7 @@ section.slide {
 
         .container {
           .content {
-            margin: 0 auto $space-96;
+            margin: 0 auto $space-128;
           }
         }
       }

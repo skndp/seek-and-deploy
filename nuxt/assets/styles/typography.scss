@@ -72,3 +72,8 @@ body {
   @include fluid-type($min, $max, 18px, 36px);
   line-height: 1.4em;
 }
+
+.h3-alt {
+  @include fluid-type($min, $max, 24px, 48px);
+  line-height: 1.4em;
+}
