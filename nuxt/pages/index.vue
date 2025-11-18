@@ -134,7 +134,7 @@ function onScrollSnapChanging(e) {
 
 // slide change
 function onScrollSnapChange(e) {
-  if (!e.snapTargetBlock) {
+  if (!e.snapTargetBlock || (window.pageYOffset === 0 && store.initialSlide === true)) {
     store.setChangingSlides(false);
     return false;
   }
