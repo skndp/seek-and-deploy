@@ -232,6 +232,13 @@ section.slide {
           justify-content: center;
           flex-direction: column;
           flex-grow: 1;
+
+          span.u {
+            text-decoration: underline;
+            text-decoration-color: $yellow;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 0.1em;
+          }
         }
       }
     }
@@ -249,6 +256,10 @@ section.slide {
         .container {
           .content {
             margin: 0 auto $space-96;
+
+            span.u {
+              text-decoration-thickness: 3px;
+            }
           }
         }
       }
@@ -279,7 +290,7 @@ section.slide {
 
         .container {
           .content {
-            margin: 0 auto $space-96;
+            margin: 0 auto $space-128;
           }
         }
       }
