@@ -30,6 +30,7 @@ $max: 1440px;
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
+  letter-spacing: -0.03em;
 }
 
 body {
@@ -37,6 +38,7 @@ body {
   font-weight: 400;
   @include fluid-type($min, $max, 12px, 20px);
   line-height: 1.4em;
+  letter-spacing: -0.01em;
 }
 
 .fs-sm {
@@ -69,11 +71,11 @@ body {
 }
 
 .h3 {
-  @include fluid-type($min, $max, 18px, 36px);
+  @include fluid-type($min, $max, 16px, 32px);
   line-height: 1.4em;
 }
 
 .h3-alt {
-  @include fluid-type($min, $max, 24px, 48px);
+  @include fluid-type($min, $max, 20px, 40px);
   line-height: 1.4em;
 }
