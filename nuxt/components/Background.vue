@@ -37,7 +37,7 @@ function onResize(e) {
 
   for(let i = 0; i < 152; i++) {
     particles.value[i] = {
-      'opacity': Math.random(),
+      'opacity': Math.random() / 2,
       'tx': `${(Math.random() * (ww * 2)) - ww}px`,
       'ty': `${(Math.random() * (wh * 2)) - wh}px`,
       'tz': `${(Math.random() * (wt * 2)) - wt}px`,
@@ -122,7 +122,7 @@ function onResize(e) {
 
       .particles {
         .particle {
-          opacity: 0 !important;
+          opacity: 1 !important;
           transform: none !important;
         }
       }
@@ -135,7 +135,7 @@ function onResize(e) {
 
           @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
-              animation: flicker $speed-333 #{($i * 100) + 666}ms linear;
+              animation: flicker 200ms #{($i * 100) + 666}ms linear;
             }
           }
         }

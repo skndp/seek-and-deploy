@@ -61,7 +61,7 @@ const slides = [
   {
     component: Contact,
     id: "contact",
-    title: "Here We Are"
+    title: "39.737376, -105.005511"
   }
 ];
 
