@@ -34,6 +34,7 @@ import Contact from '~/components/Contact.vue'
 const store = useSiteStore();
 const slidesRef = ref(null);
 const clonesRef = ref(null);
+const snap = ref(false);
 let slideIndex = 0;
 
 const slides = [
@@ -64,21 +65,31 @@ const slides = [
   }
 ];
 
+// Update HTML class
+useHead(() => ({
+  htmlAttrs: {
+    class: snap.value ? 'snap' : ''
+  }
+}));
+
 // Mounted
 onMounted(() => {
-  document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
-  document.addEventListener('scrollsnapchange', onScrollSnapChange);
-  document.addEventListener('scrollsnapchange', updateTitleSlideMsg);
+  window.addEventListener('app-ready', initScrollSnap, { once: true });
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
   document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
   document.removeEventListener('scrollsnapchange', onScrollSnapChange);
-  document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
 });
 
 // Methods
+function initScrollSnap() {
+  snap.value = true;
+  document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
+  document.addEventListener('scrollsnapchange', onScrollSnapChange);
+}
+
 function scroll(y) {
   // ignore snap events
   document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
@@ -100,11 +111,15 @@ function scroll(y) {
 
 // slide starting to change
 function onScrollSnapChanging(e) {
-  if(!e.snapTargetBlock) return;
+  if (!e.snapTargetBlock) {
+    store.setChangingSlides(false);
+    return false;
+  }
 
   const p = e.snapTargetBlock.parentElement;
   let nextIndex = 0;
 
+  store.setChangingSlides(true);
   store.setSlideActiveState('');
   store.setSlidePrevState(`slide-${slideIndex}-prev`);
 
@@ -118,23 +133,27 @@ function onScrollSnapChanging(e) {
 }
 
 // slide change
-function onScrollSnapChange (e) {
-  if(!e.snapTargetBlock) return;
+function onScrollSnapChange(e) {
+  if (!e.snapTargetBlock) {
+    store.setChangingSlides(false);
+    return false;
+  }
 
   const p = e.snapTargetBlock.parentElement;
 
   let top = 0;
 
-  // back at top, set scroll to clone top
   if(p === slidesRef.value) {
+    // back at top, set scroll to clone top
     slideIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
 
     if(slideIndex === 0) {
       top = clonesRef.value.children[0].offsetTop;
       scroll(top);
     }
-  // in a clone, set scroll to corresponding slide
-} else if(p === clonesRef.value) {
+    store.setSlideIndex(slideIndex);
+  } else if(p === clonesRef.value) {
+    // in a clone, set scroll to corresponding slide
     slideIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
     top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
     scroll(top);
@@ -144,17 +163,35 @@ function onScrollSnapChange (e) {
   store.setSlideNextState('');
   store.setSlideActiveState(`slide-${slideIndex}-active`);
 
-  if (store.introSlide) {
-    console.log(store.introSlide);
-    store.setIntroSlide(false);
+  if (store.initialSlide) {
+    store.setInitialSlide(false);
   }
+
+  setTimeout(() => {
+    store.setChangingSlides(false);
+  }, 0);
 }
 
-// update cover slide message to contact on 1st slide change
-function updateTitleSlideMsg() {
-  document.removeEventListener('scrollsnapchange', updateTitleSlideMsg);
-  store.setTitleSlideMsg('Pick up the reciever, we\'ll make you a believer.');
-}
+// Watcher
+watch(() => store.slideIndex, (newVal, oldVal) => {
+  if (slidesRef.value) {
+    if ((oldVal === 5 && newVal === 6) || (oldVal === 6 && newVal === 7)) {
+      const slides = clonesRef.value.querySelectorAll('.slide');
+      const slide = oldVal === 5 && newVal === 6 ? slides[0] : slides[1];
+
+      if (slide) {
+        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      const slides = slidesRef.value.querySelectorAll('.slide');
+      const slide = slides[newVal];
+
+      if (slide) {
+        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+})
 </script>
 
 <style lang='scss'>
@@ -179,8 +216,7 @@ section.slide {
       flex-direction: column;
       flex-grow: 1;
 
-      h2 {
-        color: $gray;
+      h2.fs-sm {
         height: $space-64;
         display: flex;
         align-items: center;
@@ -199,7 +235,7 @@ section.slide {
       margin-left: $space-96;
 
       .gutter {
-        h2 {
+        h2.fs-sm {
           height: $space-96;
         }
       }
@@ -211,7 +247,7 @@ section.slide {
       margin-left: $space-128;
 
       .gutter {
-        h2 {
+        h2.fs-sm {
           height: $space-128;
         }
       }

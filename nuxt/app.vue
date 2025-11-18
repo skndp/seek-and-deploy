@@ -9,8 +9,13 @@
 <script setup>
 // Mounted
 onMounted(() => {
+  window.scrollTo(0, 0);
   window.addEventListener('resize', onResize);
   onResize();
+
+  requestAnimationFrame(() => {
+    window.dispatchEvent(new Event('app-ready'));
+  });
 });
 
 // Before Unmount

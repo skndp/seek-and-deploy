@@ -3,14 +3,17 @@
 }
 
 html {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
 
-html::-webkit-scrollbar {
-  display: none;
+  &.snap {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html, body {
@@ -36,6 +39,10 @@ body {
 ::-moz-selection {
   background: $yellow;
   color: $black;
+}
+
+.gray {
+  color: $gray;
 }
 
 // --------------------------------------------

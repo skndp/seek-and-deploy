@@ -2,15 +2,22 @@ import { defineStore } from 'pinia';
 
 export const useSiteStore = defineStore('site', {
   state: () => ({
-    introSlide: true,
-    titleSlideMsg: 'We fight for the user.',
+    initialSlide: true,
+    changingSlides: false,
+    slideIndex: 0,
     slidePrevState: '',
     slideActiveState: 'slide-0-active',
     slideNextState: ''
   }),
   actions: {
-    setIntroSlide(s) {
-    	this.introSlide = s;
+    setInitialSlide(s) {
+    	this.initialSlide = s;
+    },
+    setChangingSlides(s) {
+    	this.changingSlides = s;
+    },
+    setSlideIndex(s) {
+    	this.slideIndex = s;
     },
     setSlidePrevState(s) {
     	this.slidePrevState = s;
@@ -20,9 +27,6 @@ export const useSiteStore = defineStore('site', {
     },
     setSlideNextState(s) {
     	this.slideNextState = s;
-    },
-    setTitleSlideMsg(t) {
-      this.titleSlideMsg = t;
     }
   }
 })
