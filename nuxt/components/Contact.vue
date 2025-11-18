@@ -52,6 +52,24 @@ const props = defineProps({
 
 <style lang='scss'>
 .contact {
+  .slide-5-next &,
+  .slide-5-active & {
+    .container {
+      .map {
+        opacity: 1;
+
+        .marker {
+          opacity: 1;
+          transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+        }
+      }
+
+      p {
+        opacity: 1;
+      }
+    }
+  }
+
   .container {
     position: relative;
     perspective: 1200px;
@@ -66,8 +84,9 @@ const props = defineProps({
       aspect-ratio: 1/1;
       perspective: 1200px;
       transform-style: preserve-3d;
-      //transform: translate(-50%, -50%);
       transform: translate(-50%, -50%) rotateX(63deg) rotateZ(-45deg);
+      opacity: 0;
+      transition: opacity $speed-666 linear;
 
       svg {
         width: 100%;
@@ -95,7 +114,9 @@ const props = defineProps({
         border-right: 10px solid transparent;
         border-left: 10px solid transparent;
         transform-origin: bottom center;
-        transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+        transform: translate3d(-50%, -100%, 20px) rotateX(-100deg);
+        transition: opacity $speed-666 linear $speed-666, transform $speed-666 $evil-ease $speed-666;
+        opacity: 0;
       }
 
       .label {
@@ -120,10 +141,11 @@ const props = defineProps({
     p {
       position: absolute;
       bottom: 33%;
-      left: 50%;
+      left: 0%;
       width: 100%;
       text-align: center;
-      transform: translate(-50%, 0);
+      opacity: 0;
+      transition: opacity $speed-666 linear;
     }
   }
 }

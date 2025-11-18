@@ -202,10 +202,10 @@ function onResize(e) {
         left: 50%;
         width: 0;
         height: 0;
-        margin: -4px 0 0 -7px;
-        border-right: 10px solid transparent;
-        border-bottom:  10px solid $white;
-        border-left: 10px solid transparent;
+        margin: -4px 0 0 -6px;
+        border-right: 6px solid transparent;
+        border-bottom:  6px solid $white;
+        border-left: 6px solid transparent;
         transition: transform $speed-666 $evil-ease, opacity $speed-666 $evil-ease;
         backface-visibility: visible;
       }
