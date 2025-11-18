@@ -223,7 +223,7 @@ const reset = () => {
           width: $space-24;
           height: $space-24;
           border-radius: 50%;
-          box-shadow: inset 0px 0px 0px 2px $yellow;
+          box-shadow: inset 0px 0px 0px 1.5px $yellow;
           display: flex;
           flex-shrink: 0;
           align-items: center;
