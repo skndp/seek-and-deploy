@@ -204,8 +204,8 @@ function onResize(e) {
     .particles {
       position: absolute;
       bottom: 0%;
-      right: $space-64;
-      margin-bottom: $space-64;
+      left: $space-64;
+      margin: 0 0 (($space-64 * 2) + $space-32) $space-32;
       width: 33%;
       aspect-ratio: 1/1;
       perspective: 1200px;
@@ -230,8 +230,8 @@ function onResize(e) {
     .logo {
       position: absolute;
       bottom: 0%;
-      right: $space-64;
-      margin-bottom: $space-64;
+      left: $space-64;
+      margin: 0 0 (($space-64 * 2) + $space-32) $space-32;
       width: 33%;
       aspect-ratio: 1/1;
 
@@ -252,13 +252,29 @@ function onResize(e) {
   @include respond-to($tablet) {
     .scene {
       .particles {
-        right: $space-96;
-        margin-bottom: $space-96;
+        left: $space-96;
+        margin: 0 0 (($space-96 * 2) + $space-48)  $space-48;
       }
 
       .logo {
+        left: $space-96;
+        margin: 0 0 (($space-96 * 2) + $space-48)  $space-48;
+      }
+    }
+  }
+
+  @include respond-to($large-tablet) {
+    .scene {
+      .particles {
+        left: unset;
         right: $space-96;
-        margin-bottom: $space-96;
+        margin: 0 0 $space-96;
+      }
+
+      .logo {
+        left: unset;
+        right: $space-96;
+        margin: 0 0 $space-96;
       }
     }
   }
@@ -267,12 +283,12 @@ function onResize(e) {
     .scene {
       .particles {
         right: $space-128;
-        margin-bottom: $space-128;
+        margin: 0 0 $space-128;
       }
 
       .logo {
         right: $space-128;
-        margin-bottom: $space-128;
+        margin: 0 0 $space-128;
       }
     }
   }
