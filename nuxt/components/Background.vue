@@ -1,11 +1,11 @@
 <template>
-  <section :class="['background', store.slidePrevState, store.slideActiveState, store.slideNextState]">
+  <section :class="['background', store.slidePrevState, store.slideActiveState, store.slideNextState, {'initial': store.initialSlide}]">
     <div class="scene">
       <div class="particles">
-        <span v-for="(particle, index) in particles" class="particle" :style="{'opacity': particle.opacity, 'transform': `rotateX(${particle.rx}) rotateY(${particle.ry}) rotateZ(${particle.rz}) translate3d(0, 0, ${particle.tz})`}"></span>
+        <span v-for="(particle, index) in particles" class="particle" :style="{'opacity': particle.opacity, 'transform': `translate3d(${particle.tx}, ${particle.ty}, ${particle.tz}) rotateX(${particle.rx}) rotateY(${particle.ry}) rotateZ(${particle.rz})`}"></span>
       </div>
       <div class="logo">
-        <svg v-for="(part, index) in logo" xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600" :style="{'transform': `translate3d(${part.tx}, ${part.ty}, ${part.tz}) rotateX(${part.rx}) rotateY(${part.ry}) rotateZ(${part.rz})`}">
+        <svg v-for="(part, index) in logo" xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600" :style="{'transform': ` translate3d(${part.tx}, ${part.ty}, ${part.tz}) rotateX(${part.rx}) rotateY(${part.ry}) rotateZ(${part.rz})`}">
           <polygon v-if="index === 0" points="12.31 543.06 63.58 594.27 363.93 294.31 261.37 294.31 12.31 543.06"/>
           <polygon v-if="index === 1" points="72.53 221.88 0 294.31 363.93 294.31 436.46 221.88 72.53 221.88"/>
           <polygon v-if="index === 2" points="340.23 56.94 288.96 5.73 72.53 221.88 175.07 221.88 340.23 56.94"/>
@@ -35,15 +35,15 @@ function onResize(e) {
         wh = window.innerHeight,
         wt = ww > wh ? ww : wh;
 
-  for(let i = 0; i < 152; i++) {
+  for(let i = 0; i < 100; i++) {
     particles.value[i] = {
       'opacity': Math.random() / 2,
       'tx': `${(Math.random() * (ww * 2)) - ww}px`,
       'ty': `${(Math.random() * (wh * 2)) - wh}px`,
       'tz': `${(Math.random() * (wt * 2)) - wt}px`,
-      'rx': `${(Math.random()) * 120 - 60}deg`,
-      'ry': `${(Math.random()) * 120 - 60}deg`,
-      'rz': `${(Math.random()) * 120 - 60}deg`
+      'rx': `${(Math.random()) * 360}deg`,
+      'ry': `${(Math.random()) * 360}deg`,
+      'rz': `${(Math.random()) * 360}deg`
     };
   }
 
@@ -51,10 +51,10 @@ function onResize(e) {
     logo.value[i] = {
       'tx': `${(Math.random() * (ww * 2)) - ww}px`,
       'ty': `${(Math.random() * (wh * 2)) - wh}px`,
-      'tz': `${-Math.random() * wt}px`,
-      'rx': `${(Math.random()) * 120 - 60}deg`,
-      'ry': `${(Math.random()) * 120 - 60}deg`,
-      'rz': `${(Math.random()) * 120 - 60}deg`
+      'tz': `${(Math.random() * (wt * 2)) - wt}px`,
+      'rx': `${(Math.random()) * 360}deg`,
+      'ry': `${(Math.random()) * 360}deg`,
+      'rz': `${(Math.random()) * 360}deg`
     };
   }
 }
@@ -122,6 +122,7 @@ function onResize(e) {
 
       .particles {
         .particle {
+          transition: transform 1s $evil-ease, opacity 1s $evil-ease;
           opacity: 1 !important;
           transform: none !important;
         }
@@ -131,11 +132,26 @@ function onResize(e) {
         svg {
           opacity: 1;
           transform: none !important;
-          animation: flicker 1s linear;
+          transition: transform 1s $evil-ease, opacity 1s $evil-ease;
 
           @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
-              animation: flicker 200ms #{($i * 100) + 666}ms linear;
+              animation: flicker 200ms #{($i * 100)}ms linear;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.initial.slide-0-next,
+  &.initial.slide-0-active {
+    .scene {
+      .logo {
+        svg {
+          @for $i from 1 through 6 {
+            &:nth-child(#{$i}) {
+              animation: none;
             }
           }
         }
@@ -153,21 +169,21 @@ function onResize(e) {
   &.slide-2-next,
   &.slide-2-active {
     .scene {
-      transform: rotateX(45deg) rotateY(45deg) rotateZ(45deg);
+      transform: rotateX(30deg) rotateY(60deg) rotateZ(30deg);
     }
   }
 
   &.slide-3-next,
   &.slide-3-active {
     .scene {
-      transform: rotateX(90deg) rotateY(90deg) rotateZ(90deg);
+      transform: rotateX(60deg) rotateY(30deg) rotateZ(60deg);
     }
   }
 
   &.slide-4-next,
   &.slide-4-active {
     .scene {
-      transform: rotateX(45deg) rotateY(45deg) rotateZ(45deg);
+      transform: rotateX(30deg) rotateY(30deg) rotateZ(30deg);
     }
   }
 
@@ -182,7 +198,7 @@ function onResize(e) {
     height: 100%;
     perspective: 1200px;
     transform-style: preserve-3d;
-    transition: transform $speed-666 $evil-ease;
+    transition: transform 1s $evil-ease;
     backface-visibility: visible;
 
     .particles {
@@ -206,7 +222,7 @@ function onResize(e) {
         border-right: 6px solid transparent;
         border-bottom:  6px solid $white;
         border-left: 6px solid transparent;
-        transition: transform $speed-666 $evil-ease, opacity $speed-666 $evil-ease;
+        transition: transform 1s $evil-ease, opacity 1s $evil-ease;
         backface-visibility: visible;
       }
     }
@@ -218,8 +234,6 @@ function onResize(e) {
       margin-bottom: $space-64;
       width: 33%;
       aspect-ratio: 1/1;
-      perspective: 1200px;
-      transform-style: preserve-3d;
 
       svg {
         position: absolute;
@@ -230,7 +244,7 @@ function onResize(e) {
         fill: $white;
         opacity: 0.2;
         backface-visibility: visible;
-        transition: transform $speed-666 $evil-ease, opacity $speed-666 $evil-ease;
+        transition: transform 1s $evil-ease, opacity 1s $evil-ease;
       }
     }
   }
