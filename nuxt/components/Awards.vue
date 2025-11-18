@@ -5,6 +5,7 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
+            <p class="gray">Nice things we’ve won. Let’s keep adding to this list!</p>
             <ul class="h3">
               <li>FWA — FOTD &times; <span class="h3-alt">23</span></li>
               <li>FWA — FOTM &times; <span class="h3-alt">1</span></li>
@@ -42,6 +43,7 @@ section.awards {
       .container {
         .content {
           ul {
+            margin-top: $space-48;
             line-height: 1.2em;
 
             li {

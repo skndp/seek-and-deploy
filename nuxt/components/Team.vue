@@ -6,20 +6,14 @@
         <div class="container">
           <div class="content">
             <div class="cols">
-              <div class="col">
-                <div class="image-holder">
-                  <img :src="'/images/matt-wiggins-profile.jpg'" alt="Matt Wiggins - Profile Photo" />
-                </div>
-                <h3 class="h3">Matt Wiggins</h3>
-                <p class="fs-sm">Founder / Director. Worked with Laika, Coca-Cola, Dominos, Diesel, Airwalk, Weiden + Kennedy, and so much more. 15+ years of crushin’ code and slammin’ beers.</p>
-              </div>
-              <div class="col">
-                <div class="image-holder">
-                  <img :src="'/images/keith-driessen-profile.jpg'" alt="Keith Driessen - Profile Photo" />
-                </div>
-                <h3 class="h3">Keith Driessen</h3>
-                <p class="fs-sm">Worked at BKWLD, Legwork Studio, freelanced for 7 years, Consume & Create, and now Seek and Deploy. 15+ years of code and a lifetime horror fanatic.</p>
-              </div>
+              <TeamMember
+                v-for="(member, index) in team"
+                :name="member.name"
+                :position="member.position"
+                :socials="member.socials"
+                :bio="member.bio"
+                :key="index"
+              />
             </div>
           </div>
         </div>
@@ -40,6 +34,54 @@ const props = defineProps({
     required: true
   }
 });
+
+const show_bio_1 = ref(false);
+const show_bio_2 = ref(false);
+
+const team = [
+  {
+    name: 'Matt Wiggins',
+    position: 'Founder &times; Director',
+    socials: [
+      'https://www.linkedin.com/in/matt-wiggins-570b403',
+      'https://www.instagram.com/gus_chiggins'
+    ],
+    bio: {
+      copy: [
+        'Worked with Laika, Coca-Cola, Dominos, Diesel, Airwalk, Weiden + Kennedy, and so much more.',
+        '15+ years of crushin’ code and slammin’ beers.'
+      ],
+      images: [
+        '/images/matt/matt-wiggins-profile.jpg',
+        '/images/matt/reporter.jpg',
+        '/images/matt/viking.jpg',
+        '/images/matt/gabf.jpg',
+        '/images/matt/interview.jpg'
+      ]
+    }
+  },
+  {
+    name: 'Keith Driessen',
+    position: 'Lead Developer',
+    socials: [
+      'https://www.linkedin.com/',
+      'https://www.instagram.com/kiproddodger'
+    ],
+    bio: {
+      copy: [
+        'BKWLD (1y), Legwork Studio (5y), Freelance (7y), Consume & Create (1y), and now Seek and Deploy.',
+        '15+ years of keyboarding smashing. Horror movie fanatic for life.'
+      ],
+      images: [
+        '/images/keith/keith-driessen-profile.jpg',
+        '/images/keith/dr-acula.jpg',
+        '/images/keith/polaroid.jpg',
+        '/images/keith/nose-press.jpg',
+        '/images/keith/alley.jpg'
+      ]
+    }
+  }
+];
 </script>
 
 <style lang='scss'>
@@ -52,37 +94,6 @@ section.team {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             column-gap: $space-16;
-
-            .col {
-              display: flex;
-              flex-direction: column;
-
-              .image-holder {
-                position: relative;
-                width: 100%;
-                aspect-ratio: 5/7;
-                background-color: #272727;
-                overflow: hidden;
-                display: flex;
-                flex-shrink: 0;
-
-                img {
-                  @include abs-fill;
-                  object-fit: cover;
-                  object-position: 50% 50%;
-                }
-              }
-
-              .h3 {
-                margin-top: $space-16;
-                line-height: 1em;
-              }
-
-              .fs-sm {
-                margin-top: $space-16;
-                line-height: 1.4em;
-              }
-            }
           }
         }
       }
@@ -96,14 +107,6 @@ section.team {
           .content {
             .cols {
               column-gap: $space-32;
-
-              .col {
-                .image-holder {
-                  position: relative;
-                  width: 100%;
-                  aspect-ratio: 1/1;
-                }
-              }
             }
           }
         }
