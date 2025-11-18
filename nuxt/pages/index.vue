@@ -211,7 +211,6 @@ section.slide {
     flex-grow: 1;
 
     .gutter {
-      height: 100%;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -226,6 +225,14 @@ section.slide {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+
+        .content {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          flex-grow: 1;
+        }
       }
     }
   }
@@ -238,6 +245,25 @@ section.slide {
         h2.fs-sm {
           height: $space-96;
         }
+
+        .container {
+          .content {
+            margin: 0 auto $space-96;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to($desktop) {
+    .inner {
+      .gutter {
+        .container {
+          .content {
+            max-width: 1000px;
+            margin: 0 auto $space-96;
+          }
+        }
       }
     }
   }
@@ -249,6 +275,12 @@ section.slide {
       .gutter {
         h2.fs-sm {
           height: $space-128;
+        }
+
+        .container {
+          .content {
+            margin: 0 auto $space-96;
+          }
         }
       }
     }

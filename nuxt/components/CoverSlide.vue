@@ -30,14 +30,6 @@ const props = defineProps({
 
 <style lang='scss'>
 .cover-slide {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-
   .inner {
     flex-direction: column;
 
