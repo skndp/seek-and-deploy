@@ -253,12 +253,12 @@ function onResize(e) {
     .scene {
       .particles {
         left: $space-96;
-        margin: 0 0 (($space-96 * 2) + $space-48)  $space-48;
+        margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
       }
 
       .logo {
         left: $space-96;
-        margin: 0 0 (($space-96 * 2) + $space-48)  $space-48;
+        margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
       }
     }
   }
