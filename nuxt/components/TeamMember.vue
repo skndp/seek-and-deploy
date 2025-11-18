@@ -254,7 +254,7 @@ const reset = () => {
 
   @include respond-to($landscape) {
     .box {
-      aspect-ratio: 1/1;
+      aspect-ratio: 8/9;
     }
   }
 
