@@ -33,7 +33,7 @@
           </div>
           <div class="content">
             <div class="info">
-              <p class="fs-sm">Find us with our friends at <NuxtLink to="https://www.herman.studio/" target="_blank">Herman</NuxtLink></p>
+              <p class="fs-sm">Based at <NuxtLink to="https://www.herman.studio/" target="_blank">Herman</NuxtLink></p>
               <NuxtLink class="h3 address" to="https://maps.app.goo.gl/zP6KGgH9fzgdapjE6" target="_blank">
                 <span>1305 Osage St.</span>
                 <span>Denver, CO 80204</span>
