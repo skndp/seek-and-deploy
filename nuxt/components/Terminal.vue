@@ -16,7 +16,9 @@ const quotes = [
         "setec astronomy ... too many secrets",
         "follow the white rabbit",
         "don't solve with more, solve with less",
-        "spot, you are disrupting my ability to work"
+        "spot, you are disrupting my ability to work",
+        "i will design the perfect system",
+        "the matrix has got you"
       ];
 let delay = 120;
 let step = 0;
