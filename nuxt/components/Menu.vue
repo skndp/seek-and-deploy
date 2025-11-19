@@ -65,19 +65,16 @@ function setNextSlide() {
   left: 0px;
   width: $space-64;
   height: 100vh;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: rgba($gray, 1);
-  box-sizing: border-box;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-right-color $speed-666 $ease-out;
 
   &.slide-0-next,
   &.slide-0-active {
-    border-right-color: rgba($black, 0);
+    &:before {
+      opacity: 0;
+    }
 
     .--logo {
       opacity: 0;
@@ -101,6 +98,15 @@ function setNextSlide() {
     .--mail {
       animation: bounce 2s ease;
     }
+  }
+
+  &:before {
+    content: '';
+    @include abs-fill;
+    background-color: rgba($white, 0.02);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity $speed-666 $evil-ease;
   }
 
   .icon {

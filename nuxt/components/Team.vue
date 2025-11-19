@@ -86,6 +86,30 @@ const team = [
 
 <style lang='scss'>
 section.team {
+  .slide-2-next &,
+  .slide-2-active & {
+    .inner {
+      .gutter {
+        .container {
+          .content {
+            .cols {
+              .team-member {
+                .box {
+                  transform: skewY(0deg);
+                }
+
+                .meta {
+                  opacity: 1;
+                  transform: skewY(0deg) translateY(0px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .inner {
     .gutter {
       .container {

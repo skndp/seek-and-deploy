@@ -51,7 +51,7 @@ const props = defineProps({
 </script>
 
 <style lang='scss'>
-.contact {
+section.contact {
   .slide-5-next &,
   .slide-5-active & {
     .container {
