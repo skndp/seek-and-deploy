@@ -228,6 +228,7 @@ section.slide {
 
         .content {
           width: 100%;
+          margin: 0 0 $space-64;
           display: flex;
           justify-content: center;
           flex-direction: column;
@@ -271,7 +272,7 @@ section.slide {
       .gutter {
         .container {
           .content {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto $space-96;
           }
         }

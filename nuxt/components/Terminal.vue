@@ -18,7 +18,8 @@ const quotes = [
         "don't solve with more, solve with less",
         "spot, you are disrupting my ability to work",
         "i will design the perfect system",
-        "the matrix has got you"
+        "the matrix has got you",
+        "what will your first sequence of the day be?"
       ];
 let delay = 120;
 let step = 0;

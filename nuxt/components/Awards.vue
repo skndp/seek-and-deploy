@@ -5,15 +5,14 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
-            <p class="gray">Nice things we’ve won. Let’s keep adding to this list!</p>
             <ul class="h3">
-              <li>FWA — FOTD &times; <span class="h3-alt">23</span></li>
-              <li>FWA — FOTM &times; <span class="h3-alt">1</span></li>
-              <li>Awwwards — SOTD &times; <span class="h3-alt">24</span></li>
-              <li>Awwwards — SOTM &times; <span class="h3-alt">1</span></li>
-              <li>Webby Nominations &times; <span class="h3-alt">11</span></li>
-              <li>Webby People’s Voice Winner &times; <span class="h3-alt">1</span></li>
-              <li>The One Show Gold Pencil &times; <span class="h3-alt">1</span></li>
+              <li>FWA — FOTD &times; <span>23</span></li>
+              <li>FWA — FOTM &times; <span>1</span></li>
+              <li>Awwwards — SOTD &times; <span>24</span></li>
+              <li>Awwwards — SOTM &times; <span>1</span></li>
+              <li>Webby Nominations &times; <span>11</span></li>
+              <li>Webby People’s Voice Winner &times; <span>1</span></li>
+              <li>The One Show Gold Pencil &times; <span>1</span></li>
             </ul>
           </div>
         </div>
@@ -43,12 +42,12 @@ section.awards {
       .container {
         .content {
           ul {
-            margin-top: $space-48;
-            line-height: 1.2em;
+            line-height: 1.8em;
 
             li {
-              .h3-alt {
+              span {
                 color: $yellow;
+                font-weight: 800;
               }
             }
           }

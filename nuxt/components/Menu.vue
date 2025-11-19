@@ -106,7 +106,7 @@ function setNextSlide() {
     background-color: rgba($white, 0.02);
     backdrop-filter: blur(2px);
     opacity: 1;
-    transition: opacity $speed-666 $evil-ease;
+    transition: opacity 1s $evil-ease;
   }
 
   .icon {
@@ -126,7 +126,7 @@ function setNextSlide() {
     }
 
     &.--logo {
-      transition: opacity $speed-666 $ease-out;
+      transition: opacity 1s $ease-out;
 
       &:after {
         width: 66.666%;

@@ -2,7 +2,7 @@
   <section :class="[ 'slide', id ]">
     <div class="inner">
       <div class="gutter">
-        <h2 class="fs-sm gray">{{ title }}</h2>
+        <h2 class="fs-sm gray"><span>{{ title }}</span></h2>
         <div class="container">
           <div class="content">
             <div class="cols">
