@@ -98,6 +98,8 @@ const reset = () => {
     aspect-ratio: 5/7;
     display: flex;
     flex-shrink: 0;
+    transform: skewY(-13deg);
+    transition: transform 1s $ease-out;
 
     &.--show-bio {
       .bio-wrapper {
@@ -204,6 +206,11 @@ const reset = () => {
   }
 
   .meta {
+    position: relative;
+    opacity: 0;
+    transform: skewY(-13deg) translateY(50%);
+    transition: opacity $speed-666 $ease-out, transform 1s $ease-out;
+
     .h3 {
       padding: $space-8 0 $space-8;
       line-height: 1em;
