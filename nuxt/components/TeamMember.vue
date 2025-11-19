@@ -3,6 +3,7 @@
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
+        @click="show_bio = true"
         @touchstart="initTouchMove"
         @touchmove="handleMove"
         @touchend="reset"
@@ -24,7 +25,7 @@
     </div>
     <div class="meta">
       <h3 class="h3">{{ name }}</h3>
-      <p v-html="position" />
+      <p class="fs-sm" v-html="position" />
       <ul>
         <li v-for="(link, index) in socials">
           <NuxtLink :to="link" target="_blank" />
@@ -217,7 +218,7 @@ const reset = () => {
     }
 
     ul {
-      margin-top: $space-8;
+      margin-top: $space-16;
       display: inline-flex;
       align-items: center;
 
@@ -227,18 +228,29 @@ const reset = () => {
         align-items: center;
 
         a {
+          position: relative;
           width: $space-24;
           height: $space-24;
-          border-radius: 50%;
-          box-shadow: inset 0px 0px 0px 1.5px $yellow;
           display: flex;
           flex-shrink: 0;
           align-items: center;
           justify-content: center;
 
+          &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 1.5px $yellow;
+            transform: translateX(-50%) translateY(-50%);
+          }
+
           &:after {
             color: $yellow;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             display: inline-flex;
           }

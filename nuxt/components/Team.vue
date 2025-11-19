@@ -75,8 +75,8 @@ const team = [
       images: [
         '/images/keith/keith-driessen-profile.jpg',
         '/images/keith/dr-acula.jpg',
-        '/images/keith/polaroid.jpg',
         '/images/keith/nose-press.jpg',
+        '/images/keith/polaroid.jpg',
         '/images/keith/alley.jpg'
       ]
     }
