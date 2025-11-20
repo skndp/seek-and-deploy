@@ -48,8 +48,8 @@ const team = [
     ],
     bio: {
       copy: [
-        'I have spent 16+ years as a partner at creative studios (like Legwork and C&C) in roles as a developer, technical director and creative director, doing award-winning work with major brands like Nike, Google and Coca-Cola.',
-        'Seek and Deploy has always been my dream. An interactive-focused company where we can do things the right way and I can keep my hands in the work.'
+        '16+ years as a partner at creative studios (like Legwork and C&C) in roles as a developer, technical director and creative director, doing award-winning work with major brands like Nike, Google and Coca-Cola.',
+        'Seek and Deploy has always been my dream. An interactive-focused company where we can do things the right way.'
       ],
       images: [
         '/images/matt/matt-wiggins-profile.jpg',
@@ -69,8 +69,8 @@ const team = [
     ],
     bio: {
       copy: [
-        'BKWLD (1y), Legwork Studio (5y), Freelance (7y), Consume & Create (1y), and now Seek and Deploy.',
-        '15+ years of keyboarding smashing. Horror movie fanatic for life.'
+        '14+ years of writing cool code at BKWLD (1&nbsp;year), Legwork Studio (5&nbsp;years), Freelance (7&nbsp;years), Consume & Create (1&nbsp;year), and now Seek and Deploy.',
+        'Currently writing and directing a short film series called <a href="https://instagram.com/nightbayentertainment" target="_blank" rel="noopener noreferrer">The Nightwalker</a>. 80’s style rock n roll horror, all shot on VHS! And yes, Matt Wiggins stars as the killer in this series.'
       ],
       images: [
         '/images/keith/keith-driessen-profile.jpg',
