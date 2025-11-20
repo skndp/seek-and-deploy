@@ -13,10 +13,11 @@
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/sitemap": "^7.4.3",
-    "nuxt": "3.17.7",
-    "vue": "^3.5.18",
     "@pinia/nuxt": "^0.11.2",
-    "pinia": "^3.0.3"
+    "detect-it": "^4.0.1",
+    "nuxt": "3.17.7",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.18"
   },
   "devDependencies": {
     "sass": "1.58.3"

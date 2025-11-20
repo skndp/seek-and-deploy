@@ -10,7 +10,7 @@
         />
       </template>
     </div>
-    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
+    <div v-if="probablyMobile === false" :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
       <CoverSlide title="Seek and Deploy" />
       <template v-for="(slide, index) in slides">
         <component
@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import { primaryInput } from 'detect-it';
 import { useSiteStore } from '~/stores/store';
 import Manifesto from '~/components/Manifesto.vue'
 import Team from '~/components/Team.vue'
@@ -36,6 +37,7 @@ const slidesRef = ref(null);
 const clonesRef = ref(null);
 const snap = ref(false);
 let slideIndex = 0;
+const probablyMobile = ref(false);
 
 const slides = [
   {
@@ -75,6 +77,10 @@ useHead(() => ({
 // Mounted
 onMounted(() => {
   window.addEventListener('app-ready', initScrollSnap, { once: true });
+  probablyMobile.value =
+    primaryInput === 'touch' ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
 });
 
 // Before Unmount
@@ -144,22 +150,25 @@ function onScrollSnapChange(e) {
   const t = e.detail.target,
         p = t.parentElement;
 
-  let top = 0;
-
-  if(p === slidesRef.value) {
-    // back at top, set scroll to clone top
+  if(probablyMobile.value === true) {
     slideIndex = Array.from(slidesRef.value.children).indexOf(t);
+  } else {
+    let top = 0;
+    if(p === slidesRef.value) {
+      // back at top, set scroll to clone top
+      slideIndex = Array.from(slidesRef.value.children).indexOf(t);
 
-    if(slideIndex === 0) {
-      top = clonesRef.value.children[0].offsetTop;
+      if(slideIndex === 0) {
+        top = clonesRef.value.children[0].offsetTop;
+        scroll(top);
+      }
+      store.setSlideIndex(slideIndex);
+    } else if(p === clonesRef.value) {
+      // in a clone, set scroll to corresponding slide
+      slideIndex = Array.from(clonesRef.value.children).indexOf(t);
+      top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
       scroll(top);
     }
-    store.setSlideIndex(slideIndex);
-  } else if(p === clonesRef.value) {
-    // in a clone, set scroll to corresponding slide
-    slideIndex = Array.from(clonesRef.value.children).indexOf(t);
-    top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
-    scroll(top);
   }
 
   store.setSlidePrevState('');
