@@ -1,5 +1,5 @@
 <template>
-  <section :class="['background', store.slidePrevState, store.slideActiveState, store.slideNextState, {'initial': store.initialSlide}]">
+  <div :class="['background', store.slidePrevState, store.slideActiveState, store.slideNextState, {'initial': store.initialSlide}]">
     <div class="scene">
       <div class="particles">
         <span v-for="(particle, index) in particles" class="particle" :style="{'opacity': particle.opacity, 'transform': `translate3d(${particle.tx}, ${particle.ty}, ${particle.tz}) rotateX(${particle.rx}) rotateY(${particle.ry}) rotateZ(${particle.rz})`}"></span>
@@ -15,7 +15,7 @@
         </svg>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>
@@ -62,48 +62,48 @@ function onResize(e) {
 
 <style lang='scss'>
 @keyframes flicker {
-	0% {
-		opacity: 0.4;
-	}
-	5% {
-		opacity: 0.5;
-	}
-	10% {
-		opacity: 0.6;
-	}
-	15% {
-		opacity: 0.85;
-	}
-	25% {
-		opacity: 0.5;
-	}
-	30% {
-		opacity: 1;
-	}
-	35% {
-		opacity: 0.1;
-	}
-	40% {
-		opacity: 0.25;
-	}
-	45% {
-		opacity: 0.5;
-	}
-	60% {
-		opacity: 1;
-	}
-	70% {
-		opacity: 0.85;
-	}
-	80% {
-		opacity: 0.4;
-	}
-	90% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0.4;
+  }
+  5% {
+    opacity: 0.5;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  30% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 0.25;
+  }
+  45% {
+    opacity: 0.5;
+  }
+  60% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .background {
@@ -111,8 +111,7 @@ function onResize(e) {
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 100vh;
-  z-index: -1;
+  height: 100%;
   overflow: hidden;
 
   &.slide-0-next,
@@ -205,7 +204,7 @@ function onResize(e) {
       position: absolute;
       bottom: 0%;
       left: $space-64;
-      margin: 0 0 (($space-64 * 2) + $space-32) $space-32;
+      margin: 0 0 (($space-64 * 2) + $space-32) 0;
       width: 33%;
       aspect-ratio: 1/1;
       perspective: 1200px;
@@ -231,7 +230,7 @@ function onResize(e) {
       position: absolute;
       bottom: 0%;
       left: $space-64;
-      margin: 0 0 (($space-64 * 2) + $space-32) $space-32;
+      margin: 0 0 (($space-64 * 2) + $space-32) 0;
       width: 33%;
       aspect-ratio: 1/1;
 

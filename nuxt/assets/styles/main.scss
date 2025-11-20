@@ -50,29 +50,7 @@ body {
 // --------------------------------------------
 
 .page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  &.fade-out {
-    pointer-events: none;
-  }
-
-  &.fade-out,
-  &.page-enter-active,
-  &.page-leave-active {
-    transition: opacity $speed-666 $evil-ease;
-  }
-
-  &.fade-out,
-  &.page-enter-from,
-  &.page-leave-to {
-    opacity: 0;
-  }
-
-  #footer {
-    margin-top: auto;
-  }
+  position: relative;
 }
 
 // --------------------------------------------
@@ -90,7 +68,7 @@ a {
 // --------------------------------------------
 
 .gutter {
-  margin: 0 $space-16;
+  margin: 0 $space-16 0 0;
 
   @include respond-to($tablet) {
     margin: 0 $space-48;
@@ -108,7 +86,7 @@ a {
     padding-top: $space-48;
   }
 
-  @include respond-to($tablet) {
+  @include respond-to($macbook) {
     padding-top: $space-64;
   }
 }
@@ -120,7 +98,7 @@ a {
     padding-bottom: $space-48;
   }
 
-  @include respond-to($tablet) {
+  @include respond-to($macbook) {
     padding-bottom: $space-64;
   }
 }

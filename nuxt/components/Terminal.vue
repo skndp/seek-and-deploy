@@ -1,6 +1,6 @@
 <template>
   <div id="terminal">
-    <span id="line-0">&gt; <span id="text">{{ text }}</span><span id="cursor">_</span></span>
+    <span id="line-0" class="fs-sm">&gt; <span id="text">{{ text }}</span><span id="cursor">_</span></span>
   </div>
 </template>
 
@@ -54,18 +54,12 @@ function go() {
 <style lang="scss">
 #terminal {
   height: 100%;
+
   #line-0 {
-    font: normal normal bold 12px/12px Courier, monospace;
     color: rgba($white, 0.33);
 
     #cursor {
       animation: cursor 1s step-start 0s infinite;
-    }
-  }
-
-  @include respond-to($large-tablet) {
-    #line-0 {
-      font: normal normal bold 14px/14px Courier, monospace;
     }
   }
 }

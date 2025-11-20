@@ -1,5 +1,5 @@
 <template>
-  <section :class="['menu', store.slidePrevState, store.slideActiveState, store.slideNextState]">
+  <nav :class="['menu', store.slidePrevState, store.slideActiveState, store.slideNextState]">
     <div class="icon --logo" />
     <div class="ticks">
       <button
@@ -11,7 +11,7 @@
     </div>
     <NuxtLink class="icon --mail" to="mailto:hello@seekanddeploy.com" target="_blank" aria-label="Email: hello@seekanddeploy.com" />
     <button class="icon --down" aria-label="Next Section" @click="setNextSlide" />
-  </section>
+  </nav>
 </template>
 
 <script setup>
@@ -59,16 +59,17 @@ function setNextSlide() {
   }
 }
 
-.menu {
+nav.menu {
   position: fixed;
   top: 0px;
   left: 0px;
   width: $space-64;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 13;
 
   &.slide-0-next,
   &.slide-0-active {
@@ -103,7 +104,6 @@ function setNextSlide() {
   &:before {
     content: '';
     @include abs-fill;
-    background-color: rgba($white, 0.02);
     backdrop-filter: blur(2px);
     opacity: 1;
     transition: opacity 1s $evil-ease;
@@ -205,6 +205,10 @@ function setNextSlide() {
 
   @include respond-to($tablet) {
     width: $space-96;
+
+    &:before {
+      background-color: rgba($white, 0.02);
+    }
 
     .icon {
       &.--mail {

@@ -2,7 +2,7 @@
   <section class="slide cover-slide">
     <div class="inner">
       <div class="gutter">
-        <h1 class="title h1 pad-t">{{ title }}</h1>
+        <h1 class="title h1">{{ title }}</h1>
         <div class="terminal">
           <Terminal />
         </div>
@@ -49,6 +49,10 @@ const props = defineProps({
     .gutter {
       justify-content: space-between;
 
+      .title {
+        margin-top: $space-64;
+      }
+
       .terminal {
         flex-grow: 1;
         margin-top: $space-16;
@@ -61,12 +65,15 @@ const props = defineProps({
 
         span {
           margin-top: -0.04em;
+          display: inline-flex;
+          align-items: center;
 
           svg {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin-bottom: -4px;
+            width: 16px;
+            height: 16px;
+            margin: -3px 7px 0 0;
+            display: flex;
+            flex-shrink: 0;
 
             circle, line {
               stroke-width: 2px;
@@ -82,8 +89,20 @@ const props = defineProps({
   @include respond-to($tablet) {
     .inner {
       .gutter {
+        .title {
+          margin-top: $space-32;
+        }
+
         .copy {
           height: $space-96;
+
+          span {
+            svg {
+              width: 18px;
+              height: 18px;
+              margin: -3px 10px 0 0;
+            }
+          }
         }
       }
     }
@@ -92,6 +111,10 @@ const props = defineProps({
   @include respond-to($large-tablet) {
     .inner {
       .gutter {
+        .title {
+          margin-top: $space-48;
+        }
+
         .terminal {
           margin-top: $space-32;
         }
@@ -102,6 +125,10 @@ const props = defineProps({
   @include respond-to($macbook) {
     .inner {
       .gutter {
+        .title {
+          margin-top: $space-64;
+        }
+
         .copy {
           height: $space-128;
 

@@ -104,10 +104,12 @@ export default defineNuxtConfig({
   //
   googleFonts: {
     families: {
-      Lexend: [400, 600, 800]
+      Lexend: [400, 600]
     },
+    subsets: ['latin'],
     display: 'swap',
-    preconnect: true
+    preconnect: true,
+    preload: true
   },
   //
   // Generate

@@ -47,7 +47,7 @@ section.awards {
             li {
               span {
                 color: $yellow;
-                font-weight: 800;
+                font-weight: 600;
               }
             }
           }
