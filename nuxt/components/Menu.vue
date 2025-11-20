@@ -171,7 +171,7 @@ nav.menu {
       align-items: center;
       justify-content: center;
       opacity: 1;
-      transform: translateY(0px);
+      transform: translateY(0%);
 
       &:before {
         content: "";
