@@ -48,8 +48,8 @@ const team = [
     ],
     bio: {
       copy: [
-        'Worked with Laika, Coca-Cola, Dominos, Diesel, Airwalk, Weiden + Kennedy, and so much more.',
-        '15+ years of crushin’ code and slammin’ beers.'
+        'I have spent 16+ years as a partner at creative studios (like Legwork and C&C) in roles as a developer, technical director and creative director, doing award-winning work with major brands like Nike, Google and Coca-Cola.',
+        'Seek and Deploy has always been my dream. An interactive-focused company where we can do things the right way and I can keep my hands in the work.'
       ],
       images: [
         '/images/matt/matt-wiggins-profile.jpg',

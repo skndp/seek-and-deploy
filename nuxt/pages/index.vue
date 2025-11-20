@@ -48,7 +48,7 @@ const slides = [
   {
     component: Team,
     id: "team",
-    title: "Juuust The Two of Us"
+    title: "Reunited And It Feels So Good"
   },
   {
     component: Work,
