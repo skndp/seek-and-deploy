@@ -156,7 +156,7 @@ const reset = () => {
           background-color: $yellow;
 
           .bio-content {
-            margin: $space-32 $space-8 $space-8;
+            margin: $space-24 $space-8 $space-8;
 
             p {
               color: $black;
@@ -166,6 +166,10 @@ const reset = () => {
               &:not(:first-child) {
                 margin-top: 1em;
               }
+            }
+
+            a {
+              text-decoration: underline;
             }
           }
         }
