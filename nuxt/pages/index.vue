@@ -79,21 +79,21 @@ onMounted(() => {
 
 // Before Unmount
 onBeforeUnmount(() => {
-  document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
-  document.removeEventListener('scrollsnapchange', onScrollSnapChange);
+  window.removeEventListener('sd_snapchanging', onScrollSnapChanging);
+  window.removeEventListener('sd_snapchange', onScrollSnapChange);
 });
 
 // Methods
 function initScrollSnap() {
   snap.value = true;
-  document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
-  document.addEventListener('scrollsnapchange', onScrollSnapChange);
+  window.addEventListener('sd_snapchanging', onScrollSnapChanging);
+  window.addEventListener('sd_snapchange', onScrollSnapChange);
 }
 
 function scroll(y) {
   // ignore snap events
-  document.removeEventListener('scrollsnapchanging', onScrollSnapChanging);
-  document.removeEventListener('scrollsnapchange', onScrollSnapChange);
+  window.removeEventListener('sd_snapchanging', onScrollSnapChanging);
+  window.removeEventListener('sd_snapchange', onScrollSnapChange);
 
   setTimeout(() => {
     // scroll
@@ -104,19 +104,21 @@ function scroll(y) {
     });
 
     // listen to snap events
-    document.addEventListener('scrollsnapchanging', onScrollSnapChanging);
-    document.addEventListener('scrollsnapchange', onScrollSnapChange);
+    window.addEventListener('sd_snapchanging', onScrollSnapChanging);
+    window.addEventListener('sd_snapchange', onScrollSnapChange);
   }, 0);
 }
 
 // slide starting to change
 function onScrollSnapChanging(e) {
-  if (!e.snapTargetBlock) {
+  if (!e.detail.target) {
     store.setChangingSlides(false);
     return false;
   }
 
-  const p = e.snapTargetBlock.parentElement;
+  const t = e.detail.target,
+        p = t.parentElement;
+
   let nextIndex = 0;
 
   store.setChangingSlides(true);
@@ -124,9 +126,9 @@ function onScrollSnapChanging(e) {
   store.setSlidePrevState(`slide-${slideIndex}-prev`);
 
   if(p === slidesRef.value) {
-    nextIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
+    nextIndex = Array.from(slidesRef.value.children).indexOf(t);
   } else if(p === clonesRef.value) {
-    nextIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
+    nextIndex = Array.from(clonesRef.value.children).indexOf(t);
   }
 
   store.setSlideNextState(`slide-${nextIndex}-next`);
@@ -134,18 +136,19 @@ function onScrollSnapChanging(e) {
 
 // slide change
 function onScrollSnapChange(e) {
-  if (!e.snapTargetBlock || (window.pageYOffset === 0 && store.initialSlide === true)) {
+  if (!e.detail.target || (window.pageYOffset === 0 && store.initialSlide === true)) {
     store.setChangingSlides(false);
     return false;
   }
 
-  const p = e.snapTargetBlock.parentElement;
+  const t = e.detail.target,
+        p = t.parentElement;
 
   let top = 0;
 
   if(p === slidesRef.value) {
     // back at top, set scroll to clone top
-    slideIndex = Array.from(slidesRef.value.children).indexOf(e.snapTargetBlock);
+    slideIndex = Array.from(slidesRef.value.children).indexOf(t);
 
     if(slideIndex === 0) {
       top = clonesRef.value.children[0].offsetTop;
@@ -154,7 +157,7 @@ function onScrollSnapChange(e) {
     store.setSlideIndex(slideIndex);
   } else if(p === clonesRef.value) {
     // in a clone, set scroll to corresponding slide
-    slideIndex = Array.from(clonesRef.value.children).indexOf(e.snapTargetBlock);
+    slideIndex = Array.from(clonesRef.value.children).indexOf(t);
     top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
     scroll(top);
   }
