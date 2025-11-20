@@ -26,3 +26,12 @@ const props = defineProps({
   }
 });
 </script>
+
+<style lang='scss'>
+section.manifesto {
+  .slide-1-next &,
+  .slide-1-active & {
+    opacity: 1;
+  }
+}
+</style>

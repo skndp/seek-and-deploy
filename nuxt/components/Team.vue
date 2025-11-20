@@ -88,6 +88,8 @@ const team = [
 section.team {
   .slide-2-next &,
   .slide-2-active & {
+    opacity: 1;
+
     .inner {
       .gutter {
         .container {
