@@ -172,6 +172,7 @@ nav.menu {
       justify-content: center;
       opacity: 1;
       transform: translateY(0%);
+      cursor: pointer;
 
       &:before {
         content: "";
@@ -186,12 +187,17 @@ nav.menu {
         pointer-events: none;
       }
 
-      &.active,
-      &:hover {
-        cursor: pointer;
-
+      &.active {
         &:before {
           background-color: $yellow;
+        }
+      }
+
+      @include can-hover {
+        &:hover {
+          &:before {
+            background-color: $yellow;
+          }
         }
       }
 
