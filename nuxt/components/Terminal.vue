@@ -7,19 +7,18 @@
 <script setup>
 const text = ref('');
 const messages = [
-        'seek and deploy',
+        'run init sd -v=1.0-new-horizon',
         '',
-        'reach out, we can help'
+        'find us, we can help'
       ];
 const quotes = [
-        "initializing v1.0 / new horizon",
         "setec astronomy ... too many secrets",
         "follow the white rabbit",
         "don't solve with more, solve with less",
         "spot, you are disrupting my ability to work",
         "i will design the perfect system",
-        "the matrix has got you",
-        "what will your first sequence of the day be?"
+        "the matrix has got you ...",
+        "what will the first sequence of the day be?"
       ];
 let delay = 120;
 let step = 0;
