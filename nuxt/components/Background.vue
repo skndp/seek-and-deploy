@@ -26,7 +26,7 @@ const logo = ref([]);
 const particles = ref([]);
 
 onMounted(() => {
-  window.addEventListener('resize', onResize);
+  //window.addEventListener('resize', onResize);
   onResize();
 })
 
