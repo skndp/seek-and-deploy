@@ -43,8 +43,8 @@ const team = [
     name: 'Matt Wiggins',
     position: 'Founder &times; Director',
     socials: [
-      'https://www.linkedin.com/in/matt-wiggins-570b403',
-      'https://www.instagram.com/gus_chiggins'
+      'https://www.instagram.com/gus_chiggins',
+      'https://www.linkedin.com/in/matt-wiggins-570b403'
     ],
     bio: {
       copy: [
@@ -64,8 +64,8 @@ const team = [
     name: 'Keith Driessen',
     position: 'Lead Developer',
     socials: [
-      'https://www.linkedin.com/',
-      'https://www.instagram.com/kiproddodger'
+      'https://www.instagram.com/kiproddodger',
+      'https://www.linkedin.com/in/keith-d-5799a9399'
     ],
     bio: {
       copy: [

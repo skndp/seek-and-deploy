@@ -26,11 +26,7 @@
     <div class="meta">
       <h3 class="h3">{{ name }}</h3>
       <p class="fs-sm" v-html="position" />
-      <ul>
-        <li v-for="(link, index) in socials">
-          <NuxtLink :to="link" target="_blank" />
-        </li>
-      </ul>
+      <SocialLinks :socials="socials" />
     </div>
   </div>
 </template>
@@ -215,59 +211,6 @@ const reset = () => {
     .h3 {
       padding: $space-8 0 $space-8;
       line-height: 1em;
-    }
-
-    ul {
-      margin-top: $space-16;
-      display: inline-flex;
-      align-items: center;
-
-      li {
-        margin-right: $space-8;
-        display: inline-flex;
-        align-items: center;
-
-        a {
-          position: relative;
-          width: $space-24;
-          height: $space-24;
-          display: flex;
-          flex-shrink: 0;
-          align-items: center;
-          justify-content: center;
-
-          &:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            box-shadow: 0px 0px 0px 1.5px $yellow;
-            transform: translateX(-50%) translateY(-50%);
-          }
-
-          &:after {
-            color: $yellow;
-            font-size: 10px;
-            font-weight: 600;
-            display: inline-flex;
-          }
-
-          &[href*='linkedin'] {
-            &:after {
-              content: 'LI';
-            }
-          }
-
-          &[href*='instagram'] {
-            &:after {
-              content: 'IG';
-            }
-          }
-        }
-      }
     }
   }
 

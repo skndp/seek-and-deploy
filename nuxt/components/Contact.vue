@@ -33,11 +33,17 @@
           </div>
           <div class="content">
             <div class="info">
-              <p class="fs-sm">Based at <NuxtLink to="https://www.herman.studio/" target="_blank">Herman</NuxtLink></p>
+              <p class="fs-sm gray l1">Located at <NuxtLink to="https://www.herman.studio/" target="_blank">Herman</NuxtLink></p>
               <NuxtLink class="h3 address" to="https://maps.app.goo.gl/zP6KGgH9fzgdapjE6" target="_blank">
-                <span>1305 Osage St.</span>
-                <span>Denver, CO 80204</span>
+                <span class="l2">1305 Osage St.</span>
+                <span class="l3">Denver, CO 80204</span>
               </NuxtLink>
+              <ul>
+                <li class="fs-sm gray l4">Reach out to Matt</li>
+                <li class="l5"><span class="fs-sm">P:</span> <NuxtLink to="tel:720-219-7096" target="_blank">(720) 219-7096</NuxtLink></li>
+                <li class="l6"><span class="fs-sm">E:</span> <NuxtLink to="mailto:hello@seekanddeploy.com" target="_blank">hello@seekanddeploy.com</NuxtLink></li>
+              </ul>
+              <SocialLinks class="l7" :socials="[ 'https://www.linkedin.com/company/seek-and-deploy/' ]" />
             </div>
           </div>
         </div>
@@ -82,12 +88,49 @@ section.contact {
         }
       }
     }
+
+    .inner {
+      .gutter {
+        .container {
+          .content {
+            .info {
+              .l1, .l2, .l3, .l4, .l5, .l6, .l7 {
+                opacity: 1;
+                transform: translateY(0%);
+              }
+
+              .l1 {
+                transition: transform $speed-666 #{333 + (1 * 111)}ms $ease-out, opacity $speed-666 #{333 + (1 * 111)}ms $ease-out;
+              }
+              .l2 {
+                transition: transform $speed-666 #{333 + (2 * 111)}ms $ease-out, opacity $speed-666 #{333 + (2 * 111)}ms $ease-out;
+              }
+              .l3 {
+                transition: transform $speed-666 #{333 + (3 * 111)}ms $ease-out, opacity $speed-666 #{333 + (3 * 111)}ms $ease-out;
+              }
+              .l4 {
+                transition: transform $speed-666 #{333 + (4 * 111)}ms $ease-out, opacity $speed-666 #{333 + (4 * 111)}ms $ease-out;
+              }
+              .l5 {
+                transition: transform $speed-666 #{333 + (5 * 111)}ms $ease-out, opacity $speed-666 #{333 + (5 * 111)}ms $ease-out;
+              }
+              .l6 {
+                transition: transform $speed-666 #{333 + (6 * 111)}ms $ease-out, opacity $speed-666 #{333 + (6 * 111)}ms $ease-out;
+              }
+              .l7 {
+                transition: transform $speed-666 #{333 + (7 * 111)}ms $ease-out, opacity $speed-666 #{333 + (7 * 111)}ms $ease-out;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .map-container {
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: -50%;
     left: 0px;
     bottom: $space-64;
     perspective: 1200px;
@@ -165,17 +208,26 @@ section.contact {
           position: relative;
 
           .info {
+            display: flex;
+            flex-direction: column;
+
+            .l1, .l2, .l3, .l4, .l5, .l6, .l7 {
+              opacity: 0;
+              transform: translateY(50%);
+              transition: transform $speed-666 $ease-out, opacity $speed-666 $ease-out;
+            }
+
             .fs-sm {
               a {
                 text-decoration: underline;
                 text-decoration-color: $yellow;
-                text-decoration-thickness: 1.5px;
+                text-decoration-thickness: 1px;
                 text-underline-offset: 0.1em;
               }
             }
 
             a.address {
-              margin-top: 0.5em;
+              margin: $space-8 0 $space-32;
               display: inline-flex;
               flex-direction: column;
 
@@ -183,9 +235,50 @@ section.contact {
                 display: flex;
               }
             }
+
+            ul:not(.social-links) {
+              padding-bottom: $space-16;
+
+              li {
+                &:not(:last-child) {
+                  margin-bottom: $space-8;
+                }
+
+                a[href^=mailto] {
+                  text-decoration: underline;
+                  text-decoration-color: $yellow;
+                  text-decoration-thickness: 1.5px;
+                  text-underline-offset: 0.1em;
+                }
+              }
+            }
           }
         }
       }
+    }
+  }
+
+  @include respond-to($tablet) {
+    .map-container {
+      right: -192px;
+    }
+
+    .inner {
+      .gutter {
+        .container {
+          .content {
+            .info {
+              margin-top: $space-56;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to($average-desktop) {
+    .map-container {
+      right: 0px;
     }
   }
 
