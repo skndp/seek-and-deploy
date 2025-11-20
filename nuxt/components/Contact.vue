@@ -33,11 +33,11 @@
           </div>
           <div class="content">
             <div class="info">
-              <p class="fs-sm gray l1">Located at <NuxtLink to="https://www.herman.studio/" target="_blank">Herman</NuxtLink></p>
-              <NuxtLink class="h3 address" to="https://maps.app.goo.gl/zP6KGgH9fzgdapjE6" target="_blank">
+              <p class="fs-sm gray l1">Located at <NuxtLink to="https://maps.app.goo.gl/zP6KGgH9fzgdapjE6" target="_blank">Herman</NuxtLink></p>
+              <div class="h3 address">
                 <span class="l2">1305 Osage St.</span>
                 <span class="l3">Denver, CO 80204</span>
-              </NuxtLink>
+              </div>
               <ul>
                 <li class="fs-sm gray l4">Reach out to Matt</li>
                 <li class="l5"><span class="fs-sm">P:</span> <NuxtLink to="tel:720-219-7096" target="_blank">(720) 219-7096</NuxtLink></li>
@@ -82,9 +82,31 @@ section.contact {
         transform: translate(0%, -50%) rotateX(63deg) rotateZ(-45deg) scale(1);
 
         .marker {
-          opacity: 1;
-          transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
-          transition: opacity $speed-666 $evil-ease 1s, transform $speed-666 $evil-ease 1s;
+          opacity: 0;
+          animation: drop $speed-666 1s cubic-bezier(0.333, 0.666, 0.333, 1.333) forwards;
+        }
+
+        @keyframes drop {
+          0% {
+            opacity: 0;
+            transform: translate3d(-50%, -100%, 90px) rotateX(-100deg);
+          }
+          20% {
+            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+          }
+          40% {
+            transform: translate3d(-50%, -100%, 50px) rotateX(-100deg);
+          }
+          60% {
+            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+          }
+          80% {
+            transform: translate3d(-50%, -100%, 30px) rotateX(-100deg);
+          }
+          100% {
+            opacity: 1;
+            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+          }
         }
       }
     }
@@ -146,7 +168,7 @@ section.contact {
       perspective: 1200px;
       transform-style: preserve-3d;
       transform: translate(0%, -50%) rotateX(13deg) rotateZ(-13deg) scale(1.4);
-      transition: transform 1s $evil-ease;
+      transition: transform 1s $ease-out;
 
       svg {
         width: 100%;
@@ -174,9 +196,8 @@ section.contact {
         border-right: 10px solid transparent;
         border-left: 10px solid transparent;
         transform-origin: bottom center;
-        transform: translate3d(-50%, -100%, 80px) rotateX(-100deg);
-        transition: opacity $speed-666 $ease-out, transform $speed-666 $ease-out;
         opacity: 0;
+        transform: translate3d(-50%, -100%, 60px) rotateX(-100deg);
       }
 
       .label {
@@ -219,6 +240,7 @@ section.contact {
 
             .fs-sm {
               a {
+                color: $white;
                 text-decoration: underline;
                 text-decoration-color: $yellow;
                 text-decoration-thickness: 1px;
@@ -226,10 +248,8 @@ section.contact {
               }
             }
 
-            a.address {
+            .address {
               margin: $space-8 0 $space-32;
-              display: inline-flex;
-              flex-direction: column;
 
               span {
                 display: flex;
