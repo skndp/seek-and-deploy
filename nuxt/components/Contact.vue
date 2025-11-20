@@ -71,12 +71,7 @@ section.contact {
   .slide-5-next &,
   .slide-5-active & {
     opacity: 1;
-  }
-}
 
-section.contact {
-  .slide-5-next &,
-  .slide-5-active & {
     .map-container {
       .map {
         transform: translate(0%, -50%) rotateX(63deg) rotateZ(-45deg) scale(1);
@@ -84,29 +79,6 @@ section.contact {
         .marker {
           opacity: 0;
           animation: drop $speed-666 1s cubic-bezier(0.333, 0.666, 0.333, 1.333) forwards;
-        }
-
-        @keyframes drop {
-          0% {
-            opacity: 0;
-            transform: translate3d(-50%, -100%, 90px) rotateX(-100deg);
-          }
-          20% {
-            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
-          }
-          40% {
-            transform: translate3d(-50%, -100%, 50px) rotateX(-100deg);
-          }
-          60% {
-            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
-          }
-          80% {
-            transform: translate3d(-50%, -100%, 30px) rotateX(-100deg);
-          }
-          100% {
-            opacity: 1;
-            transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
-          }
         }
       }
     }
@@ -146,6 +118,29 @@ section.contact {
           }
         }
       }
+    }
+  }
+
+  @keyframes drop {
+    0% {
+      opacity: 0;
+      transform: translate3d(-50%, -100%, 90px) rotateX(-100deg);
+    }
+    20% {
+      transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+    }
+    40% {
+      transform: translate3d(-50%, -100%, 50px) rotateX(-100deg);
+    }
+    60% {
+      transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
+    }
+    80% {
+      transform: translate3d(-50%, -100%, 30px) rotateX(-100deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(-50%, -100%, 10px) rotateX(-100deg);
     }
   }
 

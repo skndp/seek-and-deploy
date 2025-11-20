@@ -35,30 +35,6 @@ function setNextSlide() {
 </script>
 
 <style lang='scss'>
-@keyframes bounce {
-  70% {
-    transform:translateY(0%);
-  }
-  80% {
-    transform:translateY(-15%);
-  }
-  90% {
-    transform:translateY(0%);
-  }
-  95% {
-    transform:translateY(-7%);
-  }
-  97% {
-    transform:translateY(0%);
-  }
-  99% {
-    transform:translateY(-3%);
-  }
-  100% {
-    transform:translateY(0);
-  }
-}
-
 nav.menu {
   position: fixed;
   top: 0px;
@@ -70,6 +46,30 @@ nav.menu {
   flex-direction: column;
   justify-content: space-between;
   z-index: 13;
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0%);
+    }
+    30% {
+      transform: translateY(-15%);
+    }
+    40% {
+      transform: translateY(0%);
+    }
+    60% {
+      transform: translateY(-10%);
+    }
+    70% {
+      transform: translateY(0%);
+    }
+    90% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
 
   &.slide-0-next,
   &.slide-0-active {
@@ -97,7 +97,7 @@ nav.menu {
     }
 
     .--mail {
-      animation: bounce 2s ease;
+      animation: bounce 1s 1s cubic-bezier(0.333, 0.666, 0.333, 1.333) forwards;
     }
   }
 
