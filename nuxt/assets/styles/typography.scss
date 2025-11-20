@@ -82,6 +82,6 @@ body {
 }
 
 .h3-lg {
-  @include fluid-type($min, $max, 16px, 56px);
+  @include fluid-type($min, $max, 24px, 56px);
   line-height: 1.5em;
 }
