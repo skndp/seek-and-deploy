@@ -5,7 +5,7 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
-            <h3 ref="textRef" class="h3">We build pristine <span class="u">interfaces</span> and <span class="u">experiences</span>. In an era where AI can generate a website in ten minutes, we’re working with partners that still want something <span class="u">human</span>. Something built and maintained by experts that pay attention to <span class="u">details</span> and have a deep knowledge of how it <span class="u">works</span>. For those looking to build salient touch points for their brand, let's build something <span class="u">meaningful</span>!</h3>
+            <h3 ref="textRef" class="h3">We build <span class="u">interfaces</span>, <span class="u">experiences</span> and all of the underlying things that make them work. We believe that what matters the most is <span class="u">attention to detail</span>, <span class="u">building things people enjoy</span> and doing work that <span class="u">stands out</span>. We are <span class="u">fast, efficient</span> and <span class="u">stand by</span> the work we do. In an era where AI can build a website in ten minutes, we're looking for partners that still want <span class="u">something human</span>. If you are looking for something built and maintained by <span class="u">experts</span> who have a <span class="u">deep knowledge</span> of how it works, let's discuss your project.</h3>
           </div>
         </div>
       </div>
