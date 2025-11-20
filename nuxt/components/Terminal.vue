@@ -20,7 +20,7 @@ const quotes = [
         "the matrix has got you ...",
         "what will the first sequence of the day be?"
       ];
-let delay = 120;
+let delay = 96;
 let step = 0;
 let message = 0;
 let letters = messages.map((el) => el.split(''));
@@ -33,7 +33,7 @@ function go() {
   text.value = letters[message].slice(0, step).join('');
 
   if(step <= letters[message].length) {
-    delay = 120;
+    delay = 96;
     step += 1;
   } else {
     step = 0;

@@ -41,22 +41,22 @@ const slides = [
   {
     component: Manifesto,
     id: "manifesto",
-    title: "Manifesto"
+    title: "Hello World"
   },
   {
     component: Team,
     id: "team",
-    title: "Who We Are"
+    title: "Juuust The Two of Us"
   },
   {
     component: Work,
     id: "work",
-    title: "What We Did"
+    title: "What Would You Say Ya Do Here?"
   },
   {
     component: Awards,
     id: "awards",
-    title: "Awards We Won"
+    title: "Winner, Winner, Chicken Dinner"
   },
   {
     component: Contact,
