@@ -42,6 +42,13 @@ const props = defineProps({
 </script>
 
 <style lang='scss'>
+section.cover-slide {
+  .slide-0-next &,
+  .slide-0-active & {
+    opacity: 1;
+  }
+}
+
 .cover-slide {
   .inner {
     flex-direction: column;

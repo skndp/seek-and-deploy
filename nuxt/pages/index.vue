@@ -195,6 +195,7 @@ watch(() => store.slideIndex, (newVal, oldVal) => {
 </script>
 
 <style lang='scss'>
+
 section.slide {
   position: relative;
   width: 100%;
@@ -203,6 +204,8 @@ section.slide {
   display: flex;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  opacity: 0;
+  transition: opacity 1s $evil-ease;
 
   .inner {
     height: 100%;

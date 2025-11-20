@@ -39,6 +39,8 @@ const props = defineProps({
 section.awards {
   .slide-4-next &,
   .slide-4-active & {
+    opacity: 1;
+
     .inner {
       .gutter {
         .container {

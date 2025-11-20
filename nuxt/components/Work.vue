@@ -4,7 +4,11 @@
       <div class="gutter">
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
-          <div class="poster-wrapper"></div>
+          <div class="poster-wrapper">
+            <div class="poster-screen">
+              <!-- Do reflective stuff here? Or somewhere around here. -->
+            </div>
+          </div>
           <div class="content">
             <ul class="h3-lg">
               <li v-for="(project, index) in work">{{ project.title }}</li>
@@ -52,9 +56,17 @@ const work = [
 section.work {
   .slide-3-next &,
   .slide-3-active & {
+    opacity: 1;
+
     .inner {
       .gutter {
         .container {
+          .poster-wrapper {
+            .poster-screen {
+              transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+          }
+
           .content {
             ul {
               li {
@@ -87,8 +99,15 @@ section.work {
           max-width: 1000px;
           aspect-ratio: 2/1;
           max-width: 900px;
-          background-color: $yellow;
           transform: translateY(-50%);
+
+          .poster-screen {
+            @include abs-fill;
+            background-color: $yellow;
+            perspective: 1200px;
+            transform: rotateX(-65deg) rotateY(27deg) rotateZ(-13deg);
+            transition: transform 1s $ease-out;
+          }
         }
 
         .content {

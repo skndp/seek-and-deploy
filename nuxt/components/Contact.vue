@@ -64,9 +64,15 @@ const props = defineProps({
 section.contact {
   .slide-5-next &,
   .slide-5-active & {
+    opacity: 1;
+  }
+}
+
+section.contact {
+  .slide-5-next &,
+  .slide-5-active & {
     .map-container {
       .map {
-        opacity: 1;
         transform: translate(0%, -50%) rotateX(63deg) rotateZ(-45deg) scale(1);
 
         .marker {
@@ -91,14 +97,13 @@ section.contact {
       position: absolute;
       top: 50%;
       right: 0px;
-      width: 80%;
+      width: 75%;
       max-width: 720px;
       aspect-ratio: 1/1;
       perspective: 1200px;
       transform-style: preserve-3d;
       transform: translate(0%, -50%) rotateX(13deg) rotateZ(-13deg) scale(1.4);
-      opacity: 0;
-      transition: opacity 1s $evil-ease, transform 1s $evil-ease;
+      transition: transform 1s $evil-ease;
 
       svg {
         width: 100%;
@@ -181,6 +186,12 @@ section.contact {
           }
         }
       }
+    }
+  }
+
+  @include respond-to($macbook) {
+    .map-container {
+      right: $space-128;
     }
   }
 }
