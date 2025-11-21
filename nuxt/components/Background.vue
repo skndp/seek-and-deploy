@@ -26,11 +26,10 @@ const logo = ref([]);
 const particles = ref([]);
 
 onMounted(() => {
-  //window.addEventListener('resize', onResize);
-  onResize();
+  andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYearTheLordDidstSayThouShaltParticlate();
 })
 
-function onResize(e) {
+function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYearTheLordDidstSayThouShaltParticlate(e) {
   const ww = window.innerWidth,
         wh = window.innerHeight,
         wt = ww > wh ? ww : wh;
@@ -133,11 +132,12 @@ function onResize(e) {
           transform: none !important;
           transition: transform 1s $evil-ease, opacity 1s $evil-ease;
 
-          @for $i from 1 through 6 {
-            &:nth-child(#{$i}) {
-              animation: flicker 200ms #{($i * 100)}ms linear;
-            }
-          }
+          // TODO
+          // @for $i from 1 through 6 {
+          //   &:nth-child(#{$i}) {
+          //     animation: flicker 200ms #{($i * 100)}ms linear;
+          //   }
+          // }
         }
       }
     }

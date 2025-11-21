@@ -12,7 +12,6 @@ const loading = ref(true);
 
 // Mounted
 onMounted(() => {
-  window.scrollTo(0, 0)
   window.addEventListener('resize', onResize)
   onResize()
 

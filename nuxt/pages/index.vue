@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div :class="['page', {'snap': snap}]" ref="pageRef">
     <div :class="['slides', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="slidesRef">
       <CoverSlide title="Seek and Deploy" />
       <template v-for="(slide, index) in slides">
@@ -10,7 +10,7 @@
         />
       </template>
     </div>
-    <div v-if="probablyMobile === false" :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
+    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
       <CoverSlide title="Seek and Deploy" />
       <template v-for="(slide, index) in slides">
         <component
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { primaryInput } from 'detect-it';
+import { disableBodyScroll } from 'body-scroll-lock';
 import { useSiteStore } from '~/stores/store';
 import Manifesto from '~/components/Manifesto.vue'
 import Team from '~/components/Team.vue'
@@ -33,11 +33,14 @@ import Awards from '~/components/Awards.vue'
 import Contact from '~/components/Contact.vue'
 
 const store = useSiteStore();
+const pageRef = ref(null);
 const slidesRef = ref(null);
 const clonesRef = ref(null);
 const snap = ref(false);
+let slideElements;
+let slideOffsets = [];
 let slideIndex = 0;
-const probablyMobile = ref(false);
+let scrollTimeout;
 
 const slides = [
   {
@@ -67,143 +70,139 @@ const slides = [
   }
 ];
 
-// Update HTML class
-useHead(() => ({
-  htmlAttrs: {
-    class: snap.value ? 'snap' : ''
-  }
-}));
-
 // Mounted
 onMounted(() => {
+  if(pageRef.value) {
+    disableBodyScroll(pageRef.value);
+  }
   window.addEventListener('app-ready', initScrollSnap, { once: true });
-  probablyMobile.value =
-    primaryInput === 'touch' ||
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0;
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
-  window.removeEventListener('sd_snapchanging', onScrollSnapChanging);
-  window.removeEventListener('sd_snapchange', onScrollSnapChange);
+  pageRef.value.addEventListener('scroll', onPageScroll);
 });
 
 // Methods
 function initScrollSnap() {
+  slideElements = pageRef.value.querySelectorAll('.slide');
   snap.value = true;
-  window.addEventListener('sd_snapchanging', onScrollSnapChanging);
-  window.addEventListener('sd_snapchange', onScrollSnapChange);
+
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  pageRef.value.addEventListener('scroll', onPageScroll);
+
+  window.addEventListener('menu-slide-change', onMenuSlideChange);
 }
 
-function scroll(y) {
-  // ignore snap events
-  window.removeEventListener('sd_snapchanging', onScrollSnapChanging);
-  window.removeEventListener('sd_snapchange', onScrollSnapChange);
-
-  setTimeout(() => {
-    // scroll
-    window.scrollTo({
-      'top': y,
-      'left': 0,
-      'behavior': 'instant'
-    });
-
-    // listen to snap events
-    window.addEventListener('sd_snapchanging', onScrollSnapChanging);
-    window.addEventListener('sd_snapchange', onScrollSnapChange);
-  }, 0);
+function onResize(e) {
+  slideElements.forEach((slide, index) => {
+    slideOffsets[index] = slide.offsetTop;
+  });
 }
 
-// slide starting to change
-function onScrollSnapChanging(e) {
-  if (!e.detail.target) {
-    store.setChangingSlides(false);
-    return false;
-  }
-
-  const t = e.detail.target,
-        p = t.parentElement;
-
-  let nextIndex = 0;
-
+function onPageScroll(e) {
   store.setChangingSlides(true);
-  store.setSlideActiveState('');
-  store.setSlidePrevState(`slide-${slideIndex}-prev`);
 
-  if(p === slidesRef.value) {
-    nextIndex = Array.from(slidesRef.value.children).indexOf(t);
-  } else if(p === clonesRef.value) {
-    nextIndex = Array.from(clonesRef.value.children).indexOf(t);
-  }
+  slideElements.forEach((slide, index) => {
+    const wh = window.innerHeight,
+          b = slide.getBoundingClientRect();
 
-  store.setSlideNextState(`slide-${nextIndex}-next`);
+    if(b.top > 10 && b.top < wh - 10 || b.bottom > 10 && b.bottom < wh - 10) {
+      if(slideIndex === 0 && store.initialSlide !== true) {
+        let nextIndex = index;
+
+        if(nextIndex === 6) nextIndex = 5;
+        if(nextIndex === 7) nextIndex = 1;
+
+        store.setSlideActiveState('');
+        if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
+      } else if(index !== slideIndex) {
+        let nextIndex = index;
+
+        if(nextIndex === 6) nextIndex = 0;
+
+        store.setSlideActiveState('');
+        if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
+      }
+    }
+  });
+
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(onScrollComplete, 80);
 }
 
-// slide change
-function onScrollSnapChange(e) {
-  if (!e.detail.target || (window.pageYOffset === 0 && store.initialSlide === true)) {
-    store.setChangingSlides(false);
-    return false;
-  }
+function onScrollComplete() {
+  const currentScroll = Math.round(pageRef.value.scrollTop);
 
-  const t = e.detail.target,
-        p = t.parentElement;
+  if(slideOffsets.includes(currentScroll)) {
+    const t = slideElements[slideOffsets.indexOf(currentScroll)],
+          p = t.parentElement;
 
-  if(probablyMobile.value === true) {
-    slideIndex = Array.from(slidesRef.value.children).indexOf(t);
-  } else {
-    let top = 0;
+    let newScroll = 0;
+
     if(p === slidesRef.value) {
       // back at top, set scroll to clone top
       slideIndex = Array.from(slidesRef.value.children).indexOf(t);
 
       if(slideIndex === 0) {
-        top = clonesRef.value.children[0].offsetTop;
-        scroll(top);
+        newScroll = clonesRef.value.children[0].offsetTop;
+        scroll(newScroll);
       }
-      store.setSlideIndex(slideIndex);
     } else if(p === clonesRef.value) {
       // in a clone, set scroll to corresponding slide
       slideIndex = Array.from(clonesRef.value.children).indexOf(t);
-      top = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
-      scroll(top);
+      newScroll = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
+      scroll(newScroll);
     }
+
+    store.setSlideNextState('');
+    store.setSlideActiveState(`slide-${slideIndex}-active`);
+    
+
+    if (store.initialSlide) {
+      store.setInitialSlide(false);
+    }
+
+    setTimeout(() => {
+      store.setChangingSlides(false);
+    }, 0);
   }
-
-  store.setSlidePrevState('');
-  store.setSlideNextState('');
-  store.setSlideActiveState(`slide-${slideIndex}-active`);
-
-  if (store.initialSlide) {
-    store.setInitialSlide(false);
-  }
-
-  setTimeout(() => {
-    store.setChangingSlides(false);
-  }, 0);
 }
 
-// Watcher
-watch(() => store.slideIndex, (newVal, oldVal) => {
-  if (slidesRef.value) {
-    if ((oldVal === 5 && newVal === 6) || (oldVal === 6 && newVal === 7)) {
-      const slides = clonesRef.value.querySelectorAll('.slide');
-      const slide = oldVal === 5 && newVal === 6 ? slides[0] : slides[1];
+function scroll(y) {
+  // ignore scroll
+  pageRef.value.addEventListener('scroll', onPageScroll);
 
-      if (slide) {
-        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  setTimeout(() => {
+    // scroll
+    pageRef.value.scrollTo({
+      'top': y,
+      'left': 0,
+      'behavior': 'instant'
+    });
+
+    // listen to page scroll
+    pageRef.value.addEventListener('scroll', onPageScroll);
+  }, 10);
+}
+
+function onMenuSlideChange(e) {
+  let slide;
+
+  if(e.detail.slide === 'next') {
+    if(slideIndex === 0 && store.initialSlide !== true) {
+      slide = slideElements[7];
     } else {
-      const slides = slidesRef.value.querySelectorAll('.slide');
-      const slide = slides[newVal];
-
-      if (slide) {
-        slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      slide = slideElements[slideIndex + 1];
     }
+  } else {
+    slide = slideElements[e.detail.slide];
   }
-})
+
+  slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 </script>
 
 <style lang='scss'>
