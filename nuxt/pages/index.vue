@@ -198,31 +198,6 @@ function onMenuSlideChange(e) {
 
   slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
-// slide starting to change
-function onScrollSnapChanging(e) {
-  if (!e.detail.target) {
-    store.setChangingSlides(false);
-    return false;
-  }
-
-  const t = e.detail.target,
-        p = t.parentElement;
-
-  let nextIndex = 0;
-
-  store.setChangingSlides(true);
-  store.setSlideActiveState('');
-  store.setSlidePrevState(`slide-${slideIndex}-prev`);
-
-  if(p === slidesRef.value) {
-    nextIndex = Array.from(slidesRef.value.children).indexOf(t);
-  } else if(p === clonesRef.value) {
-    nextIndex = Array.from(clonesRef.value.children).indexOf(t);
-  }
-
-  store.setSlideNextState(`slide-${nextIndex}-next`);
-}
 </script>
 
 <style lang='scss'>
