@@ -100,6 +100,29 @@ function onResize(e) {
 
 function onPageScroll(e) {
   store.setChangingSlides(true);
+  store.setSlideActiveState('');
+
+  slideElements.forEach((slide, index) => {
+    const wh = window.innerHeight,
+          b = slide.getBoundingClientRect();
+
+    if(b.top > 0 && b.top < wh || b.bottom > 0 && b.bottom < wh) {
+      if(slideIndex === 0 && store.initialSlide !== true) {
+        let nextIndex = index;
+
+        if(nextIndex === 6) nextIndex = 5;
+        if(nextIndex === 7) nextIndex = 1;
+
+        if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
+      } else if(index !== slideIndex) {
+        let nextIndex = index;
+
+        if(nextIndex === 6) nextIndex = 0;
+
+        if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
+      }
+    }
+  });
 
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(onScrollComplete, 50);
@@ -129,7 +152,6 @@ function onScrollComplete() {
       scroll(newScroll);
     }
 
-    store.setSlidePrevState('');
     store.setSlideNextState('');
     store.setSlideActiveState(`slide-${slideIndex}-active`);
     

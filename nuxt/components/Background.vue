@@ -26,11 +26,10 @@ const logo = ref([]);
 const particles = ref([]);
 
 onMounted(() => {
-  //window.addEventListener('resize', onResize);
-  onResize();
+  andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYearTheLordDidstSayThouShaltParticlate();
 })
 
-function onResize(e) {
+function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYearTheLordDidstSayThouShaltParticlate(e) {
   const ww = window.innerWidth,
         wh = window.innerHeight,
         wt = ww > wh ? ww : wh;
