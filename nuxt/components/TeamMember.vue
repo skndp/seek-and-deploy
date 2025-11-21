@@ -1,5 +1,5 @@
 <template>
-  <div class="team-member">
+  <div ref="memberRef" class="team-member">
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
@@ -52,6 +52,7 @@ const props = defineProps({
 });
 
 const isTouchDevice = ref(false);
+const memberRef = ref(null);
 const show_bio = ref(false);
 const activeImageIndex = ref(0);
 const totalImages = props.bio.images.length;
@@ -71,25 +72,28 @@ const mouseMove = (e) => {
   }
 };
 
-const reset = () => {
-  activeImageIndex.value = 0;
-};
-
-const clickInfoCloseBtn = () => {
-  show_bio.value = !show_bio.value;
-}
-
-const clickImages = () => {
-  console.log('click');
-  show_bio.value = true;
-}
-
 onMounted(() => {
   isTouchDevice.value =
     primaryInput === 'touch' ||
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
 });
+
+function reset() {
+  activeImageIndex.value = 0;
+};
+
+function clickInfoCloseBtn() {
+  if (memberRef.value) {
+    show_bio.value = !show_bio.value;
+  }
+};
+
+function clickImages() {
+  if (memberRef.value) {
+    show_bio.value = true;
+  }
+};
 </script>
 
 <style lang='scss'>

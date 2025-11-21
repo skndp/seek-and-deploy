@@ -35,9 +35,6 @@ const props = defineProps({
   }
 });
 
-const show_bio_1 = ref(false);
-const show_bio_2 = ref(false);
-
 const team = [
   {
     name: 'Matt Wiggins',
