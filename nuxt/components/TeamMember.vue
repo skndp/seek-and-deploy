@@ -4,8 +4,6 @@
       <div
         class="images"
         @click="clickImages"
-        @mousemove="mouseMove"
-        @mouseleave="reset"
       >
         <img v-for="(image, index) in bio.images" :src="image" :alt="name" draggable="false" :class="{ '--active': index === activeImageIndex }" />
       </div>
@@ -57,20 +55,24 @@ const show_bio = ref(false);
 const activeImageIndex = ref(0);
 const totalImages = props.bio.images.length;
 
-const mouseMove = (e) => {
-  if (!isTouchDevice.value) {
-    const imagesDiv = e.currentTarget;
-    const rect = imagesDiv.getBoundingClientRect();
-    const clientX = e.clientX;
-    const relativeX = clientX - rect.left;
-    const clampedX = Math.max(0, Math.min(relativeX, rect.width));
-    const percentage = (clampedX / rect.width) * 100;
-    const segmentSize = 100 / totalImages;
-    const index = Math.floor(percentage / segmentSize);
+// const mouseMove = (e) => {
+//   if (!isTouchDevice.value) {
+//     const imagesDiv = e.currentTarget;
+//     const rect = imagesDiv.getBoundingClientRect();
+//     const clientX = e.clientX;
+//     const relativeX = clientX - rect.left;
+//     const clampedX = Math.max(0, Math.min(relativeX, rect.width));
+//     const percentage = (clampedX / rect.width) * 100;
+//     const segmentSize = 100 / totalImages;
+//     const index = Math.floor(percentage / segmentSize);
 
-    activeImageIndex.value = index;
-  }
-};
+//     activeImageIndex.value = index;
+//   }
+// };
+
+// function reset() {
+//   activeImageIndex.value = 0;
+// };
 
 onMounted(() => {
   isTouchDevice.value =
@@ -78,10 +80,6 @@ onMounted(() => {
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
 });
-
-function reset() {
-  activeImageIndex.value = 0;
-};
 
 function clickInfoCloseBtn() {
   if (memberRef.value) {
