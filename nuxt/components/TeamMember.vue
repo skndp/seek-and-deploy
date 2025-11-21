@@ -3,8 +3,8 @@
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
-        @click="show_bio = true"
-        @mousemove="handleMove"
+        @click="clickImages"
+        @mousemove="mouseMove"
         @mouseleave="reset"
       >
         <img v-for="(image, index) in bio.images" :src="image" :alt="name" draggable="false" :class="{ '--active': index === activeImageIndex }" />
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <button class="info-close-btn" @click="show_bio = !show_bio" />
+      <button class="info-close-btn" @click="clickInfoCloseBtn" />
     </div>
     <div class="meta">
       <h3 class="h3">{{ name }}</h3>
@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+import { primaryInput } from 'detect-it';
+
 // Props
 const props = defineProps({
   name: {
@@ -49,28 +51,45 @@ const props = defineProps({
   }
 });
 
+const isTouchDevice = ref(false);
 const show_bio = ref(false);
 const activeImageIndex = ref(0);
 const totalImages = props.bio.images.length;
 
-const handleMove = (e) => {
-  e.preventDefault();
+const mouseMove = (e) => {
+  if (!isTouchDevice.value) {
+    const imagesDiv = e.currentTarget;
+    const rect = imagesDiv.getBoundingClientRect();
+    const clientX = e.clientX;
+    const relativeX = clientX - rect.left;
+    const clampedX = Math.max(0, Math.min(relativeX, rect.width));
+    const percentage = (clampedX / rect.width) * 100;
+    const segmentSize = 100 / totalImages;
+    const index = Math.floor(percentage / segmentSize);
 
-  const imagesDiv = e.currentTarget;
-  const rect = imagesDiv.getBoundingClientRect();
-  const clientX = e.clientX;
-  const relativeX = clientX - rect.left;
-  const clampedX = Math.max(0, Math.min(relativeX, rect.width));
-  const percentage = (clampedX / rect.width) * 100;
-  const segmentSize = 100 / totalImages;
-  const index = Math.floor(percentage / segmentSize);
-
-  activeImageIndex.value = index;
+    activeImageIndex.value = index;
+  }
 };
 
 const reset = () => {
   activeImageIndex.value = 0;
 };
+
+const clickInfoCloseBtn = () => {
+  show_bio.value = !show_bio.value;
+}
+
+const clickImages = () => {
+  console.log('click');
+  show_bio.value = true;
+}
+
+onMounted(() => {
+  isTouchDevice.value =
+    primaryInput === 'touch' ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
+});
 </script>
 
 <style lang='scss'>
