@@ -110,7 +110,9 @@ function clickImages() {
 
     &.--show-bio {
       .bio-wrapper {
+        visibility: visible;
         transform: translateY(0%);
+        transition: transform $speed-666 $evil-ease;
 
         .bio-mask {
           transform: translateY(0%);
@@ -152,11 +154,11 @@ function clickImages() {
       @include abs-fill;
       overflow: hidden;
       transform: translateY(-100%);
-      transition: transform $speed-666 $evil-ease;
+      visibility: hidden;
       will-change: transform;
       backface-visibility: hidden;
       transform-style: preserve-3d;
-      z-index: 1;
+      transition: visibility 0ms linear $speed-666, transform $speed-666 $evil-ease;
 
       .bio-mask {
         @include abs-fill;
@@ -201,7 +203,6 @@ function clickImages() {
       height: $space-24;
       display: flex;
       cursor: pointer;
-      z-index: 2;
 
       &:before,
       &:after {
