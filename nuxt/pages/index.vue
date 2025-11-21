@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import { disableBodyScroll } from 'body-scroll-lock';
 import { useSiteStore } from '~/stores/store';
 import Manifesto from '~/components/Manifesto.vue'
 import Team from '~/components/Team.vue'
@@ -71,6 +72,9 @@ const slides = [
 
 // Mounted
 onMounted(() => {
+  if(pageRef.value) {
+    disableBodyScroll(pageRef.value);
+  }
   window.addEventListener('app-ready', initScrollSnap, { once: true });
 });
 
@@ -100,36 +104,37 @@ function onResize(e) {
 
 function onPageScroll(e) {
   store.setChangingSlides(true);
-  store.setSlideActiveState('');
 
   slideElements.forEach((slide, index) => {
     const wh = window.innerHeight,
           b = slide.getBoundingClientRect();
 
-    if(b.top > 0 && b.top < wh || b.bottom > 0 && b.bottom < wh) {
+    if(b.top > 10 && b.top < wh - 10 || b.bottom > 10 && b.bottom < wh - 10) {
       if(slideIndex === 0 && store.initialSlide !== true) {
         let nextIndex = index;
 
         if(nextIndex === 6) nextIndex = 5;
         if(nextIndex === 7) nextIndex = 1;
 
+        store.setSlideActiveState('');
         if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
       } else if(index !== slideIndex) {
         let nextIndex = index;
 
         if(nextIndex === 6) nextIndex = 0;
 
+        store.setSlideActiveState('');
         if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
       }
     }
   });
 
   clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(onScrollComplete, 50);
+  scrollTimeout = setTimeout(onScrollComplete, 80);
 }
 
 function onScrollComplete() {
-  const currentScroll = pageRef.value.scrollTop;
+  const currentScroll = Math.round(pageRef.value.scrollTop);
 
   if(slideOffsets.includes(currentScroll)) {
     const t = slideElements[slideOffsets.indexOf(currentScroll)],
@@ -180,7 +185,7 @@ function scroll(y) {
 
     // listen to page scroll
     pageRef.value.addEventListener('scroll', onPageScroll);
-  }, 0);
+  }, 10);
 }
 
 function onMenuSlideChange(e) {

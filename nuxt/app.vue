@@ -4,21 +4,14 @@
   </Transition>
   <Background />
   <Menu />
-  <NuxtPage ref="contentRef" />
+  <NuxtPage />
 </template>
 
 <script setup>
-import { disableBodyScroll } from 'body-scroll-lock';
-
 const loading = ref(true);
-const contentRef = ref(null);
 
 // Mounted
 onMounted(() => {
-  if (contentRef.value) {
-    disableBodyScroll(contentRef.value);
-  }
-
   window.addEventListener('resize', onResize)
   onResize()
 
