@@ -29,6 +29,7 @@ body {
 
   #__nuxt {
     height: 100%;
+    overflow: visible;
   }
 }
 
@@ -42,7 +43,7 @@ body {
 
 .page {
   position: relative;
-  overflow: auto;
+  overflow-y: auto;
   height: 100%;
   -ms-overflow-style: none;
   scrollbar-width: none;
