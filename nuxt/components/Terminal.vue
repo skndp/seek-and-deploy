@@ -55,7 +55,7 @@ function go() {
   height: 100%;
 
   #line-0 {
-    color: rgba($white, 0.33);
+    color: rgba($yellow, 0.8);
 
     #cursor {
       animation: cursor 1s step-start 0s infinite;
