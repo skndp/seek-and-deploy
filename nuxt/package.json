@@ -14,6 +14,7 @@
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/sitemap": "^7.4.3",
     "@pinia/nuxt": "^0.11.2",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "detect-it": "^4.0.1",
     "nuxt": "3.17.7",
     "pinia": "^3.0.3",

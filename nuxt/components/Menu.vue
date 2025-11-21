@@ -22,14 +22,29 @@ const store = useSiteStore();
 // Methods
 function setActiveSlide(number) {
   if (!store.changingSlides) {
-    store.setSlideIndex(number);
+    const e = new CustomEvent('menu-slide-change', {
+      'detail': {
+        'slide': number
+      },
+      'bubbles': false,
+      'cancelable': true
+    });
+
+    window.dispatchEvent(e);
   }
 }
 
 function setNextSlide() {
   if (!store.changingSlides) {
-    let nextIndex = store.slideIndex + 1;
-    store.setSlideIndex(nextIndex);
+    const e = new CustomEvent('menu-slide-change', {
+      'detail': {
+        'slide': 'next'
+      },
+      'bubbles': false,
+      'cancelable': true
+    });
+
+    window.dispatchEvent(e);
   }
 }
 </script>

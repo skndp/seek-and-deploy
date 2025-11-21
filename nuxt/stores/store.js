@@ -4,7 +4,6 @@ export const useSiteStore = defineStore('site', {
   state: () => ({
     initialSlide: true,
     changingSlides: false,
-    slideIndex: 0,
     slidePrevState: '',
     slideActiveState: 'slide-0-active',
     slideNextState: ''
@@ -15,9 +14,6 @@ export const useSiteStore = defineStore('site', {
     },
     setChangingSlides(s) {
     	this.changingSlides = s;
-    },
-    setSlideIndex(s) {
-    	this.slideIndex = s;
     },
     setSlidePrevState(s) {
     	this.slidePrevState = s;
