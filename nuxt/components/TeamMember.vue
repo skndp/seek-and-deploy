@@ -130,6 +130,7 @@ function clickImages() {
       @include abs-fill;
       overflow: hidden;
       background-color: #272727;
+      cursor: pointer;
 
       img {
         @include abs-fill;
@@ -152,12 +153,19 @@ function clickImages() {
       overflow: hidden;
       transform: translateY(-100%);
       transition: transform $speed-666 $evil-ease;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      z-index: 1;
 
       .bio-mask {
         @include abs-fill;
         overflow: hidden;
         transform: translateY(100%);
         transition: transform $speed-666 $evil-ease;
+        will-change: transform;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
 
         .bio-card {
           @include abs-fill;
@@ -193,6 +201,7 @@ function clickImages() {
       height: $space-24;
       display: flex;
       cursor: pointer;
+      z-index: 2;
 
       &:before,
       &:after {
