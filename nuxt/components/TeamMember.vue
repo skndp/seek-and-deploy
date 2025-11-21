@@ -4,9 +4,6 @@
       <div
         class="images"
         @click="show_bio = true"
-        @touchstart="initTouchMove"
-        @touchmove="handleMove"
-        @touchend="reset"
         @mousemove="handleMove"
         @mouseleave="reset"
       >
@@ -54,16 +51,14 @@ const props = defineProps({
 
 const show_bio = ref(false);
 const activeImageIndex = ref(0);
-const isTouching = ref(false);
 const totalImages = props.bio.images.length;
 
 const handleMove = (e) => {
   e.preventDefault();
 
-  const imagesDiv = event.currentTarget;
+  const imagesDiv = e.currentTarget;
   const rect = imagesDiv.getBoundingClientRect();
-  const totalImages = props.bio.images.length;
-  const clientX = event instanceof TouchEvent ? event.touches[0].clientX : event.clientX;
+  const clientX = e.clientX;
   const relativeX = clientX - rect.left;
   const clampedX = Math.max(0, Math.min(relativeX, rect.width));
   const percentage = (clampedX / rect.width) * 100;
@@ -73,15 +68,9 @@ const handleMove = (e) => {
   activeImageIndex.value = index;
 };
 
-const initTouchMove = (e) => {
-  isTouching.value = true;
-  handleMove(e);
-};
-
 const reset = () => {
   activeImageIndex.value = 0;
 };
-
 </script>
 
 <style lang='scss'>
