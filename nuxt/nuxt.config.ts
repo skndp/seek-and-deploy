@@ -55,6 +55,7 @@ export default defineNuxtConfig({
         { hid: 'og:title', property: 'og:title', content: site_name },
         { hid: 'og:description', property: 'og:description', content: site_description },
         { hid: 'og:url', property: 'og:url', content: site_url },
+        { hid: 'og:image', property: 'og:image', content: `${site_url}/images/seek-and-deploy.png` }
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'apple-mobile-web-app-title', content: site_name }
       ],
