@@ -120,7 +120,6 @@ const reset = () => {
       @include abs-fill;
       overflow: hidden;
       background-color: #272727;
-      touch-action: none;
 
       img {
         @include abs-fill;
