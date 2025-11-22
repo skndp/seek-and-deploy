@@ -1,11 +1,9 @@
 <template>
-  <div class="team-member">
+  <div ref="memberRef" class="team-member">
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
-        @click="show_bio = true"
-        @mousemove="handleMove"
-        @mouseleave="reset"
+        @click="clickImages"
       >
         <img v-for="(image, index) in bio.images" :src="image" :alt="name" draggable="false" :class="{ '--active': index === activeImageIndex }" />
       </div>
@@ -18,7 +16,7 @@
           </div>
         </div>
       </div>
-      <button class="info-close-btn" @click="show_bio = !show_bio" />
+      <button class="info-close-btn" @click="clickInfoCloseBtn" />
     </div>
     <div class="meta">
       <h3 class="h3">{{ name }}</h3>
@@ -29,6 +27,8 @@
 </template>
 
 <script setup>
+import { primaryInput } from 'detect-it';
+
 // Props
 const props = defineProps({
   name: {
@@ -49,27 +49,48 @@ const props = defineProps({
   }
 });
 
+const isTouchDevice = ref(false);
+const memberRef = ref(null);
 const show_bio = ref(false);
 const activeImageIndex = ref(0);
 const totalImages = props.bio.images.length;
 
-const handleMove = (e) => {
-  e.preventDefault();
+// const mouseMove = (e) => {
+//   if (!isTouchDevice.value) {
+//     const imagesDiv = e.currentTarget;
+//     const rect = imagesDiv.getBoundingClientRect();
+//     const clientX = e.clientX;
+//     const relativeX = clientX - rect.left;
+//     const clampedX = Math.max(0, Math.min(relativeX, rect.width));
+//     const percentage = (clampedX / rect.width) * 100;
+//     const segmentSize = 100 / totalImages;
+//     const index = Math.floor(percentage / segmentSize);
 
-  const imagesDiv = e.currentTarget;
-  const rect = imagesDiv.getBoundingClientRect();
-  const clientX = e.clientX;
-  const relativeX = clientX - rect.left;
-  const clampedX = Math.max(0, Math.min(relativeX, rect.width));
-  const percentage = (clampedX / rect.width) * 100;
-  const segmentSize = 100 / totalImages;
-  const index = Math.floor(percentage / segmentSize);
+//     activeImageIndex.value = index;
+//   }
+// };
 
-  activeImageIndex.value = index;
+// function reset() {
+//   activeImageIndex.value = 0;
+// };
+
+onMounted(() => {
+  isTouchDevice.value =
+    primaryInput === 'touch' ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
+});
+
+function clickInfoCloseBtn() {
+  if (memberRef.value) {
+    show_bio.value = !show_bio.value;
+  }
 };
 
-const reset = () => {
-  activeImageIndex.value = 0;
+function clickImages() {
+  if (memberRef.value) {
+    show_bio.value = true;
+  }
 };
 </script>
 
@@ -89,7 +110,9 @@ const reset = () => {
 
     &.--show-bio {
       .bio-wrapper {
+        visibility: visible;
         transform: translateY(0%);
+        transition: transform $speed-666 $evil-ease;
 
         .bio-mask {
           transform: translateY(0%);
@@ -109,6 +132,7 @@ const reset = () => {
       @include abs-fill;
       overflow: hidden;
       background-color: #272727;
+      cursor: pointer;
 
       img {
         @include abs-fill;
@@ -130,13 +154,20 @@ const reset = () => {
       @include abs-fill;
       overflow: hidden;
       transform: translateY(-100%);
-      transition: transform $speed-666 $evil-ease;
+      visibility: hidden;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: visibility 0ms linear $speed-666, transform $speed-666 $evil-ease;
 
       .bio-mask {
         @include abs-fill;
         overflow: hidden;
         transform: translateY(100%);
         transition: transform $speed-666 $evil-ease;
+        will-change: transform;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
 
         .bio-card {
           @include abs-fill;
