@@ -5,7 +5,7 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
-            <h3 ref="textRef" class="h3">We build the <span class="u">interfaces</span> and <span class="u">experiences</span> that actually feel good to use. Not the generic stuff—the <span class="u">good&nbsp;stuff</span>. AI can handle the quick tasks. We’re here for the work that needs <span class="u">judgment</span>, <span class="u">creativity</span>, and a <span class="u">human&nbsp;touch</span>. We move fast, <span class="u">obsess</span> over details, and stand behind every pixel and every line of code. Let’s <span class="u">team&nbsp;up</span> and <span class="u">turn&nbsp;ideas</span> into something that goes to <span class="u">eleven</span>.</h3>
+            <h3 ref="textRef" class="h3">We build the <span class="u">interfaces</span> and <span class="u">experiences</span> that actually feel good to use. Not the generic stuff—the <span class="u">good&nbsp;stuff</span>. AI can handle the repetitive tasks. We’re here for the work that needs <span class="u">judgment</span>, <span class="u">creativity</span>, and a <span class="u">human&nbsp;touch</span>. We move fast, <span class="u">obsess</span> over details, and stand behind every pixel and line of code. Let’s <span class="u">team&nbsp;up</span> and <span class="u">turn&nbsp;ideas</span> into something that goes to <span class="u">eleven</span>.</h3>
           </div>
         </div>
       </div>
