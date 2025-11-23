@@ -95,6 +95,7 @@ function initTouchMove(e) {
 
 function handleMove(e) {
   if (memberRef.value) {
+    e.preventDefault();
     isDragging.value = true;
 
     const imagesDiv = e.currentTarget;
@@ -159,6 +160,7 @@ function reset() {
       overflow: hidden;
       background-color: #272727;
       cursor: pointer;
+      user-select: none;
 
       &.is-dragging {
         touch-action: none;
