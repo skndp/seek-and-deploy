@@ -3,7 +3,7 @@
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
-        :class="{ 'is-dragging': isDragging }"
+        :class="{ 'is-dragging': isTouchDevice && isDragging }"
         @click="clickImages"
         @touchstart="initTouchMove"
         @touchmove="handleMove"
@@ -83,6 +83,7 @@ function clickInfoCloseBtn() {
 function clickImages() {
   if (memberRef.value) {
     show_bio.value = true;
+    isDragging.value = false;
   }
 };
 
@@ -91,12 +92,6 @@ function initTouchMove(e) {
     handleMove(e);
   }
 };
-
-function touchEnd() {
-  if (memberRef.value) {
-    isDragging.value = false;
-  }
-}
 
 function handleMove(e) {
   if (memberRef.value) {
@@ -117,6 +112,8 @@ function handleMove(e) {
 };
 
 function reset() {
+  isDragging.value = false;
+
   if (!show_bio.value) {
     activeImageIndex.value = 0;
   }
