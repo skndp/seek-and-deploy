@@ -3,7 +3,13 @@
     <div class="box" :class="{ '--show-bio': show_bio }">
       <div
         class="images"
+        :class="{ 'is-dragging': isTouchDevice && isDragging }"
         @click="clickImages"
+        @touchstart="initTouchMove"
+        @touchmove="handleMove"
+        @touchend="reset"
+        @mousemove="handleMove"
+        @mouseleave="reset"
       >
         <img v-for="(image, index) in bio.images" :src="image" :alt="name" draggable="false" :class="{ '--active': index === activeImageIndex }" />
       </div>
@@ -49,30 +55,12 @@ const props = defineProps({
   }
 });
 
+const isDragging = ref(false);
 const isTouchDevice = ref(false);
 const memberRef = ref(null);
 const show_bio = ref(false);
 const activeImageIndex = ref(0);
 const totalImages = props.bio.images.length;
-
-// const mouseMove = (e) => {
-//   if (!isTouchDevice.value) {
-//     const imagesDiv = e.currentTarget;
-//     const rect = imagesDiv.getBoundingClientRect();
-//     const clientX = e.clientX;
-//     const relativeX = clientX - rect.left;
-//     const clampedX = Math.max(0, Math.min(relativeX, rect.width));
-//     const percentage = (clampedX / rect.width) * 100;
-//     const segmentSize = 100 / totalImages;
-//     const index = Math.floor(percentage / segmentSize);
-
-//     activeImageIndex.value = index;
-//   }
-// };
-
-// function reset() {
-//   activeImageIndex.value = 0;
-// };
 
 onMounted(() => {
   isTouchDevice.value =
@@ -83,13 +71,52 @@ onMounted(() => {
 
 function clickInfoCloseBtn() {
   if (memberRef.value) {
-    show_bio.value = !show_bio.value;
+    if (show_bio.value) {
+      show_bio.value = false;
+      activeImageIndex.value = 0;
+    } else {
+      show_bio.value = true;
+    }
   }
 };
 
 function clickImages() {
   if (memberRef.value) {
     show_bio.value = true;
+    isDragging.value = false;
+  }
+};
+
+function initTouchMove(e) {
+  if (memberRef.value) {
+    handleMove(e);
+  }
+};
+
+function handleMove(e) {
+  if (memberRef.value) {
+    e.preventDefault();
+    isDragging.value = true;
+
+    const imagesDiv = e.currentTarget;
+    const rect = imagesDiv.getBoundingClientRect();
+    const totalImages = props.bio.images.length;
+    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+    const relativeX = clientX - rect.left;
+    const clampedX = Math.max(0, Math.min(relativeX, rect.width));
+    const percentage = (clampedX / rect.width) * 100;
+    const segmentSize = 100 / totalImages;
+    const index = Math.floor(percentage / segmentSize);
+
+    activeImageIndex.value = index;
+  }
+};
+
+function reset() {
+  isDragging.value = false;
+
+  if (!show_bio.value) {
+    activeImageIndex.value = 0;
   }
 };
 </script>
@@ -133,6 +160,11 @@ function clickImages() {
       overflow: hidden;
       background-color: #272727;
       cursor: pointer;
+      user-select: none;
+
+      &.is-dragging {
+        touch-action: none;
+      }
 
       img {
         @include abs-fill;
