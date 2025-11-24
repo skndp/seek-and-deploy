@@ -130,7 +130,7 @@ function onPageScroll(e) {
   });
 
   clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(onScrollComplete, 80);
+  scrollTimeout = setTimeout(onScrollComplete, 127);
 }
 
 function onScrollComplete() {
@@ -184,8 +184,10 @@ function scroll(y) {
     });
 
     // listen to page scroll
-    pageRef.value.addEventListener('scroll', onPageScroll);
-  }, 10);
+    setTimeout(() => {
+      pageRef.value.addEventListener('scroll', onPageScroll);
+    }, 27);
+  }, 27);
 }
 
 function onMenuSlideChange(e) {
