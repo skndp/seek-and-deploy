@@ -9,12 +9,12 @@ const text = ref('');
 const messages = [
         'run init sd -v=1.0-new-horizon',
         '',
-        'find us, we can help'
+        'find us, hello@seekanddeploy.com'
       ];
 const quotes = [
         "don't solve with more, solve with less",
         "spot, you are disrupting my ability to work",
-        "i will design the perfect system",
+        "we will design the perfect system",
         "the matrix has got you ...",
         "what will the first sequence of the day be?"
       ];
