@@ -56,7 +56,7 @@ const slides = [
   {
     component: Work,
     id: "work",
-    title: "What Would You Say Ya Do Here?"
+    title: "How Is This Stuff Still Online?"
   },
   {
     component: Awards,
