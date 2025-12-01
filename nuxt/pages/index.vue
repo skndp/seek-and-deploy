@@ -51,17 +51,17 @@ const slides = [
   {
     component: Team,
     id: "team",
-    title: "Reunited And It Feels So Good"
+    title: "Reunited"
   },
   {
     component: Work,
     id: "work",
-    title: "How Is This Stuff Still Online?"
+    title: "Past Projects"
   },
   {
     component: Awards,
     id: "awards",
-    title: "Winner, Winner, Chicken Dinner"
+    title: "The Results"
   },
   {
     component: Contact,
