@@ -101,7 +101,7 @@ function handleMove(e) {
     const imagesDiv = e.currentTarget;
     const rect = imagesDiv.getBoundingClientRect();
     const totalImages = props.bio.images.length;
-    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+    const clientX = e.touches?.[0]?.clientX ?? e.clientX;
     const relativeX = clientX - rect.left;
     const clampedX = Math.max(0, Math.min(relativeX, rect.width));
     const percentage = (clampedX / rect.width) * 100;
