@@ -14,6 +14,12 @@
           <polygon v-if="index === 5" points="527.49 521.57 600 521.57 600 161.37 527.49 233.78 527.49 521.57"/>
         </svg>
       </div>
+      <div class="logo-cover">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="600" viewBox="0 0 600 600">
+          <polygon points="436.46 221.88 175.07 221.88 340.23 56.94 288.96 5.73 0 294.31 261.37 294.31 12.31 543.06 63.58 594.27 436.46 221.88"/>
+          <path d="M600,161.37v432.65H166.78l360.71-360.24v102.43s-185.6,185.36-185.6,185.36h185.6V233.78s72.51-72.41,72.51-72.41Z"/>
+        </svg>
+      </div>
     </div>
   </div>
 </template>
@@ -140,6 +146,11 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
           // }
         }
       }
+
+      .logo-cover {
+        transition: visibility 0s linear 1s;
+        visibility: visible;
+      }
     }
   }
 
@@ -226,7 +237,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       }
     }
 
-    .logo {
+    .logo, .logo-cover {
       position: absolute;
       bottom: 0%;
       left: $space-64;
@@ -246,6 +257,15 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
         transition: transform 1s $evil-ease, opacity 1s $evil-ease;
       }
     }
+
+    .logo-cover {
+      transition: visibility 0s linear 0s;
+      visibility: hidden;
+      
+      svg {
+        opacity: 1;
+      }
+    }
   }
 
   @include respond-to($tablet) {
@@ -255,7 +275,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
         margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
       }
 
-      .logo {
+      .logo, .logo-cover {
         left: $space-96;
         margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
       }
@@ -270,7 +290,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
         margin: 0 0 $space-96;
       }
 
-      .logo {
+      .logo, .logo-cover {
         left: unset;
         right: $space-96;
         margin: 0 0 $space-96;
@@ -285,7 +305,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
         margin: 0 0 $space-128;
       }
 
-      .logo {
+      .logo, .logo-cover {
         right: $space-128;
         margin: 0 0 $space-128;
       }
