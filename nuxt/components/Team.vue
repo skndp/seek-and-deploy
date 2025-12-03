@@ -45,8 +45,8 @@ const team = [
     ],
     bio: {
       copy: [
-        '16+ years as a partner at creative studios (like Legwork and C&C) in roles as a developer, technical director and creative director, doing award-winning work with major brands like Nike, Google and Coca-Cola.',
-        'Seek and Deploy has always been my dream. An interactive-focused company where we can do things the right way.'
+        '16+ years as a partner at creative studios (Legwork and Consume & Create) in roles as a developer, technical director and creative director, doing award-winning work with major brands like Nike, Google and Coca-Cola.',
+        'Seek and Deploy has always been my dream; an interactive-focused company where we can do things the right way.'
       ],
       images: [
         '/images/matt/matt-wiggins-profile.jpg',
