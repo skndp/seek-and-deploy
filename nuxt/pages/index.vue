@@ -32,6 +32,62 @@ import Work from '~/components/Work.vue'
 import Awards from '~/components/Awards.vue'
 import Contact from '~/components/Contact.vue'
 
+const siteUrl = 'https://seekanddeploy.com';
+const pageTitle = 'Denver Web Design and Interactive Studio | Seek and Deploy';
+const pageDescription = 'Seek and Deploy is a Denver web design and interactive studio creating thoughtfully crafted websites, interfaces, and digital experiences with strong creative and technical execution.';
+const ogImage = `${siteUrl}/images/seek-and-deploy.jpg`;
+
+useSeoMeta({
+  title: pageTitle,
+  description: pageDescription,
+  ogTitle: pageTitle,
+  ogDescription: pageDescription,
+  ogUrl: siteUrl,
+  ogImage,
+  ogType: 'website',
+  twitterTitle: pageTitle,
+  twitterDescription: pageDescription,
+  twitterImage: ogImage,
+  twitterCard: 'summary_large_image'
+});
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        '@id': `${siteUrl}/#organization`,
+        name: 'Seek and Deploy',
+        url: siteUrl,
+        image: ogImage,
+        description: pageDescription,
+        telephone: '+1-720-219-7096',
+        email: 'hello@seekanddeploy.com',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '1305 Osage St.',
+          addressLocality: 'Denver',
+          addressRegion: 'CO',
+          postalCode: '80204',
+          addressCountry: 'US'
+        },
+        areaServed: 'Denver, CO',
+        sameAs: [
+          'https://www.linkedin.com/company/seek-and-deploy/'
+        ]
+      })
+    }
+  ]
+});
+
 const store = useSiteStore();
 const pageRef = ref(null);
 const slidesRef = ref(null);
