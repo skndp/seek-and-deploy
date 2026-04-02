@@ -1,10 +1,13 @@
 <template>
   <Background />
-  <Menu />
+  <Menu v-if="showMenu" />
   <NuxtPage />
 </template>
 
 <script setup>
+const route = useRoute();
+const showMenu = computed(() => route.path === '/');
+
 // Mounted
 onMounted(() => {
   window.addEventListener('resize', onResize)
