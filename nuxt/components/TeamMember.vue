@@ -27,7 +27,7 @@
     <div class="meta">
       <h3 class="h3">{{ name }}</h3>
       <p class="fs-sm" v-html="position" />
-      <SocialLinks :socials="socials" />
+      <SocialLinks :socials="socials" :label-prefix="name" />
     </div>
   </div>
 </template>

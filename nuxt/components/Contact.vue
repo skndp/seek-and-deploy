@@ -43,7 +43,7 @@
                 <li class="l5"><span class="fs-sm">P:</span> <NuxtLink to="tel:720-219-7096" target="_blank">(720) 219-7096</NuxtLink></li>
                 <li class="l6"><span class="fs-sm">E:</span> <NuxtLink to="mailto:hello@seekanddeploy.com" target="_blank">hello@seekanddeploy.com</NuxtLink></li>
               </ul>
-              <SocialLinks class="l7" :socials="[ 'https://www.linkedin.com/company/seek-and-deploy/' ]" />
+              <SocialLinks class="l7" :socials="[ 'https://www.linkedin.com/company/seek-and-deploy/' ]" label-prefix="Seek and Deploy" />
             </div>
           </div>
         </div>

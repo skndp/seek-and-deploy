@@ -1,7 +1,12 @@
 <template>
   <ul class="social-links">
     <li v-for="(link, index) in socials">
-      <NuxtLink :to="link" target="_blank" />
+      <NuxtLink
+        :to="link"
+        target="_blank"
+        :aria-label="getSocialLabel(link)"
+        :title="getSocialLabel(link)"
+      />
     </li>
   </ul>
 </template>
@@ -12,8 +17,24 @@ const props = defineProps({
   socials: {
     type: Array,
     required: true
+  },
+  labelPrefix: {
+    type: String,
+    default: 'Seek and Deploy'
   }
 });
+
+function getSocialLabel(link) {
+  if (link.includes('linkedin')) {
+    return `${props.labelPrefix} on LinkedIn`;
+  }
+
+  if (link.includes('instagram')) {
+    return `${props.labelPrefix} on Instagram`;
+  }
+
+  return `${props.labelPrefix} social profile`;
+}
 </script>
 
 <style lang='scss'>

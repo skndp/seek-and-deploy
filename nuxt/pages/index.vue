@@ -10,16 +10,18 @@
         />
       </template>
     </div>
-    <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef">
-      <CoverSlide title="Seek and Deploy" />
-      <template v-for="(slide, index) in slides">
-        <component
-          :is="slide.component"
-          :id="slide.id"
-          :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
-        />
-      </template>
-    </div>
+    <ClientOnly>
+      <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef" aria-hidden="true" inert>
+        <CoverSlide title="Seek and Deploy" />
+        <template v-for="(slide, index) in slides">
+          <component
+            :is="slide.component"
+            :id="slide.id"
+            :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
+          />
+        </template>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
