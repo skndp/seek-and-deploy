@@ -35,8 +35,8 @@ import Awards from '~/components/Awards.vue'
 import Contact from '~/components/Contact.vue'
 
 const siteUrl = 'https://seekanddeploy.com';
-const pageTitle = 'Denver Web Design and Interactive Studio | Seek and Deploy';
-const pageDescription = 'Seek and Deploy is a Denver web design and interactive studio creating thoughtfully crafted websites, interfaces, and digital experiences with strong creative and technical execution.';
+const pageTitle = 'Seek and Deploy | Interactive Studio in Denver, CO';
+const pageDescription = 'Seek and Deploy is a Denver-based interactive studio creating thoughtfully crafted websites, interfaces, and digital experiences with strong creative and technical execution.';
 const ogImage = `${siteUrl}/images/seek-and-deploy.jpg`;
 
 useSeoMeta({
@@ -104,12 +104,12 @@ const slides = [
   {
     component: Manifesto,
     id: "manifesto",
-    title: "Hello World"
+    title: "We Don't Do Safe / We Don't Do Boring"
   },
   {
     component: Team,
     id: "team",
-    title: "Reunited"
+    title: "Check Us Out"
   },
   {
     component: Work,
@@ -266,7 +266,6 @@ function onMenuSlideChange(e) {
 </script>
 
 <style lang='scss'>
-
 section.slide {
   position: relative;
   width: 100%;

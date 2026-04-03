@@ -5,7 +5,7 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
-            <h3 ref="textRef" class="h3">We build the <span class="u">interfaces</span> and <span class="u">experiences</span> that actually feel nice to use. Not the generic stuff—the <span class="u">good</span> stuff. AI can handle the repetitive tasks. We’re here for the work that needs <span class="u">judgment</span>, <span class="u">creativity</span>, and a <span class="u">human</span>touch. We move fast, <span class="u">obsess</span> over details, and stand behind every pixel and line of code. Reach out, we can help turn your <span class="u">ideas</span> into <span class="u">salient</span> touch points for your brand.</h3>
+            <h3 class="h3">We’re a Denver-based interactive studio specializing in <span class="u">innovative</span> web design, development, and digital experiences. With over <span class="u">25 years</span> of experience building notable websites for global brands like <span class="u">Google</span>, <span class="u">Nike</span>, and <span class="u">Coca-Cola</span>, we thrive on solving the challenges labelled <span class="u">“too complex”</span>. Empowered by AI, we work <span class="u">faster</span> and <span class="u">more efficient</span> than ever to design and develop immersive digital experiences that demand <span class="u">creativity</span>, <span class="u">precision</span>, and <span class="u">serious</span> technical firepower. If your brand needs more than a template, we’re the Denver-based creative technology partner that can bring it to life.</h3>
           </div>
         </div>
       </div>
