@@ -216,7 +216,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       bottom: 0%;
       left: $space-64;
       margin: 0 0 112px 0;
-      width: 90px;
+      width: 33.333%;
       aspect-ratio: 1/1;
       perspective: 1200px;
       transform-style: preserve-3d;
@@ -242,7 +242,7 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       bottom: 0%;
       left: $space-64;
       margin: 0 0 112px 0;
-      width: 90px;
+      width: 33.333%;
       aspect-ratio: 1/1;
 
       svg {
@@ -272,13 +272,11 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
     .scene {
       .particles {
         left: $space-96;
-        width: 180px;
         margin: 0 0 ($space-64 * 2.5) $space-48;
       }
 
       .logo, .logo-cover {
         left: $space-96;
-        width: 180px;
         margin: 0 0 ($space-64 * 2.5) $space-48;
       }
     }
@@ -289,27 +287,25 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       .particles {
         left: unset;
         right: 40px;
-        width: 270px;
         margin: 0 0 37px;
       }
 
       .logo, .logo-cover {
         left: unset;
         right: 40px;
-        width: 270px;
         margin: 0 0 37px;
       }
     }
   }
 
-  @include respond-to($average-desktop) {
+  @include respond-to($macbook) {
     .scene {
       .particles {
-        width: 360px;
+        width: 480px;
       }
 
       .logo, .logo-cover {
-        width: 360px;
+        width: 480px;
       }
     }
   }

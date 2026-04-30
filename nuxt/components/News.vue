@@ -14,7 +14,9 @@
     <div class="news-screen">
       <div class="news-content" :class="{ loaded: tvLoaded }">        
         <div class="news-picture">
-          <a href="https://wearefleshandbones.com"><img src="/images/flesh-and-bones.webp" alt="We launched Flesh & Bones." /></a>
+          <a href="https://wearefleshandbones.com" target="_blank" rel="noreferrer noopener">
+            <img src="/images/flesh-and-bones.webp" alt="We launched Flesh & Bones." />
+          </a>
         </div>
         <div class="marquee fs-sm" aria-label="BREAKING NEWS">
           <div class="marquee-track">
@@ -141,10 +143,14 @@ export default {
 }
 
 .news-wrapper {
-  position: relative;
-  aspect-ratio: 1/1;
-  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  margin-top: -$space-48;
   margin-left: -10%;
+  aspect-ratio: 1/1;
+  transform: translateX(-50%) translateY(-50%);
 
   .news-screen {
     position: absolute;
@@ -263,6 +269,28 @@ export default {
       width: 100%;
       height: 100%;
     }
+  }
+
+  @include respond-to($tablet) {
+    width: 75%;
+    margin-left: -16%;
+    margin-top: -150px;
+  }
+
+  @include respond-to($large-tablet) {
+    left: 0px;
+    width: 62.5%;
+    margin-top: 0px;
+    margin-left: 0px;
+    transform: translateX(-8.333%) translateY(-50%);
+  }
+
+  @include respond-to($average-desktop) {
+    width: 50%;
+  }
+
+  @include respond-to($macbook) {
+    width: 800px;
   }
 }
 </style>

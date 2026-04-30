@@ -11,7 +11,7 @@
       </template>
     </div>
     <ClientOnly>
-      <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef" aria-hidden="true" inert>
+      <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef" aria-hidden="true">
         <CoverSlide title="Seek and Deploy" />
         <template v-for="(slide, index) in slides">
           <component
@@ -138,7 +138,7 @@ onMounted(() => {
 
 // Before Unmount
 onBeforeUnmount(() => {
-  pageRef.value.addEventListener('scroll', onPageScroll);
+  pageRef.value.removeEventListener('scroll', onPageScroll);
 });
 
 // Methods
@@ -231,7 +231,7 @@ function onScrollComplete() {
 
 function scroll(y) {
   // ignore scroll
-  pageRef.value.addEventListener('scroll', onPageScroll);
+  pageRef.value.removeEventListener('scroll', onPageScroll);
 
   setTimeout(() => {
     // scroll

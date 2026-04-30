@@ -4,9 +4,6 @@
       <div class="gutter">
         <h1 class="title h1">{{ title }}</h1>
         <Terminal />
-        <div class="news-wrapper">
-          <News />
-        </div>
         <footer>
           <p v-if="store.initialSlide" class="copy"><span>We fight for the user.</span></p>
           <p v-else class="copy"><span>Pick up the reciever, we’ll make you a believer.</span></p>
@@ -25,6 +22,7 @@
         </footer>
       </div>
     </div>
+    <News />
   </section>
 </template>
 
@@ -62,8 +60,11 @@ section.cover-slide {
         line-height: $space-64;
       }
 
-      .news-wrapper {
+      .flex-content {
         flex-grow: 1;
+        margin-bottom: $space-128;
+        display: flex;
+        align-items: center;
       }
 
       footer {
@@ -112,6 +113,10 @@ section.cover-slide {
           line-height: $space-96;
         }
 
+        .flex-content {
+          margin-bottom: 200px;
+        }
+
         footer {
           &:after {
             height: $space-24;
@@ -128,6 +133,16 @@ section.cover-slide {
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  @include respond-to($large-tablet) {
+    .inner {
+      .gutter {
+        .flex-content {
+          margin-bottom: auto;
         }
       }
     }
