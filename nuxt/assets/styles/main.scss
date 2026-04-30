@@ -74,14 +74,10 @@ a {
 // --------------------------------------------
 
 .gutter {
-  margin: 0 $space-16 0 0;
+  margin: 0 20px 0 0;
 
   @include respond-to($tablet) {
-    margin: 0 $space-48;
-  }
-
-  @include respond-to($macbook) {
-    margin: 0 $space-64;
+    margin: 0 $space-32;
   }
 }
 
@@ -91,10 +87,6 @@ a {
   @include respond-to($tablet) {
     padding-top: $space-48;
   }
-
-  @include respond-to($macbook) {
-    padding-top: $space-64;
-  }
 }
 
 .pad-b {
@@ -102,10 +94,6 @@ a {
 
   @include respond-to($tablet) {
     padding-bottom: $space-48;
-  }
-
-  @include respond-to($macbook) {
-    padding-bottom: $space-64;
   }
 }
 

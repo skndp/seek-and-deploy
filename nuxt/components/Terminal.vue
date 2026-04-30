@@ -50,7 +50,7 @@ function go() {
 
 <style lang="scss">
 #terminal {
-  height: 100%;
+  margin-top: -$space-8;
 
   #line-0 {
     color: rgba($yellow, 0.8);
@@ -58,6 +58,10 @@ function go() {
     #cursor {
       animation: cursor 1s step-start 0s infinite;
     }
+  }
+
+  @include respond-to($tablet) {
+    margin-top: -$space-16;
   }
 }
 

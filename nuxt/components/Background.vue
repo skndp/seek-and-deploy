@@ -215,8 +215,8 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       position: absolute;
       bottom: 0%;
       left: $space-64;
-      margin: 0 0 (($space-64 * 2) + $space-32) 0;
-      width: 33%;
+      margin: 0 0 112px 0;
+      width: 90px;
       aspect-ratio: 1/1;
       perspective: 1200px;
       transform-style: preserve-3d;
@@ -241,8 +241,8 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
       position: absolute;
       bottom: 0%;
       left: $space-64;
-      margin: 0 0 (($space-64 * 2) + $space-32) 0;
-      width: 33%;
+      margin: 0 0 112px 0;
+      width: 90px;
       aspect-ratio: 1/1;
 
       svg {
@@ -272,12 +272,14 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
     .scene {
       .particles {
         left: $space-96;
-        margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
+        width: 180px;
+        margin: 0 0 ($space-64 * 2.5) $space-48;
       }
 
       .logo, .logo-cover {
         left: $space-96;
-        margin: 0 0 (($space-96 * 2) + $space-48) $space-48;
+        width: 180px;
+        margin: 0 0 ($space-64 * 2.5) $space-48;
       }
     }
   }
@@ -286,28 +288,28 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
     .scene {
       .particles {
         left: unset;
-        right: $space-96;
-        margin: 0 0 $space-96;
+        right: 40px;
+        width: 270px;
+        margin: 0 0 37px;
       }
 
       .logo, .logo-cover {
         left: unset;
-        right: $space-96;
-        margin: 0 0 $space-96;
+        right: 40px;
+        width: 270px;
+        margin: 0 0 37px;
       }
     }
   }
 
-  @include respond-to($macbook) {
+  @include respond-to($average-desktop) {
     .scene {
       .particles {
-        right: $space-128;
-        margin: 0 0 $space-128;
+        width: 360px;
       }
 
       .logo, .logo-cover {
-        right: $space-128;
-        margin: 0 0 $space-128;
+        width: 360px;
       }
     }
   }

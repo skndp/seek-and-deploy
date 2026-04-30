@@ -341,23 +341,5 @@ section.slide {
       }
     }
   }
-
-  @include respond-to($macbook) {
-    .inner {
-      margin-left: $space-128;
-
-      .gutter {
-        h2.fs-sm {
-          height: $space-128;
-        }
-
-        .container {
-          .content {
-            margin: 0 auto $space-128;
-          }
-        }
-      }
-    }
-  }
 }
 </style>

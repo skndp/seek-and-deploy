@@ -3,13 +3,11 @@
     <div class="inner">
       <div class="gutter">
         <h1 class="title h1">{{ title }}</h1>
-        <div class="terminal">
-          <Terminal />
-        </div>
-        <div class="news">
+        <Terminal />
+        <div class="news-wrapper">
           <News />
         </div>
-        <div class="copy-blocks">
+        <footer>
           <p v-if="store.initialSlide" class="copy"><span>We fight for the user.</span></p>
           <p v-else class="copy"><span>Pick up the reciever, we’ll make you a believer.</span></p>
           <p v-if="store.initialSlide" class="copy fs-sm gray"><span>Go ahead. Scroll down.</span></p>
@@ -24,7 +22,7 @@
               No terms. No polices. Stay metal.
             </span>
           </p>
-        </div>
+        </footer>
       </div>
     </div>
   </section>
@@ -60,42 +58,49 @@ section.cover-slide {
       justify-content: space-between;
 
       .title {
-        margin-top: $space-64;
+        height: $space-64;
+        line-height: $space-64;
       }
 
-      .terminal {
-        margin-top: $space-16;
-      }
-
-      .news {
+      .news-wrapper {
         flex-grow: 1;
       }
 
-      .copy {
-        height: $space-64;
-        display: flex;
-        align-items: center;
-
-        span {
-          margin-top: -0.04em;
-          display: inline-flex;
+      footer {
+        &:after {
+          content: '';
+          width: 100%;
+          height: $space-16;
+          display: flex;
+        }
+        
+        .copy {
+          height: $space-32;
+          display: flex;
           align-items: center;
-
-          svg {
-            width: 16px;
-            height: 16px;
-            margin: -3px 7px 0 0;
-            display: flex;
-            flex-shrink: 0;
-
-            circle, line {
-              stroke-width: 2px;
-              stroke: $gray;
-              fill: none;
+  
+          span {
+            margin-top: -0.04em;
+            display: inline-flex;
+            align-items: center;
+  
+            svg {
+              width: 16px;
+              height: 16px;
+              margin: -3px 7px 0 0;
+              display: flex;
+              flex-shrink: 0;
+  
+              circle, line {
+                stroke-width: 2px;
+                stroke: $gray;
+                fill: none;
+              }
             }
           }
         }
       }
+
     }
   }
 
@@ -103,50 +108,25 @@ section.cover-slide {
     .inner {
       .gutter {
         .title {
-          margin-top: $space-32;
-        }
-
-        .copy {
           height: $space-96;
+          line-height: $space-96;
+        }
 
-          span {
-            svg {
-              width: 18px;
-              height: 18px;
-              margin: -3px 10px 0 0;
-            }
+        footer {
+          &:after {
+            height: $space-24;
           }
-        }
-      }
-    }
-  }
-
-  @include respond-to($large-tablet) {
-    .inner {
-      .gutter {
-        .title {
-          margin-top: $space-48;
-        }
-
-        .terminal {
-          margin-top: $space-32;
-        }
-      }
-    }
-  }
-
-  @include respond-to($macbook) {
-    .inner {
-      .gutter {
-        .title {
-          margin-top: $space-64;
-        }
-
-        .copy {
-          height: $space-128;
-
-          &:first-child {
-            margin-bottom: -$space-32;
+          
+          .copy {
+            height: $space-48;
+  
+            span {
+              svg {
+                width: 18px;
+                height: 18px;
+                margin: -3px 10px 0 0;
+              }
+            }
           }
         }
       }
