@@ -6,6 +6,9 @@
         <div class="terminal">
           <Terminal />
         </div>
+        <div class="news">
+          <News />
+        </div>
         <div class="copy-blocks">
           <p v-if="store.initialSlide" class="copy"><span>We fight for the user.</span></p>
           <p v-else class="copy"><span>Pick up the reciever, we’ll make you a believer.</span></p>
@@ -61,8 +64,11 @@ section.cover-slide {
       }
 
       .terminal {
-        flex-grow: 1;
         margin-top: $space-16;
+      }
+
+      .news {
+        flex-grow: 1;
       }
 
       .copy {
