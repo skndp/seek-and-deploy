@@ -1,25 +1,27 @@
 <template>
   <div :class="['page', {'snap': snap}]" ref="pageRef">
+    <ClientOnly>
+      <div :class="['clones', 'clones-before', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="beforeClonesRef" aria-hidden="true">
+        <component
+          :is="lastSlide.component"
+          :id="lastSlide.id"
+          :title="formatSlideTitle(slides.length - 1)"
+        />
+      </div>
+    </ClientOnly>
     <div :class="['slides', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="slidesRef">
-      <CoverSlide title="Seek and Deploy" />
+      <CoverSlide :title="coverTitle" />
       <template v-for="(slide, index) in slides">
         <component
           :is="slide.component"
           :id="slide.id"
-          :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
+          :title="formatSlideTitle(index)"
         />
       </template>
     </div>
     <ClientOnly>
-      <div :class="['clones', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="clonesRef" aria-hidden="true">
-        <CoverSlide title="Seek and Deploy" />
-        <template v-for="(slide, index) in slides">
-          <component
-            :is="slide.component"
-            :id="slide.id"
-            :title="`${String(index + 1).padStart(3, '0')} — ${slide.title}`"
-          />
-        </template>
+      <div :class="['clones', 'clones-after', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="afterClonesRef" aria-hidden="true">
+        <CoverSlide :title="coverTitle" />
       </div>
     </ClientOnly>
   </div>
@@ -93,12 +95,14 @@ useHead({
 const store = useSiteStore();
 const pageRef = ref(null);
 const slidesRef = ref(null);
-const clonesRef = ref(null);
+const beforeClonesRef = ref(null);
+const afterClonesRef = ref(null);
 const snap = ref(false);
 let slideElements;
 let slideOffsets = [];
 let slideIndex = 0;
 let scrollTimeout;
+const coverTitle = 'Seek and Deploy';
 
 const slides = [
   {
@@ -127,6 +131,8 @@ const slides = [
     title: "39.737376, -105.005511"
   }
 ];
+const lastSlide = slides[slides.length - 1];
+const lastSlideIndex = slides.length;
 
 // Mounted
 onMounted(() => {
@@ -139,25 +145,69 @@ onMounted(() => {
 // Before Unmount
 onBeforeUnmount(() => {
   pageRef.value.removeEventListener('scroll', onPageScroll);
+  window.removeEventListener('resize', onResize);
+  window.removeEventListener('menu-slide-change', onMenuSlideChange);
 });
 
 // Methods
-function initScrollSnap() {
+async function initScrollSnap() {
+  await nextTick();
+
   slideElements = pageRef.value.querySelectorAll('.slide');
-  snap.value = true;
 
   window.addEventListener('resize', onResize);
   onResize();
+  disableCloneTabStops();
+  jumpToRealSlide(0);
+  snap.value = true;
 
   pageRef.value.addEventListener('scroll', onPageScroll);
 
   window.addEventListener('menu-slide-change', onMenuSlideChange);
 }
 
+function formatSlideTitle(index) {
+  return `${String(index + 1).padStart(3, '0')} — ${slides[index].title}`;
+}
+
 function onResize(e) {
   slideElements.forEach((slide, index) => {
     slideOffsets[index] = slide.offsetTop;
   });
+}
+
+function disableCloneTabStops() {
+  [beforeClonesRef.value, afterClonesRef.value].forEach((clone) => {
+    clone?.querySelectorAll('a, button, input, select, textarea, summary, [tabindex]').forEach((el) => {
+      el.setAttribute('tabindex', '-1');
+    });
+  });
+}
+
+function getLogicalSlideIndex(slide) {
+  const parent = slide.parentElement;
+
+  if(parent === beforeClonesRef.value) {
+    return lastSlideIndex;
+  }
+
+  if(parent === afterClonesRef.value) {
+    return 0;
+  }
+
+  return Array.from(slidesRef.value.children).indexOf(slide);
+}
+
+function jumpToRealSlide(index) {
+  const slide = slidesRef.value?.children[index];
+
+  if(slide) {
+    pageRef.value.scrollTo({
+      'top': slide.offsetTop,
+      'left': 0,
+      'behavior': 'instant'
+    });
+  }
 }
 
 function onPageScroll(e) {
@@ -168,19 +218,9 @@ function onPageScroll(e) {
           b = slide.getBoundingClientRect();
 
     if(b.top > 10 && b.top < wh - 10 || b.bottom > 10 && b.bottom < wh - 10) {
-      if(slideIndex === 0 && store.initialSlide !== true) {
-        let nextIndex = index;
+      const nextIndex = getLogicalSlideIndex(slide);
 
-        if(nextIndex === 6) nextIndex = 5;
-        if(nextIndex === 7) nextIndex = 1;
-
-        store.setSlideActiveState('');
-        if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
-      } else if(index !== slideIndex) {
-        let nextIndex = index;
-
-        if(nextIndex === 6) nextIndex = 0;
-
+      if(nextIndex !== slideIndex) {
         store.setSlideActiveState('');
         if(store.slideNextState !== `slide-${nextIndex}-next`) store.setSlideNextState(`slide-${nextIndex}-next`);
       }
@@ -198,21 +238,10 @@ function onScrollComplete() {
     const t = slideElements[slideOffsets.indexOf(currentScroll)],
           p = t.parentElement;
 
-    let newScroll = 0;
+    slideIndex = getLogicalSlideIndex(t);
 
-    if(p === slidesRef.value) {
-      // back at top, set scroll to clone top
-      slideIndex = Array.from(slidesRef.value.children).indexOf(t);
-
-      if(slideIndex === 0) {
-        newScroll = clonesRef.value.children[0].offsetTop;
-        scroll(newScroll);
-      }
-    } else if(p === clonesRef.value) {
-      // in a clone, set scroll to corresponding slide
-      slideIndex = Array.from(clonesRef.value.children).indexOf(t);
-      newScroll = slideIndex === 0 ? clonesRef.value.children[slideIndex].offsetTop : slidesRef.value.children[slideIndex].offsetTop;
-      scroll(newScroll);
+    if(p === beforeClonesRef.value || p === afterClonesRef.value) {
+      scroll(slidesRef.value.children[slideIndex].offsetTop);
     }
 
     store.setSlideNextState('');
@@ -252,13 +281,13 @@ function onMenuSlideChange(e) {
   let slide;
 
   if(e.detail.slide === 'next') {
-    if(slideIndex === 0 && store.initialSlide !== true) {
-      slide = slideElements[7];
+    if(slideIndex === lastSlideIndex) {
+      slide = afterClonesRef.value.children[0];
     } else {
-      slide = slideElements[slideIndex + 1];
+      slide = slidesRef.value.children[slideIndex + 1];
     }
   } else {
-    slide = slideElements[e.detail.slide];
+    slide = slidesRef.value.children[e.detail.slide];
   }
 
   slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
