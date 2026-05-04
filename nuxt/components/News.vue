@@ -1,5 +1,5 @@
 <template>
-  <div class="news-wrapper">
+  <div class="news-wrapper" :class="{ loaded: tvLoaded }">
     <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style="position:absolute">
       <clipPath id="tvClip" clipPathUnits="objectBoundingBox">
         <path d="
@@ -12,7 +12,7 @@
       </clipPath>
     </svg>
     <div class="news-screen">
-      <div class="news-content" :class="{ loaded: tvLoaded }">        
+      <div class="news-content">        
         <div class="news-picture">
           <a href="https://wearefleshandbones.com" target="_blank" rel="noreferrer noopener">
             <img src="/images/flesh-and-bones.webp" alt="We launched Flesh & Bones." />
@@ -31,6 +31,8 @@
         ref="tvImage"
         src="/images/tv.png"
         alt="A TV from the ancient times displaying our latest news."
+        fetchpriority="high"
+        loading="eager"
         @load="handleTvLoad"
       />
     </div>
@@ -152,6 +154,17 @@ export default {
   aspect-ratio: 1/1;
   transform: translateX(-50%) translateY(-50%);
 
+  .slide-0-active &.loaded {
+    .news-screen {
+      visibility: visible;
+
+      .news-content {
+        transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 1);
+        transition: transform 333ms $ease-out 333ms;
+      }
+    }
+  }
+
   .news-screen {
     position: absolute;
     top: 50%;
@@ -163,6 +176,7 @@ export default {
     perspective: 2000px;
     transform-style: preserve-3d;
     transform: translate(-50%, -50%);
+    visibility: hidden;
 
     &:after {
       content: "";
@@ -184,11 +198,6 @@ export default {
       background-color: $black;
       transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 0);
       transition: transform 333ms $ease-out;
-
-      .slide-0-active &.loaded {
-        transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 1);
-        transition: transform 333ms $ease-out 333ms;
-      }
 
       &:before {
         content: " ";
