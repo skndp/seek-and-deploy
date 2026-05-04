@@ -154,10 +154,14 @@ export default {
   aspect-ratio: 1/1;
   transform: translateX(-50%) translateY(-50%);
 
-  .slide-0-active &.loaded {
+  &.loaded {
     .news-screen {
       visibility: visible;
+    }
+  }
 
+  .slide-0-active &.loaded {
+    .news-screen {
       .news-content {
         transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 1);
         transition: transform 333ms $ease-out 333ms;
