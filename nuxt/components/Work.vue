@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="content">
-            <ul class="h3-lg">
+            <ul class="h3">
               <template v-if="isTouchDevice">
                 <li v-for="(project, index) in work" class="ml" :class="{ '--active': index === activeIndex }" @click="onClickMobileItem(index)">
                   <p>{{ project.title }}</p>
@@ -19,8 +19,8 @@
                 </li>
               </template>
               <template v-else>
-                <li v-for="(project, index) in work" class="dl" @mouseenter="onWorkHover(index)">
-                  <NuxtLink :to="project.url" target="_blank">{{ project.title }}</NuxtLink>
+                <li v-for="(project, index) in work" class="dl">
+                  <NuxtLink :to="project.url" target="_blank" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
                 </li>
               </template>
             </ul>
@@ -36,7 +36,7 @@ import { primaryInput } from 'detect-it';
 
 const isTouchDevice = ref(false);
 const activeIndex = ref(0);
-const image = ref('/images/work/nike-sb.jpg');
+const image = ref('/images/work/flesh-and-bones.jpg');
 
 // Props
 const props = defineProps({
@@ -52,19 +52,14 @@ const props = defineProps({
 
 const work = [
   {
-    title: "15 Years of Dunk",
-    image: "/images/work/nike-sb.jpg",
-    url: "http://fyod.s3-website-us-east-1.amazonaws.com/"
+    title: "Flesh and Bones",
+    image: "/images/work/flesh-and-bones.jpg",
+    url: "https://wearefleshandbones.com/"
   },
   {
-    title: "Domino’s + IFTTT",
-    image: "/images/work/dominos-ifttt.jpg",
-    url: "http://ifttt-dominos.s3-website-us-east-1.amazonaws.com/"
-  },
-  {
-    title: "Tuck Effect",
-    image: "/images/work/tuck-effect.jpg",
-    url: "http://tuck-effect.s3-website-us-east-1.amazonaws.com/"
+    title: "Futuristic Films",
+    image: "/images/work/futuristic.jpg",
+    url: "https://futuristicfilms.com/"
   },
   {
     title: "Clayton Cotterell",
@@ -72,9 +67,28 @@ const work = [
     url: "https://claytoncotterell.com/"
   },
   {
-    title: "Legwork is Dead",
-    image: "/images/work/legwork-is-dead.jpg",
-    url: "https://legwork-is-dead.netlify.app/"
+    title: "Nike: 15 Years of Dunk",
+    image: "/images/work/nike-sb.jpg",
+    url: "http://fyod.s3-website-us-east-1.amazonaws.com/",
+    archive: true
+  },
+  {
+    title: "Coca Cola: Building of Memories",
+    image: "/images/work/coca-cola.jpg",
+    url: "http://cb-proto.s3-website-us-east-1.amazonaws.com/",
+    archive: true
+  },
+  {
+    title: "Domino's: IFTTT",
+    image: "/images/work/dominos-ifttt.jpg",
+    url: "http://ifttt-dominos.s3-website-us-east-1.amazonaws.com/",
+    archive: true
+  },
+  {
+    title: "Fruit of the Loom: Tuck Effect",
+    image: "/images/work/tuck-effect.jpg",
+    url: "http://tuck-effect.s3-website-us-east-1.amazonaws.com/",
+    archive: true
   }
 ];
 
@@ -137,7 +151,7 @@ section.work {
         .poster-wrapper {
           position: absolute;
           right: 0px;
-          top: 62.5%;
+          top: 20%;
           width: 90%;
           max-width: 1000px;
           aspect-ratio: 2/1;
@@ -179,7 +193,7 @@ section.work {
 
         .content {
           ul {
-            line-height: 1.8em;
+            line-height: 2em;
 
             li {
               font-weight: 600;
@@ -264,17 +278,13 @@ section.work {
                     transform: rotate(-90deg) translateX(-50%) translateY(-6px);
                     transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
                   }
-                }
 
-                &:hover {
-                  a {
+                  &:hover {
                     color: $yellow;
 
-                    &:hover {
-                      &:after {
-                        opacity: 1;
-                        transform: rotate(-90deg) translateX(-50%) translateY(0px);
-                      }
+                    &:after {
+                      opacity: 1;
+                      transform: rotate(-90deg) translateX(-50%) translateY(0px);
                     }
                   }
                 }

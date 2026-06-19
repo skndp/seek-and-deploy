@@ -3,7 +3,7 @@
     <div class="icon --logo" @click="setActiveSlide(0)" />
     <div class="ticks">
       <button
-        v-for="(number, index) in 5"
+        v-for="(number, index) in 6"
         :class="['tick', {'active': store.slideNextState === `slide-${number}-next` || store.slideActiveState === `slide-${number}-active`}]"
         :key="index"
         @click="setActiveSlide(number)"
@@ -96,7 +96,7 @@ nav.menu {
         transform: translateY(50%);
         pointer-events: none;
 
-        @for $i from 1 through 5 {
+        @for $i from 1 through 6 {
           &:nth-child(#{$i}) {
             transition: transform $speed-666 #{444 - (($i - 1) * 111)}ms $ease-out, opacity $speed-666 #{444 - (($i - 1) * 111)}ms $ease-out;
           }
@@ -181,7 +181,7 @@ nav.menu {
         }
       }
 
-      @for $i from 1 through 5 {
+      @for $i from 1 through 6 {
         &:nth-child(#{$i}) {
           transition: transform $speed-666 #{($i - 1) * 111}ms $ease-out, opacity $speed-666 #{($i - 1) * 111}ms $ease-out;
         }

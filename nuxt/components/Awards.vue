@@ -37,8 +37,8 @@ const props = defineProps({
 
 <style lang='scss'>
 section.awards {
-  .slide-4-next &,
-  .slide-4-active & {
+  .slide-5-next &,
+  .slide-5-active & {
     opacity: 1;
 
     .inner {

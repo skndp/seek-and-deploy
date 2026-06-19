@@ -68,8 +68,8 @@ const props = defineProps({
 
 <style lang='scss'>
 section.contact {
-  .slide-5-next &,
-  .slide-5-active & {
+  .slide-6-next &,
+  .slide-6-active & {
     opacity: 1;
 
     .map-container {

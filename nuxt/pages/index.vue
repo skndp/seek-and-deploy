@@ -33,6 +33,7 @@ import { useSiteStore } from '~/stores/store';
 import Manifesto from '~/components/Manifesto.vue'
 import Team from '~/components/Team.vue'
 import Work from '~/components/Work.vue'
+import Services from '~/components/Services.vue'
 import Awards from '~/components/Awards.vue'
 import Contact from '~/components/Contact.vue'
 
@@ -108,17 +109,22 @@ const slides = [
   {
     component: Manifesto,
     id: "manifesto",
-    title: "We Don't Do Safe / We Don't Do Boring"
+    title: "We're here for it"
   },
   {
     component: Team,
     id: "team",
-    title: "Check Us Out"
+    title: "Juuust the two of us (and an intern)"
   },
   {
     component: Work,
     id: "work",
-    title: "Past Projects"
+    title: "Dropping rows of 1 and 0s"
+  },
+  {
+    component: Services,
+    id: "services",
+    title: "What would you say ... ya do here?"
   },
   {
     component: Awards,

@@ -66,51 +66,6 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
 </script>
 
 <style lang='scss'>
-@keyframes flicker {
-  0% {
-    opacity: 0.4;
-  }
-  5% {
-    opacity: 0.5;
-  }
-  10% {
-    opacity: 0.6;
-  }
-  15% {
-    opacity: 0.85;
-  }
-  25% {
-    opacity: 0.5;
-  }
-  30% {
-    opacity: 1;
-  }
-  35% {
-    opacity: 0.1;
-  }
-  40% {
-    opacity: 0.25;
-  }
-  45% {
-    opacity: 0.5;
-  }
-  60% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.85;
-  }
-  80% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .background {
   position: fixed;
   top: 0px;
@@ -137,13 +92,6 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
           opacity: 1;
           transform: none !important;
           transition: transform 1s $evil-ease, opacity 1s $evil-ease;
-
-          // TODO
-          // @for $i from 1 through 6 {
-          //   &:nth-child(#{$i}) {
-          //     animation: flicker 200ms #{($i * 100)}ms linear;
-          //   }
-          // }
         }
       }
 
@@ -199,6 +147,13 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
 
   &.slide-5-next,
   &.slide-5-active {
+    .scene {
+      transform: rotateX(0deg) rotateY(60deg) rotateZ(60deg);
+    }
+  }
+
+  &.slide-6-next,
+  &.slide-6-active {
     .scene {
       transform: none
     }
