@@ -73,11 +73,13 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
   width: 100%;
   height: 100%;
   overflow: hidden;
+  pointer-events: none;
+  transform: translateZ(0);
 
   &.slide-0-next,
   &.slide-0-active {
     .scene {
-      transform: rotateY(0deg);
+      transform: translate3d(0,0,0) rotateY(0deg);
 
       .particles {
         .particle {
@@ -120,42 +122,42 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
   &.slide-1-next,
   &.slide-1-active {
     .scene {
-      transform: none
+      transform: translate3d(0,0,0);
     }
   }
 
   &.slide-2-next,
   &.slide-2-active {
     .scene {
-      transform: rotateX(30deg) rotateY(60deg) rotateZ(30deg);
+      transform: translate3d(0,0,0) rotateX(30deg) rotateY(60deg) rotateZ(30deg);
     }
   }
 
   &.slide-3-next,
   &.slide-3-active {
     .scene {
-      transform: rotateX(60deg) rotateY(30deg) rotateZ(60deg);
+      transform: translate3d(0,0,0) rotateX(60deg) rotateY(30deg) rotateZ(60deg);
     }
   }
 
   &.slide-4-next,
   &.slide-4-active {
     .scene {
-      transform: rotateX(30deg) rotateY(30deg) rotateZ(30deg);
+      transform: translate3d(0,0,0) rotateX(30deg) rotateY(30deg) rotateZ(30deg);
     }
   }
 
   &.slide-5-next,
   &.slide-5-active {
     .scene {
-      transform: rotateX(0deg) rotateY(60deg) rotateZ(60deg);
+      transform: translate3d(0,0,0) rotateX(0deg) rotateY(60deg) rotateZ(60deg);
     }
   }
 
   &.slide-6-next,
   &.slide-6-active {
     .scene {
-      transform: none
+      transform: translate3d(0,0,0);
     }
   }
 
@@ -163,8 +165,10 @@ function andOnTheTwentyFirstDayOfTheEleventhMonthOfTheTwoThousandTwentyFifthYear
     height: 100%;
     perspective: 1200px;
     transform-style: preserve-3d;
+    transform: translate3d(0,0,0);
     transition: transform 1s $evil-ease;
     backface-visibility: visible;
+    will-change: transform;
 
     .particles {
       position: absolute;

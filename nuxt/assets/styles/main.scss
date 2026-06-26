@@ -28,7 +28,9 @@ body {
   }
 
   #__nuxt {
+    position: relative;
     height: 100%;
+    isolation: isolate;
     overflow: visible;
   }
 }
@@ -43,19 +45,68 @@ body {
 
 .page {
   position: relative;
-  overflow-y: auto;
-  height: 100%;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
+.page-enter-active,
+.page-leave-active {
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+.home-page {
+  z-index: 1;
+}
+
+.work-detail-page {
+  z-index: 2;
+}
+
+// --------------------------------------------
+// Page Transitions
+// --------------------------------------------
+
+.page-enter-active.home-page,
+.page-leave-active.home-page {
+  transition: opacity $speed-666 $evil-ease, transform $speed-666 $evil-ease;
+}
+
+.page-enter-from.home-page,
+.page-leave-to.home-page {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.page-enter-to.home-page,
+.page-leave-from.home-page {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+.page-enter-active.work-detail-page {
+  transition: opacity $speed-666 $evil-ease, transform $speed-666 $evil-ease;
+}
+
+.page-leave-active.work-detail-page {
+  transition: opacity $speed-666 $evil-ease $speed-666, transform $speed-666 $evil-ease $speed-666;
+}
+
+.page-enter-from.work-detail-page,
+.page-leave-to.work-detail-page {
+  opacity: 0;
+  transform: translateX($space-64);
+
+  @include respond-to($tablet) {
+    transform: translateX($space-96);
   }
+}
 
-  &.snap {
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
+.page-enter-to.work-detail-page,
+.page-leave-from.work-detail-page {
+  opacity: 1;
+  transform: translateX(0px);
+
+  @include respond-to($tablet) {
+    transform: translateX(0px);
   }
 }
 

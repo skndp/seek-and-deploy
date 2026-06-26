@@ -8,7 +8,10 @@ export default defineNuxtConfig({
     enabled: false
   },
   nitro: {
-    preset: 'netlify-static'
+    preset: 'netlify-static',
+    prerender: {
+      concurrency: 1
+    }
   },
   //
   // Runtime config

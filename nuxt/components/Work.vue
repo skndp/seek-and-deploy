@@ -13,14 +13,14 @@
           <div class="content">
             <ul class="h3">
               <template v-if="isTouchDevice">
-                <li v-for="(project, index) in work" class="ml" :class="{ '--active': index === activeIndex }" @click="onClickMobileItem(index)">
+                <li v-for="(project, index) in work" :key="project.slug" class="ml" :class="{ '--active': index === activeIndex }" @click="onClickMobileItem(index)">
                   <p>{{ project.title }}</p>
-                  <NuxtLink class="fs-sm" :to="project.url" target="_blank">View Site</NuxtLink>
+                  <NuxtLink class="fs-sm" :to="project.path">View Project</NuxtLink>
                 </li>
               </template>
               <template v-else>
-                <li v-for="(project, index) in work" class="dl">
-                  <NuxtLink :to="project.url" target="_blank" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
+                <li v-for="(project, index) in work" :key="project.slug" class="dl">
+                  <NuxtLink :to="project.path" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
                 </li>
               </template>
             </ul>
@@ -33,10 +33,12 @@
 
 <script setup>
 import { primaryInput } from 'detect-it';
+import { workProjects } from '~/data/work';
 
 const isTouchDevice = ref(false);
 const activeIndex = ref(0);
 const image = ref('/images/work/flesh-and-bones.jpg');
+const work = workProjects;
 
 // Props
 const props = defineProps({
@@ -49,48 +51,6 @@ const props = defineProps({
     required: true
   }
 });
-
-const work = [
-  {
-    title: "Flesh and Bones",
-    image: "/images/work/flesh-and-bones.jpg",
-    url: "https://wearefleshandbones.com/"
-  },
-  {
-    title: "Futuristic Films",
-    image: "/images/work/futuristic.jpg",
-    url: "https://futuristicfilms.com/"
-  },
-  {
-    title: "Clayton Cotterell",
-    image: "/images/work/clayton-cotterell.jpg",
-    url: "https://claytoncotterell.com/"
-  },
-  {
-    title: "Nike: 15 Years of Dunk",
-    image: "/images/work/nike-sb.jpg",
-    url: "http://fyod.s3-website-us-east-1.amazonaws.com/",
-    archive: true
-  },
-  {
-    title: "Coca Cola: Building of Memories",
-    image: "/images/work/coca-cola.jpg",
-    url: "http://cb-proto.s3-website-us-east-1.amazonaws.com/",
-    archive: true
-  },
-  {
-    title: "Domino's: IFTTT",
-    image: "/images/work/dominos-ifttt.jpg",
-    url: "http://ifttt-dominos.s3-website-us-east-1.amazonaws.com/",
-    archive: true
-  },
-  {
-    title: "Fruit of the Loom: Tuck Effect",
-    image: "/images/work/tuck-effect.jpg",
-    url: "http://tuck-effect.s3-website-us-east-1.amazonaws.com/",
-    archive: true
-  }
-];
 
 onMounted(() => {
   isTouchDevice.value =

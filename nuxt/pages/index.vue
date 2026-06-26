@@ -1,5 +1,5 @@
 <template>
-  <div :class="['page', {'snap': snap}]" ref="pageRef">
+  <div :class="['page home-page', {'snap': snap}]" ref="pageRef">
     <ClientOnly>
       <div :class="['clones', 'clones-before', store.slidePrevState, store.slideActiveState, store.slideNextState]" ref="beforeClonesRef" aria-hidden="true">
         <component
@@ -103,6 +103,8 @@ let slideElements;
 let slideOffsets = [];
 let slideIndex = 0;
 let scrollTimeout;
+let scrollSnapInitialized = false;
+let restoreScrollFrame;
 const coverTitle = 'Seek and Deploy';
 
 const slides = [
@@ -145,26 +147,53 @@ onMounted(() => {
   if(pageRef.value) {
     disableBodyScroll(pageRef.value);
   }
+
   window.addEventListener('app-ready', initScrollSnap, { once: true });
+  initScrollSnap();
 });
 
 // Before Unmount
 onBeforeUnmount(() => {
-  pageRef.value.removeEventListener('scroll', onPageScroll);
+  clearTimeout(scrollTimeout);
+  cancelAnimationFrame(restoreScrollFrame);
+  window.removeEventListener('app-ready', initScrollSnap);
+  pageRef.value?.removeEventListener('scroll', onPageScroll);
   window.removeEventListener('resize', onResize);
   window.removeEventListener('menu-slide-change', onMenuSlideChange);
+  store.setChangingSlides(false);
 });
 
 // Methods
 async function initScrollSnap() {
+  if(scrollSnapInitialized || !pageRef.value) {
+    return;
+  }
+
+  scrollSnapInitialized = true;
+
   await nextTick();
+
+  if(!pageRef.value) {
+    return;
+  }
 
   slideElements = pageRef.value.querySelectorAll('.slide');
 
   window.addEventListener('resize', onResize);
   onResize();
   disableCloneTabStops();
-  jumpToRealSlide(0);
+  slideIndex = getStoredSlideIndex();
+  snap.value = false;
+  restoreRealSlidePosition(slideIndex);
+  await waitForFrames(2);
+
+  if(!pageRef.value) {
+    return;
+  }
+
+  store.setChangingSlides(false);
+  store.setSlideNextState('');
+  store.setSlideActiveState(`slide-${slideIndex}-active`);
   snap.value = true;
 
   pageRef.value.addEventListener('scroll', onPageScroll);
@@ -190,6 +219,13 @@ function disableCloneTabStops() {
   });
 }
 
+function getStoredSlideIndex() {
+  const match = (store.slideActiveState || store.slideNextState).match(/slide-(\d+)-(active|next)/);
+  const nextIndex = match ? Number(match[1]) : 0;
+
+  return Math.min(Math.max(nextIndex, 0), lastSlideIndex);
+}
+
 function getLogicalSlideIndex(slide) {
   const parent = slide.parentElement;
 
@@ -204,15 +240,35 @@ function getLogicalSlideIndex(slide) {
   return Array.from(slidesRef.value.children).indexOf(slide);
 }
 
-function jumpToRealSlide(index) {
+function restoreRealSlidePosition(index) {
   const slide = slidesRef.value?.children[index];
 
   if(slide) {
-    pageRef.value.scrollTo({
-      'top': slide.offsetTop,
-      'left': 0,
-      'behavior': 'instant'
-    });
+    pageRef.value.scrollTop = slide.offsetTop;
+    pageRef.value.scrollLeft = 0;
+  }
+}
+
+function waitForFrames(count) {
+  return new Promise((resolve) => {
+    const tick = () => {
+      count--;
+
+      if(count <= 0) {
+        resolve();
+        return;
+      }
+
+      restoreScrollFrame = requestAnimationFrame(tick);
+    };
+
+    restoreScrollFrame = requestAnimationFrame(tick);
+  });
+}
+
+function unsetInitialSlideAfterCover() {
+  if(store.initialSlide && slideIndex !== 0) {
+    store.setInitialSlide(false);
   }
 }
 
@@ -254,9 +310,7 @@ function onScrollComplete() {
     store.setSlideActiveState(`slide-${slideIndex}-active`);
     
 
-    if (store.initialSlide) {
-      store.setInitialSlide(false);
-    }
+    unsetInitialSlideAfterCover();
 
     setTimeout(() => {
       store.setChangingSlides(false);
@@ -301,6 +355,24 @@ function onMenuSlideChange(e) {
 </script>
 
 <style lang='scss'>
+.home-page {
+  position: relative;
+  overflow-y: auto;
+  height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.snap {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+}
+
 section.slide {
   position: relative;
   width: 100%;
