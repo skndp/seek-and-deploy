@@ -3,7 +3,7 @@
     <div class="menu-stage">
       <nav class="primary-nav">
         <button
-          class="icon --logo"
+          class="icon --logo --main-logo"
           aria-label="Cover Slide"
           @click="setActiveSlide(0)"
         />
@@ -135,7 +135,7 @@ function setNextSlide() {
     }
 
     .icon {
-      &.--logo {
+      &.--main-logo {
         pointer-events: none;
 
         &:before {
@@ -319,7 +319,19 @@ function setNextSlide() {
 
     &.--logo {
       aspect-ratio: 1/1;
-      
+
+      &:after {
+        content: '';
+        position: relative;
+        width: 66.666%;
+        height: 100%;
+        @include logo($white, 0);
+        opacity: 1;
+        transition: opacity $speed-333 $ease-out $speed-333, background-image $speed-333 $ease-out $speed-333;
+      }
+    }
+
+    &.--main-logo {  
       &:before {
         content: '';
         position: absolute;
@@ -331,16 +343,6 @@ function setNextSlide() {
         opacity: 0;
         transform: translateX(-50%) translateY(-50%);
         transition: opacity $speed-333 $ease-out;
-      }
-
-      &:after {
-        content: '';
-        position: relative;
-        width: 66.666%;
-        height: 100%;
-        @include logo($white, 0);
-        opacity: 1;
-        transition: opacity $speed-333 $ease-out $speed-333, background-image $speed-333 $ease-out $speed-333;
       }
     }
 
@@ -402,7 +404,7 @@ function setNextSlide() {
     }
 
     .icon {
-      &.--logo {      
+      &.--main-logo {      
         &:before {
           width: $space-32;
           height: 2px;
