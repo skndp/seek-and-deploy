@@ -2,41 +2,10 @@
   <main v-if="project" :class="['page work-detail-page', workDetailPageClasses]">
     <div class="page-scroll" ref="pageScrollRef">
       <article class="work-track">
-        <section class="project-hero">
-          <h1 class="h1">{{ project.title }}</h1>
-          <figure class="media hero-media">
-            <img :src="project.image" :alt="project.title" />
-          </figure>
-          <a class="project-link fs-sm" :href="project.url" target="_blank" rel="noopener">Visit Site</a>
-        </section>
-        <section class="project-challenge">
-          <h2 class="section-title">The Challenge</h2>
-          <div class="media challenge-media">
-            <img :src="project.image" :alt="`${project.title} preview`" />
-          </div>
-          <p class="case-copy fs-sm">{{ project.challenge }}</p>
-          <div class="media artifact-media" aria-hidden="true" />
-        </section>
-        <section class="project-solution">
-          <h2 class="section-title">The Solution</h2>
-          <div class="media solution-media">
-            <span>{{ project.solutionLabel }}</span>
-          </div>
-          <p class="case-copy fs-sm">{{ project.solution }}</p>
-        </section>
-        <section class="project-results">
-          <div
-            v-for="(label, index) in project.resultLabels"
-            :key="label"
-            class="media result-media"
-            :class="`result-media-${index + 1}`"
-          >
-            <span>{{ label }}</span>
-          </div>
-          <h2 class="section-title">The Results</h2>
-          <p class="case-copy fs-sm">{{ project.results }}</p>
-          <NuxtLink v-if="nextProject" class="next-project fs-sm" :to="nextProject.path">Next {{ nextProject.title }} &gt;</NuxtLink>
-        </section>
+        <WorkProjectHero :project="project" />
+        <WorkChallenge :project="project" />
+        <WorkSolution :project="project" />
+        <WorkResults :project="project" :next-project="nextProject" />
       </article>
     </div>
   </main>
@@ -172,30 +141,6 @@ function onPageScrollWheel(e) {
     display: flex;
   }
 
-  .project-hero {
-    align-items: flex-start;
-    padding-left: span(1);
-    gap: span(1);
-  }
-
-  .project-challenge {
-    align-items: flex-start;
-    gap: span(1);
-    padding-left: span(1);
-  }
-
-  .project-solution {
-    align-items: flex-start;
-    gap: span(1);
-    padding-left: span(1);
-  }
-
-  .project-results {
-    align-items: flex-start;
-    gap: span(1);
-    padding: 0 span(1);
-  }
-
   .h1,
   .section-title,
   .case-copy,
@@ -208,12 +153,6 @@ function onPageScrollWheel(e) {
   .h1,
   .section-title {
     line-height: 1.1em;
-  }
-
-  .h1 {
-    width: span(3);
-    margin-top: 30vh;
-    z-index: 2;
   }
 
   .section-title {
@@ -247,124 +186,5 @@ function onPageScrollWheel(e) {
       text-align: center;
     }
   }
-
-  .hero-media {
-    width: 104vh;
-    margin-top: 24vh;
-    aspect-ratio: 2 / 1;
-  }
-
-  .project-link {
-    margin: 76vh 0 0 calc(-104vh - #{span(1)});
-    color: $gray;
-    transition: color $speed-333 $ease-out;
-
-    &:after {
-      content: ">";
-      margin-left: 0.4em;
-    }
-
-    &:hover {
-      color: $white;
-    }
-  }
-
-  .project-challenge {
-    .section-title {
-      margin-top: 24vh;
-      width: span(3.5);
-    }
-
-    .challenge-media {
-      width: 60vh;
-      margin-top: 50vh;
-      aspect-ratio: 5 / 3;
-      transform: translateY(-50%);
-    }
-
-    .case-copy {
-      width: span(2.6);
-      margin-top: 55vh;
-      color: $white;
-      font-weight: 600;
-      line-height: 1.25em;
-      transform: translateY(-50%);
-    }
-
-    .artifact-media {
-      width: 26vh;
-      margin-top: 12vh;
-      aspect-ratio: 1 / 1;
-    }
-  }
-
-  .project-solution {
-    .section-title {
-      margin-top: 13vh;
-      width: span(2.6);
-    }
-
-    .solution-media {
-      width: 126vh;
-      margin-top: 24vh;
-      aspect-ratio: 2 / 1;
-    }
-
-    .case-copy {
-      width: span(3.6);
-      margin: 77vh 0 0 calc(-1 * #{span(4.6)});
-      color: $gray;
-      line-height: 1.25em;
-    }
-  }
-
-  .project-results {
-    .section-title,
-    .case-copy,
-    .next-project {
-      order: 2;
-    }
-
-    .section-title {
-      width: span(3.5);
-      margin-top: 81vh;
-    }
-
-    .case-copy {
-      width: span(4);
-      margin: calc(81vh + #{$space-40}) 0 0 calc(-1 * #{span(3.5)});
-      color: $gray;
-      line-height: 1.25em;
-    }
-
-    .result-media {
-      order: 1;
-      width: 42vh;
-      margin-top: 24vh;
-      aspect-ratio: 1 / 1;
-    }
-
-    .result-media-1 {
-      margin-left: 0px;
-    }
-
-    .result-media-3 {
-      margin-right: span(1);
-    }
-
-    .next-project {
-      align-self: flex-start;
-      margin: 88vh 0 0 span(1);
-      color: $white;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: color $speed-333 $ease-out;
-
-      &:hover {
-        color: $yellow;
-      }
-    }
-  }
-
 }
 </style>
