@@ -5,7 +5,9 @@
         <h2 class="fs-sm gray">{{ title }}</h2>
         <div class="container">
           <div class="content">
-            <h3 class="h3">We’re a Denver-based interactive studio specializing in <span class="u">innovative</span> web design, development, and digital experiences. With over <span class="u">25 years</span> of experience building notable websites for global brands like <span class="u">Google</span>, <span class="u">Nike</span>, and <span class="u">Coca-Cola</span>, we have a diverse skill set that can match almost <span class="u">any challenge</span>. Leveraging AI, we work <span class="u">faster</span> and <span class="u">more efficient</span> than ever to design and develop immersive digital experiences that demand <span class="u">creativity</span>, <span class="u">precision</span>, and <span class="u">serious</span> technical firepower. If your brand needs more than a template, we’re the Denver-based creative technology partner that can bring it to life.</h3>
+            <h3 class="h3" ref="textRef">
+              We’re a Denver-based interactive studio specializing in <span class="u">innovative</span> web design, development, and digital experiences. With over <span class="u">25 years</span> of experience building notable websites for global brands like <span class="u">Google</span>, <span class="u">Nike</span>, and <span class="u">Coca-Cola</span>, we have a diverse skill set that can match almost <span class="u">any challenge</span>. Leveraging AI, we work <span class="u">faster</span> and <span class="u">more efficient</span> than ever to design and develop immersive digital experiences that demand <span class="u">creativity</span>, <span class="u">precision</span>, and <span class="u">serious</span> technical firepower. If your brand needs more than a template, we’re the Denver-based creative technology partner that can bring it to life.
+            </h3>
           </div>
         </div>
       </div>
@@ -27,111 +29,20 @@ const props = defineProps({
 });
 
 const textRef = ref(null);
-let resizeHandler = null;
-let resizeTimeout = null;
-let originalHtml = null;
 
-function wrapLines() {
-  const el = textRef.value;
-  if (!el) return;
-
-  // Restore original HTML for fresh measurement
-  if (originalHtml !== null) {
-    el.innerHTML = originalHtml;
-  } else {
-    originalHtml = el.innerHTML;
-  }
-
-  // Clone element for measurement
-  const clone = el.cloneNode(true);
-  clone.style.visibility = "hidden";
-  clone.style.position = "absolute";
-  clone.style.pointerEvents = "none";
-  clone.style.whiteSpace = "normal";
-  clone.style.width = el.offsetWidth + "px";
-  clone.style.left = "-9999px";
-  clone.style.top = "0";
-  document.body.appendChild(clone);
-
-  // Build measurement units
-  const units = [];
-  clone.childNodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      // split text into words
-      node.textContent.split(/\s+/).filter(Boolean).forEach(word => {
-        units.push({ type: "text", text: word });
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      // <span class="u"> treated as a single unit
-      const text = node.textContent.trim();
-      if (text.length) units.push({ type: "u", text });
-    }
+function setUnderlineDelays() {
+  textRef.value?.querySelectorAll('span.u').forEach((span, index) => {
+    span.style.setProperty('--u-delay', `${333 + ((index + 1) * 111)}ms`);
   });
-
-  // Rebuild clone for measurement
-  clone.innerHTML = "";
-  const measureSpans = units.map(u => {
-    const span = document.createElement("span");
-    span.textContent = u.text + " "; // trailing space
-    span.className = u.type === "u" ? "u measure-word" : "measure-word";
-    clone.appendChild(span);
-    return { el: span, type: u.type, text: u.text };
-  });
-
-  // Detect line breaks
-  const lines = [];
-  let currentLine = [];
-  let lastTop = null;
-
-  measureSpans.forEach(mu => {
-    const top = mu.el.offsetTop;
-    if (lastTop === null) lastTop = top;
-    if (top !== lastTop) {
-      lines.push(currentLine);
-      currentLine = [];
-      lastTop = top;
-    }
-    currentLine.push(mu);
-  });
-  if (currentLine.length) lines.push(currentLine);
-
-  // Remove clone
-  document.body.removeChild(clone);
-
-  // Build final HTML: simpler, no per-character checks
-  const finalHtml = lines
-    .map(lineUnits => {
-      return `<span class="line">` + lineUnits.map(mu => {
-        return mu.type === "u"
-          ? `<span class="u">${mu.text}</span>`
-          : mu.text;
-      }).join(' ') + `</span>`;
-    })
-    .join('');
-
-  el.innerHTML = finalHtml.replace(/\s+([.,!?;:])/g, '$1');;
 }
 
 onMounted(() => {
-  wrapLines();
-
-  resizeHandler = () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => wrapLines(), 27);
-  };
-  window.addEventListener("resize", resizeHandler);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", resizeHandler);
-  clearTimeout(resizeTimeout);
+  setUnderlineDelays();
 });
 </script>
 
 <style lang='scss'>
 section.manifesto {
-  $lines: 20; // arbitrary, just use more than needed to cover enough lines rippling in
-
   .slide-1-next &,
   .slide-1-active & {
     opacity: 1;
@@ -141,19 +52,10 @@ section.manifesto {
         .container {
           .content {
             .h3 {
-              span.line {
-                opacity: 1;
-                transform: translateY(0%);
-
-                @for $i from 1 through $lines {
-                  &:nth-child(#{$i}) {
-                    transition: transform $speed-666 #{333 + ($i * 111)}ms $ease-out, opacity $speed-666 #{333 + ($i * 111)}ms $ease-out;
-
-                    span.n {
-                      animation: pop $speed-333 #{666 + ($i * 111)}ms $ease-out forwards;
-                    }
-                  }
-                }
+              span.u {
+                text-decoration-color: rgba($yellow, 1);
+                text-underline-offset: 0.1em;
+                transition-delay: var(--u-delay);
               }
             }
           }
@@ -167,29 +69,15 @@ section.manifesto {
       .container {
         .content {
           .h3 {
-            span.line {
-              display: block;
-              opacity: 0;
-              transform: translateY(50%);
-
-              @for $i from 1 through $lines {
-                &:nth-child(#{$i}) {
-                  transition: transform $speed-666 $ease-out, opacity $speed-666 $ease-out;
-                }
-              }
-            }
-
-            span.measure-word {
-              display: inline-block;
-              white-space: nowrap;
-            }
-
             span.u {
+              --u-delay: 0ms;
               position: relative;
               text-decoration: underline;
-              text-decoration-color: $yellow;
+              text-decoration-color: rgba($yellow, 0);
               text-decoration-thickness: 2px;
-              text-underline-offset: 0.1em;
+              text-underline-offset: 0.4em;
+              transition: text-decoration-color $speed-666 $ease-out, text-underline-offset $speed-666 $ease-out;
+              transition-delay: 0ms;
             }
           }
         }
@@ -197,7 +85,7 @@ section.manifesto {
     }
   }
 
-  @include respond-to($tablet) {
+  @include respond-to($large-tablet) {
     .inner {
       .gutter {
         .container {
@@ -212,5 +100,6 @@ section.manifesto {
       }
     }
   }
+
 }
 </style>
