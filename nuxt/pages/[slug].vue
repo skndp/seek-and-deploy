@@ -234,17 +234,6 @@ function getDetailSnapTargetLeft(scroller, target) {
 
       .detail-slide {
         flex: 0 0 auto;
-
-        .title-block > *,
-        .media-holder,
-        .extra-media-holder,
-        .section-carousel,
-        .results-stat-block {
-          transform: skewX(-13deg);
-          transform-origin: 50% 50%;
-          transition: transform 1s $ease-out;
-          will-change: transform;
-        }
       }
 
       .detail-slide,
@@ -255,24 +244,55 @@ function getDetailSnapTargetLeft(scroller, target) {
     }
   }
 
-  @for $i from 0 through 3 {
-    &.detail-slide-#{$i} {
+  @include respond-to($tablet) {
+    left: $space-96;
+  }
+
+  @include respond-to($landscape) {
+    .page-scroll {
       .work-track {
-        > .detail-slide:nth-of-type(#{$i + 1}) {
+        position: relative;
+        width: max-content;
+        min-width: 100%;
+        height: 100%;
+        display: inline-flex;
+
+        .detail-slide {
+          flex: 0 0 auto;
+
           .title-block > *,
           .media-holder,
           .extra-media-holder,
           .section-carousel,
           .results-stat-block {
-            transform: skewX(0deg);
+            transform: skewX(-13deg);
+            transform-origin: 50% 50%;
+            transition: transform $speed-666 $ease-out;
+            will-change: transform;
           }
         }
       }
     }
-  }
+    
+    $slides: 10; // NOTE: 10 is arbitrary, but should be enough for most cases. If you have more than 10 slides, increase this number.
 
-  @include respond-to($tablet) {
-    left: $space-96;
+    @for $i from 0 through $slides {
+      &.detail-slide-#{$i} {
+        .page-scroll {
+          .work-track {
+            > .detail-slide:nth-of-type(#{$i + 1}) {
+              .title-block > *,
+              .media-holder,
+              .extra-media-holder,
+              .section-carousel,
+              .results-stat-block {
+                transform: skewX(0deg);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>
