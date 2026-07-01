@@ -1,5 +1,5 @@
 <template>
-  <main v-if="project" :class="['page work-detail-page', workDetailPageClasses]">
+  <main v-if="project" :class="['page work-detail-page', workDetailPageClasses, activeDetailSlideClass]">
     <div class="page-scroll" ref="pageScrollRef">
       <article class="work-track">
         <WorkProjectHero :project="project" />
@@ -19,13 +19,16 @@ const slug = computed(() => String(route.params.slug || ''));
 const project = computed(() => getWorkProjectBySlug(slug.value));
 const nextProject = computed(() => project.value ? getNextWorkProject(project.value.slug) : null);
 const pageScrollRef = ref(null);
+const activeDetailSlideIndex = ref(0);
 const pageTransitionState = useState('menu-transition-state', () => 'detail');
 const workDetailPageClasses = computed(() => ({
   scaler: ['detail-enter', 'detail-leave', 'detail-leave-rotate'].includes(pageTransitionState.value),
   cased: pageTransitionState.value === 'detail'
 }));
+const activeDetailSlideClass = computed(() => `detail-slide-${activeDetailSlideIndex.value}`);
 const siteUrl = 'https://seekanddeploy.com';
 let wheelSnapTimeout;
+let scrollFrame;
 
 if(!project.value) {
   throw createError({
@@ -59,11 +62,15 @@ useHead({
 
 onMounted(() => {
   pageScrollRef.value?.addEventListener('wheel', onPageScrollWheel, { passive: false });
+  pageScrollRef.value?.addEventListener('scroll', onPageScroll, { passive: true });
+  updateActiveDetailSlide();
 });
 
 onBeforeUnmount(() => {
   pageScrollRef.value?.removeEventListener('wheel', onPageScrollWheel);
+  pageScrollRef.value?.removeEventListener('scroll', onPageScroll);
   clearTimeout(wheelSnapTimeout);
+  cancelAnimationFrame(scrollFrame);
 });
 
 function onPageScrollWheel(e) {
@@ -108,6 +115,7 @@ function onPageScrollWheel(e) {
   }
 
   clearTimeout(wheelSnapTimeout);
+  setActiveDetailSlide(nextTarget);
   scroller.classList.add('is-snapping');
   scroller.scrollTo({
     left: nextTarget.left,
@@ -118,13 +126,47 @@ function onPageScrollWheel(e) {
   }, 777);
 }
 
+function onPageScroll() {
+  cancelAnimationFrame(scrollFrame);
+  scrollFrame = requestAnimationFrame(updateActiveDetailSlide);
+}
+
+function updateActiveDetailSlide() {
+  const scroller = pageScrollRef.value;
+
+  if(!scroller) {
+    return;
+  }
+
+  const snapTargets = getDetailSnapTargets(scroller);
+
+  if(!snapTargets.length) {
+    return;
+  }
+
+  setActiveDetailSlide(snapTargets[getClosestDetailSnapIndex(scroller, snapTargets)]);
+}
+
+function setActiveDetailSlide(snapTarget) {
+  if(Number.isInteger(snapTarget?.slideIndex)) {
+    activeDetailSlideIndex.value = snapTarget.slideIndex;
+  }
+}
+
 function getDetailSnapTargets(scroller) {
+  const detailSlides = [...scroller.querySelectorAll('.detail-slide')];
+
   return [...scroller.querySelectorAll('.detail-slide, .detail-snap')]
     .filter((target) => target.getClientRects().length)
-    .map((target) => ({
-      el: target,
-      left: getDetailSnapTargetLeft(scroller, target)
-    }))
+    .map((target) => {
+      const slide = target.classList.contains('detail-slide') ? target : target.closest('.detail-slide');
+
+      return {
+        el: target,
+        slideIndex: detailSlides.indexOf(slide),
+        left: getDetailSnapTargetLeft(scroller, target)
+      };
+    })
     .sort((a, b) => a.left - b.left);
 }
 
@@ -192,12 +234,39 @@ function getDetailSnapTargetLeft(scroller, target) {
 
       .detail-slide {
         flex: 0 0 auto;
+
+        .title-block > *,
+        .media-holder,
+        .extra-media-holder,
+        .section-carousel,
+        .results-stat-block {
+          transform: skewX(-13deg);
+          transform-origin: 50% 50%;
+          transition: transform 1s $ease-out;
+          will-change: transform;
+        }
       }
 
       .detail-slide,
       .detail-snap {
         scroll-snap-align: start;
         scroll-snap-stop: always;
+      }
+    }
+  }
+
+  @for $i from 0 through 3 {
+    &.detail-slide-#{$i} {
+      .work-track {
+        > .detail-slide:nth-of-type(#{$i + 1}) {
+          .title-block > *,
+          .media-holder,
+          .extra-media-holder,
+          .section-carousel,
+          .results-stat-block {
+            transform: skewX(0deg);
+          }
+        }
       }
     }
   }

@@ -38,6 +38,7 @@ section.project-hero {
 
     a {
       margin-top: $space-8;
+      margin-left: 1ch;
       text-decoration: underline;
       text-decoration-color: $yellow;
       text-decoration-thickness: 1px;
