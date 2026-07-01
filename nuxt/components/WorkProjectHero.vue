@@ -1,7 +1,7 @@
 <template>
   <section class="project-hero detail-slide">
     <div class="title-block">
-      <h1 class="h2">{{ project.title }}</h1>
+      <h1 class="h3-lg">{{ project.title }}</h1>
       <NuxtLink class="project-link fs-sm" :href="project.url" target="_blank">Visit Site</NuxtLink>
     </div>
     <div class="media-block">
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   project: {
     type: Object,
     required: true
@@ -56,6 +56,7 @@ section.project-hero {
       position: relative;
       width: 100%;
       aspect-ratio: 4/3;
+      overflow: hidden;
 
       img {
         @include abs-fill;

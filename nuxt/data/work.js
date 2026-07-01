@@ -4,27 +4,73 @@ const caseStudyProjects = [
     slug: "flesh-and-bones",
     image: "/images/work/flesh-and-bones.jpg",
     url: "https://wearefleshandbones.com/",
-    challenge: "Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter. Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter.",
-    solutionLabel: "Campaign sequence",
-    resultLabels: ["Identity", "Experience", "Launch"]
+    challenge: {
+      image: "/images/work/flesh-and-bones.jpg",
+      copy: "Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter. Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter.",
+      extraImage: "/images/work/flesh-and-bones.jpg"
+    },
+    solution: {
+      video: "/videos/work/fnb-fpo.mp4",
+      chapters: [
+        {
+          start: 0,
+          title: "Loading"
+        },
+        {
+          start: 3.5,
+          title: "Transition"
+        }
+      ]
+    },
+    results: {
+      resultsStats: [
+        "Identity",
+        "Experience",
+        "Launch"
+      ]
+    }
   },
   {
     title: "Futuristic Films",
     slug: "futuristic-films",
     image: "/images/work/futuristic.jpg",
     url: "https://futuristicfilms.com/",
-    challenge: "Give a production studio portfolio the speed of a reel and the structure of a serious body of work.",
-    solutionLabel: "Portfolio system",
-    resultLabels: ["Reel", "Projects", "Studio"]
+    challenge: {
+      image: "/images/work/futuristic.jpg",
+      copy: "Give a production studio portfolio the speed of a reel and the structure of a serious body of work.",
+      extraImage: "/images/work/futuristic.jpg"
+    },
+    solution: {
+      image: "/images/work/futuristic.jpg"
+    },
+    results: {
+      resultsStats: [
+        "Reel",
+        "Projects",
+        "Studio"
+      ]
+    }
   },
   {
     title: "Clayton Cotterell",
     slug: "clayton-cotterell",
     image: "/images/work/clayton-cotterell.jpg",
     url: "https://claytoncotterell.com/",
-    challenge: "Present a photographer's work with enough restraint for the images to lead and enough attitude to feel authored.",
-    solutionLabel: "Gallery rhythm",
-    resultLabels: ["Archive", "Editorial", "Portfolio"]
+    challenge: {
+      image: "/images/work/clayton-cotterell.jpg",
+      copy: "Present a photographer's work with enough restraint for the images to lead and enough attitude to feel authored.",
+      extraImage: "/images/work/clayton-cotterell.jpg"
+    },
+    solution: {
+      image: "/images/work/clayton-cotterell.jpg"
+    },
+    results: {
+      resultsStats: [
+        "Archive",
+        "Editorial",
+        "Portfolio"
+      ]
+    }
   }
 ];
 

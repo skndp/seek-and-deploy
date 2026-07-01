@@ -3,7 +3,7 @@
     <div class="detail-snap detail-snap-half" aria-hidden="true" />
     <div class="results-block">
       <div
-        v-for="(label, index) in project.resultLabels"
+        v-for="(label, index) in project.results.resultsStats"
         :key="index"
         class="results-stat-block"
       >
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="title-block">
-      <h2 class="section-title h3">The Results</h2>
+      <h2 class="section-title h3-mid">The Results</h2>
       <p class="fs-sm">
         Next:
         <NuxtLink v-if="nextProject" class="next-project" :to="nextProject.path">{{ nextProject.title }}</NuxtLink>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   project: {
     type: Object,
     required: true

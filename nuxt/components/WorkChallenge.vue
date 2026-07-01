@@ -2,22 +2,22 @@
   <section class="project-challenge detail-slide">
     <div class="detail-snap detail-snap-half" aria-hidden="true" />
     <div class="title-block">
-      <h2 class="section-title h3">The Challenge</h2>
-      <p class="copy">{{ project.challenge }}</p>
+      <h2 class="section-title h3-mid">The Challenge</h2>
+      <p class="copy">{{ project.challenge.copy }}</p>
     </div>
     <div class="media-block">
       <figure class="media-holder">
-        <img :src="project.image" :alt="project.title" />
+        <img :src="project.challenge.image" :alt="`Challenge for ${project.title}`" />
       </figure>
     </div>
     <figure class="extra-media-holder">
-      <img :src="project.image" :alt="project.title" />
+      <img :src="project.challenge.extraImage" :alt="`Extra image for ${project.title}`" />
     </figure>
   </section>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   project: {
     type: Object,
     required: true
@@ -69,6 +69,7 @@ section.project-challenge {
       position: relative;
       width: 100%;
       aspect-ratio: 3/2;
+      overflow: hidden;
 
       img {
         @include abs-fill;
