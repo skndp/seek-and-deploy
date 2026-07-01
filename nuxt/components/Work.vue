@@ -11,9 +11,14 @@
             </div>
           </div>
           <div class="content">
-            <ul class="h3">
-              <li v-for="(project, index) in work" :key="project.slug">
-                <NuxtLink :to="project.path" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
+            <ul>
+              <li class="fs-sm gray">Case Studies</li>
+              <li v-for="project in caseStudies" :key="project.slug" class="h3">
+                <NuxtLink :to="project.path" @mouseenter="onWorkHover(project)">{{ project.title }}</NuxtLink>
+              </li>
+              <li class="fs-sm gray pad-t">Archives</li>
+              <li v-for="archive in archives" :key="archive.url">
+                <NuxtLink class="external" :href="archive.url" target="_blank" @mouseenter="onWorkHover(archive)">{{ archive.title }}</NuxtLink>
               </li>
             </ul>
           </div>
@@ -25,12 +30,12 @@
 
 <script setup>
 import { primaryInput } from 'detect-it';
-import { workProjects } from '~/data/work';
+import { archives, caseStudies } from '~/data/work';
 
 const isTouchDevice = ref(false);
 const activeIndex = ref(0);
 const image = ref('/images/work/flesh-and-bones.jpg');
-const work = workProjects;
+const work = [...caseStudies, ...archives];
 
 // Props
 const props = defineProps({
@@ -53,11 +58,13 @@ onMounted(() => {
 
 function onClickMobileItem(index) {
   activeIndex.value = index;
-  image.value = work[index].image;
+  onWorkHover(work[index]);
 }
 
-function onWorkHover(index) {
-  image.value = work[index].image;
+function onWorkHover(project) {
+  if(project?.image) {
+    image.value = project.image;
+  }
 }
 </script>
 
@@ -82,7 +89,7 @@ section.work {
                 opacity: 1;
                 transform: translateY(0%);
 
-                @for $i from 1 through 7 {
+                @for $i from 1 through 16 {
                   &:nth-child(#{$i}) {
                     transition: transform $speed-666 #{333 + ($i * 111)}ms $ease-out, opacity $speed-666 #{333 + ($i * 111)}ms $ease-out;
                   }
@@ -159,32 +166,83 @@ section.work {
                 }
               }
 
+              &.fs-sm {
+                margin-bottom: $space-8;
+              }
+
               a {
                 position: relative;
-                padding-right: 0.75em;
+                padding-right: 1.25em;
                 display: inline-flex;
+
+                &:not(.external) {
+                  &:after {
+                    display: none;
+                  }
+                }
+
+                &.external {
+                  padding-right: 2em;
+                  
+                  &:after {
+                    width: 1em;
+                    height: 1em;
+                    @include link($yellow, 1.25);
+                    transform: translateY(-50%);
+
+                    @include respond-to($tablet) {
+                      @include link($yellow, 2);
+                    }
+                  }
+                }
 
                 &:after {
                   content: '';
                   position: absolute;
                   top: 50%;
                   right: 0px;
-                  width: 0.5em;
-                  height: 0.5em;
+                  width: 0.75em;
+                  height: 0.75em;
                   margin-top: 0.04em;
-                  @include down-arrow($yellow, 5);
-                  opacity: 0;
+                  @include down-arrow($yellow, 3);
+                  opacity: 1;
                   transform-origin: 0% 0%;
-                  transform: rotate(-90deg) translateX(-50%) translateY(-6px);
-                  transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
+                  transform: rotate(-90deg) translateX(-50%) translateY(0px);
                 }
 
-                &:hover {
-                  color: $yellow;
+                @include can-hover {
+                  &:not(.external) {
+                    &:after {
+                      display: flex;
+                    }
+                  }
+
+                  &.external {
+                    &:after {
+                      transform: translateX(-6px) translateY(-50%);
+                    }
+                  }
 
                   &:after {
-                    opacity: 1;
-                    transform: rotate(-90deg) translateX(-50%) translateY(0px);
+                    @include down-arrow($yellow, 3);
+                    opacity: 0;
+                    transform: rotate(-90deg) translateX(-50%) translateY(-6px);
+                    transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
+                  }
+  
+                  &:hover {
+                    color: $yellow;
+
+                    &.external {
+                      &:after {
+                        transform: translateX(0px) translateY(-50%);
+                      }
+                    }
+  
+                    &:after {
+                      opacity: 1;
+                      transform: rotate(-90deg) translateX(-50%) translateY(0px);
+                    }
                   }
                 }
               }

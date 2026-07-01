@@ -65,6 +65,13 @@
   background-size: contain;
 }
 
+@mixin link($color, $width) {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20" xml:space="preserve" fill="none" stroke="#{svgColorMaker($color)}" stroke-width="#{$width}px" stroke-linecap="round"><path vector-effect="non-scaling-stroke" d="M7.334,3.067h-1.92c-1.195,0-1.793,0-2.249.233-.401.205-.728.531-.932.932-.233.456-.233,1.054-.233,2.249v8.107c0,1.195,0,1.792.233,2.248.205.401.531.728.932.933.456.232,1.053.232,2.245.232h8.113c1.192,0,1.789,0,2.245-.232.401-.204.729-.532.933-.933.232-.456.232-1.052.232-2.245v-1.923M18,7.333V2M18,2h-5.333M18,2l-7.467,7.467"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
 @mixin linkedin($color) {
   background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16" xml:space="preserve" fill="#{svgColorMaker($color)}"><path d="M.263,5.317h3.317v10.668H.263V5.317ZM1.922.014C2.982.014,3.843.876,3.843,1.938s-.862,1.922-1.922,1.922-1.922-.862-1.922-1.922S.859.014,1.922.014M5.66,5.317h3.18v1.459h.045c.443-.839,1.525-1.723,3.137-1.723,3.358,0,3.977,2.209,3.977,5.081v5.851h-3.314v-5.188c0-1.238-.022-2.829-1.723-2.829-1.726,0-1.989,1.349-1.989,2.74v5.277h-3.314V5.317Z"/></svg>');
   background-repeat: no-repeat;
