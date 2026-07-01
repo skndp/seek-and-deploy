@@ -12,17 +12,9 @@
           </div>
           <div class="content">
             <ul class="h3">
-              <template v-if="isTouchDevice">
-                <li v-for="(project, index) in work" :key="project.slug" class="ml" :class="{ '--active': index === activeIndex }" @click="onClickMobileItem(index)">
-                  <p>{{ project.title }}</p>
-                  <NuxtLink class="fs-sm" :to="project.path">View Project</NuxtLink>
-                </li>
-              </template>
-              <template v-else>
-                <li v-for="(project, index) in work" :key="project.slug" class="dl">
-                  <NuxtLink :to="project.path" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
-                </li>
-              </template>
+              <li v-for="(project, index) in work" :key="project.slug">
+                <NuxtLink :to="project.path" @mouseenter="onWorkHover(index)">{{ project.title }}</NuxtLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -157,6 +149,7 @@ section.work {
 
             li {
               font-weight: 600;
+              align-items: center;
               opacity: 0;
               transform: translateY(50%);
 
@@ -166,86 +159,32 @@ section.work {
                 }
               }
 
-              &.ml {
+              a {
                 position: relative;
-                display: flex;
-                padding-bottom: 12px;
-                flex-direction: column;
-                color: $white;
-                cursor: pointer;
-                transition: color $speed-333 $ease-out;
+                padding-right: 0.75em;
+                display: inline-flex;
 
-                &:first-child {
-                  margin-top: 12px;
-                }
-
-                &.--active {
-                  color: $yellow;
-                  cursor: default;
-
-                  a {
-                    opacity: 1;
-                    pointer-events: auto;
-                    cursor: pointer;
-                  }
-                }
-
-                a {
+                &:after {
+                  content: '';
                   position: absolute;
-                  bottom: 0px;
-                  left: 0px;
-                  color: $white;
+                  top: 50%;
+                  right: 0px;
+                  width: 0.5em;
+                  height: 0.5em;
+                  margin-top: 0.04em;
+                  @include down-arrow($yellow, 5);
                   opacity: 0;
-                  height: 24px;
-                  display: flex;
-                  align-items: center;
-                  pointer-events: none;
-                  transition: opacity $speed-333 $ease-out;
-
-                  &:after {
-                    content: '';
-                    width: 10px;
-                    height: 10px;
-                    @include down-arrow($white, 2);
-                    display: flex;
-                    flex-shrink: 0;
-                    margin-left: 0.5em;
-                    transform-origin: 50% 50%;
-                    transform: rotate(-90deg);
-                  }
+                  transform-origin: 0% 0%;
+                  transform: rotate(-90deg) translateX(-50%) translateY(-6px);
+                  transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
                 }
-              }
 
-              &.dl {
-                align-items: center;
-
-                a {
-                  position: relative;
-                  padding-right: 0.75em;
-                  display: inline-flex;
+                &:hover {
+                  color: $yellow;
 
                   &:after {
-                    content: '';
-                    position: absolute;
-                    top: 50%;
-                    right: 0px;
-                    width: 0.5em;
-                    height: 0.5em;
-                    margin-top: 0.04em;
-                    @include down-arrow($yellow, 5);
-                    opacity: 0;
-                    transform-origin: 0% 0%;
-                    transform: rotate(-90deg) translateX(-50%) translateY(-6px);
-                    transition: opacity $speed-333 $ease-out, transform $speed-333 $ease-out;
-                  }
-
-                  &:hover {
-                    color: $yellow;
-
-                    &:after {
-                      opacity: 1;
-                      transform: rotate(-90deg) translateX(-50%) translateY(0px);
-                    }
+                    opacity: 1;
+                    transform: rotate(-90deg) translateX(-50%) translateY(0px);
                   }
                 }
               }

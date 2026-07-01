@@ -4,8 +4,7 @@ const projects = [
     slug: "flesh-and-bones",
     image: "/images/work/flesh-and-bones.jpg",
     url: "https://wearefleshandbones.com/",
-    challenge: "Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter.",
-    results: "A focused experience built around mood, momentum, and direct paths into the finished site.",
+    challenge: "Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter. Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter.",
     solutionLabel: "Campaign sequence",
     resultLabels: ["Identity", "Experience", "Launch"]
   },
@@ -15,7 +14,6 @@ const projects = [
     image: "/images/work/futuristic.jpg",
     url: "https://futuristicfilms.com/",
     challenge: "Give a production studio portfolio the speed of a reel and the structure of a serious body of work.",
-    results: "A sharp, durable platform for browsing the studio's work without slowing down the first impression.",
     solutionLabel: "Portfolio system",
     resultLabels: ["Reel", "Projects", "Studio"]
   },
@@ -25,7 +23,6 @@ const projects = [
     image: "/images/work/clayton-cotterell.jpg",
     url: "https://claytoncotterell.com/",
     challenge: "Present a photographer's work with enough restraint for the images to lead and enough attitude to feel authored.",
-    results: "A portfolio that feels editorial, direct, and ready for repeated exploration.",
     solutionLabel: "Gallery rhythm",
     resultLabels: ["Archive", "Editorial", "Portfolio"]
   },
@@ -36,7 +33,6 @@ const projects = [
     url: "http://fyod.s3-website-us-east-1.amazonaws.com/",
     archive: true,
     challenge: "Celebrate a deep product history without turning the archive into a static timeline.",
-    results: "An archived experience that still carries the energy of the original launch.",
     solutionLabel: "Archive interaction",
     resultLabels: ["Timeline", "Product", "Campaign"]
   },
@@ -47,7 +43,6 @@ const projects = [
     url: "http://cb-proto.s3-website-us-east-1.amazonaws.com/",
     archive: true,
     challenge: "Turn a branded story into a web experience with warmth, pacing, and a clear emotional arc.",
-    results: "A campaign prototype shaped to feel approachable while still carrying the brand moment.",
     solutionLabel: "Story prototype",
     resultLabels: ["Narrative", "Prototype", "Brand"]
   },
@@ -58,7 +53,6 @@ const projects = [
     url: "http://ifttt-dominos.s3-website-us-east-1.amazonaws.com/",
     archive: true,
     challenge: "Make a playful service integration understandable at a glance without flattening the idea.",
-    results: "An archived prototype that explains the hook fast and keeps the tone light.",
     solutionLabel: "Integration flow",
     resultLabels: ["Automation", "Prototype", "Ordering"]
   },
@@ -69,7 +63,6 @@ const projects = [
     url: "http://tuck-effect.s3-website-us-east-1.amazonaws.com/",
     archive: true,
     challenge: "Turn a small product behavior into a campaign interaction people can immediately understand.",
-    results: "A compact archived experience built around one memorable interaction.",
     solutionLabel: "Comparison tool",
     resultLabels: ["Product", "Prototype", "Campaign"]
   }

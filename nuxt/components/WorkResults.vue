@@ -1,16 +1,22 @@
 <template>
-  <section class="project-results">
-    <div
-      v-for="(label, index) in project.resultLabels"
-      :key="label"
-      class="media result-media"
-      :class="`result-media-${index + 1}`"
-    >
-      <span>{{ label }}</span>
+  <section class="project-results detail-slide">
+    <div class="detail-snap detail-snap-half" aria-hidden="true" />
+    <div class="results-block">
+      <div
+        v-for="(label, index) in project.resultLabels"
+        :key="index"
+        class="results-stat-block"
+      >
+        <span>{{ label }}</span>
+      </div>
     </div>
-    <h2 class="section-title">The Results</h2>
-    <p class="case-copy fs-sm">{{ project.results }}</p>
-    <NuxtLink v-if="nextProject" class="next-project fs-sm" :to="nextProject.path">Next {{ nextProject.title }} &gt;</NuxtLink>
+    <div class="title-block">
+      <h2 class="section-title h3">The Results</h2>
+      <p class="fs-sm">
+        Next:
+        <NuxtLink v-if="nextProject" class="next-project" :to="nextProject.path">{{ nextProject.title }}</NuxtLink>
+      </p>
+    </div>
   </section>
 </template>
 
@@ -28,55 +34,73 @@ defineProps({
 </script>
 
 <style lang="scss">
-.work-detail-page {
-  .project-results {
-    align-items: flex-start;
+section.project-results {
+  position: relative;
+  height: 100%;
+  @include work-section-width(2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .detail-snap-half {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 0px;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .results-block {
+    position: relative;
+    margin: 0 span(1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: span(1);
-    padding: 0 span(1);
+    
+    .results-stat-block {
+      position: relative;
+      aspect-ratio: 1/1;
+      background-color: $gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
-    .section-title,
-    .case-copy,
-    .next-project {
-      order: 2;
+  .title-block {
+    position: absolute;
+    bottom: span(1);
+    left: span(1);
+    right: span(1);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    p {
+      display: inline-flex;
+
+      a {
+        margin-left: 1ch;
+        text-decoration: underline;
+        text-decoration-color: $yellow;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.2em;
+        display: flex;
+      }
+    }
+  }
+
+  @include respond-to($landscape) {
+    @include respond-to($desktop) {
+      .results-block {
+        margin: 0 span(2) 0 span(1);
+      }
     }
 
-    .section-title {
-      width: span(3.5);
-      margin-top: 81vh;
-    }
-
-    .case-copy {
-      width: span(4);
-      margin: calc(81vh + #{$space-40}) 0 0 calc(-1 * #{span(3.5)});
-      color: $gray;
-      line-height: 1.25em;
-    }
-
-    .result-media {
-      order: 1;
-      width: 42vh;
-      margin-top: 24vh;
-      aspect-ratio: 1 / 1;
-    }
-
-    .result-media-1 {
-      margin-left: 0px;
-    }
-
-    .result-media-3 {
-      margin-right: span(1);
-    }
-
-    .next-project {
-      align-self: flex-start;
-      margin: 88vh 0 0 span(1);
-      color: $white;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: color $speed-333 $ease-out;
-
-      &:hover {
-        color: $yellow;
+    @include respond-to($macbook) {
+      .title-block {
+        bottom: span(0.5);
       }
     }
   }

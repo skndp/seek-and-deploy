@@ -1,10 +1,14 @@
 <template>
-  <section class="project-hero">
-    <h1 class="h1">{{ project.title }}</h1>
-    <figure class="media hero-media">
-      <img :src="project.image" :alt="project.title" />
-    </figure>
-    <a class="project-link fs-sm" :href="project.url" target="_blank" rel="noopener">Visit Site</a>
+  <section class="project-hero detail-slide">
+    <div class="title-block">
+      <h1 class="h2">{{ project.title }}</h1>
+      <NuxtLink class="project-link fs-sm" :href="project.url" target="_blank">Visit Site</NuxtLink>
+    </div>
+    <div class="media-block">
+      <figure class="media-holder">
+        <img :src="project.image" :alt="project.title" />
+      </figure>
+    </div>
   </section>
 </template>
 
@@ -18,37 +22,70 @@ defineProps({
 </script>
 
 <style lang="scss">
-.work-detail-page {
-  .project-hero {
-    align-items: flex-start;
-    padding-left: span(1);
-    gap: span(1);
+section.project-hero {
+  position: relative;
+  height: 100%;
+  @include work-section-width(1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  .title-block {
+    order: 2;
+    width: 100%;
+    margin-top: span(1);
+    margin-left: span(2);
+
+    a {
+      margin-top: $space-8;
+      text-decoration: underline;
+      text-decoration-color: $yellow;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+      display: flex;
+    }
   }
 
-  .h1 {
-    width: span(3);
-    margin-top: 30vh;
-    z-index: 2;
+  .media-block {
+    order: 1;
+    width: 100%;
+    margin-left: span(2);
+
+    .media-holder {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+
+      img {
+        @include abs-fill;
+        object-fit: cover;
+        object-position: 50% 50%;
+      }
+    }
   }
 
-  .hero-media {
-    width: 104vh;
-    margin-top: 24vh;
-    aspect-ratio: 2 / 1;
-  }
-
-  .project-link {
-    margin: 76vh 0 0 calc(-104vh - #{span(1)});
-    color: $gray;
-    transition: color $speed-333 $ease-out;
-
-    &:after {
-      content: ">";
-      margin-left: 0.4em;
+  @include respond-to($landscape) {
+    .title-block {
+      position: absolute;
+      top: 50%;
+      left: span(1);
+      right: span(1);
+      width: auto;
+      margin-top: 0px;
+      margin-left: 0px;
+      transform: translateY(-100%);
+      z-index: 1;
     }
 
-    &:hover {
-      color: $white;
+    .media-block {
+      order: 1;
+      width: 70%;
+      margin-left: auto;
+      margin-right: span(1);
+
+      .media-holder {
+        aspect-ratio: 2/1;
+      }
     }
   }
 }

@@ -24,6 +24,22 @@
   height: 100%;
 }
 
+@mixin work-section-width($n) {
+  width: calc((100vw * #{$n}) - (#{$space-64} * #{$n}));
+
+  @include respond-to($landscape) {
+    width: calc(100vw - $space-64);
+  }
+
+  @include respond-to($tablet) {
+    width: calc((100vw * #{$n}) - (#{$space-96} * #{$n}));
+
+    @include respond-to($landscape) {
+      width: calc(100vw - $space-96);
+    }
+  }
+}
+
 // --------------------------------------------
 // Logos, icons, etc
 // --------------------------------------------

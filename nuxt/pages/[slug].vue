@@ -25,6 +25,7 @@ const workDetailPageClasses = computed(() => ({
   cased: pageTransitionState.value === 'detail'
 }));
 const siteUrl = 'https://seekanddeploy.com';
+let wheelSnapTimeout;
 
 if(!project.value) {
   throw createError({
@@ -62,6 +63,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   pageScrollRef.value?.removeEventListener('wheel', onPageScrollWheel);
+  clearTimeout(wheelSnapTimeout);
 });
 
 function onPageScrollWheel(e) {
@@ -73,42 +75,82 @@ function onPageScrollWheel(e) {
 
   const multiplier = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : e.deltaMode === WheelEvent.DOM_DELTA_PAGE ? window.innerHeight : 1,
         deltaX = e.deltaX * multiplier,
-        deltaY = e.deltaY * multiplier,
-        delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX,
-        maxScroll = scroller.scrollWidth - scroller.clientWidth,
-        nextScroll = Math.min(Math.max(scroller.scrollLeft + delta, 0), maxScroll);
+        deltaY = e.deltaY * multiplier;
 
-  if(nextScroll === scroller.scrollLeft) {
+  if(Math.abs(deltaX) >= Math.abs(deltaY)) {
     return;
   }
 
+  if(scroller.classList.contains('is-snapping')) {
+    e.preventDefault();
+    return;
+  }
+
+  if(Math.abs(deltaY) < 4) {
+    return;
+  }
+
+  const snapTargets = getDetailSnapTargets(scroller);
+
   e.preventDefault();
-  scroller.scrollLeft = nextScroll;
+
+  if(!snapTargets.length) {
+    return;
+  }
+
+  const direction = deltaY > 0 ? 1 : -1,
+        currentIndex = getClosestDetailSnapIndex(scroller, snapTargets),
+        nextIndex = Math.min(Math.max(currentIndex + direction, 0), snapTargets.length - 1),
+        nextTarget = snapTargets[nextIndex];
+
+  if(!nextTarget || nextIndex === currentIndex) {
+    return;
+  }
+
+  clearTimeout(wheelSnapTimeout);
+  scroller.classList.add('is-snapping');
+  scroller.scrollTo({
+    left: nextTarget.left,
+    behavior: 'smooth'
+  });
+  wheelSnapTimeout = setTimeout(() => {
+    scroller.classList.remove('is-snapping');
+  }, 777);
+}
+
+function getDetailSnapTargets(scroller) {
+  return [...scroller.querySelectorAll('.detail-slide, .detail-snap')]
+    .filter((target) => target.getClientRects().length)
+    .map((target) => ({
+      el: target,
+      left: getDetailSnapTargetLeft(scroller, target)
+    }))
+    .sort((a, b) => a.left - b.left);
+}
+
+function getClosestDetailSnapIndex(scroller, snapTargets) {
+  return snapTargets.reduce((closestIndex, target, index) => {
+    const closestDistance = Math.abs(snapTargets[closestIndex].left - scroller.scrollLeft),
+          targetDistance = Math.abs(target.left - scroller.scrollLeft);
+
+    return targetDistance < closestDistance ? index : closestIndex;
+  }, 0);
+}
+
+function getDetailSnapTargetLeft(scroller, target) {
+  return target.getBoundingClientRect().left - scroller.getBoundingClientRect().left + scroller.scrollLeft;
 }
 </script>
 
 <style lang="scss">
 .work-detail-page {
-  @include abs-fill;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: $space-64;
+  bottom: 0px;
+  background-color: $black;
   overflow: hidden;
-  backdrop-filter: blur(8px);
-
-  .page-scroll {
-    @include abs-fill;
-    overflow-x: auto;
-    overflow-y: hidden;
-    transform-origin: 50% 50%;
-    transform: scale(0.9);
-    transition: transform $speed-666 $evil-ease;
-    will-change: transform;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
 
   &.cased {
     .page-scroll {
@@ -122,69 +164,46 @@ function onPageScrollWheel(e) {
     }
   }
 
-  .work-track {
-    position: relative;
-    width: max-content;
-    min-width: 100%;
-    height: 100%;
-    display: inline-flex;
-    align-items: stretch;
-  }
+  .page-scroll {
+    @include abs-fill;
+    overflow-x: auto;
+    overflow-y: hidden;
+    transform-origin: 50% 50%;
+    transform: scale(0.9);
+    transition: transform $speed-666 $evil-ease;
+    will-change: transform;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 
-  .project-hero,
-  .project-challenge,
-  .project-solution,
-  .project-results {
-    flex: 0 0 auto;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-  }
-
-  .h1,
-  .section-title,
-  .case-copy,
-  .project-link,
-  .next-project {
-    letter-spacing: 0;
-    flex: 0 0 auto;
-  }
-
-  .h1,
-  .section-title {
-    line-height: 1.1em;
-  }
-
-  .section-title {
-    font-size: clamp(18px, 1.35vw, 26px);
-    font-weight: 400;
-    color: $white;
-  }
-
-  .media {
-    overflow: hidden;
-    background: #9b9b9b;
-    flex: 0 0 auto;
-
-    img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
+    .work-track {
+      position: relative;
+      width: max-content;
+      min-width: 100%;
       height: 100%;
-      color: rgba($black, 0.7);
-      font-size: 10px;
-      line-height: 1em;
-      letter-spacing: 0;
-      text-align: center;
+      display: inline-flex;
+
+      .detail-slide {
+        flex: 0 0 auto;
+      }
+
+      .detail-slide,
+      .detail-snap {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
     }
+  }
+
+  @include respond-to($tablet) {
+    left: $space-96;
   }
 }
 </style>
