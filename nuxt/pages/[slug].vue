@@ -1,7 +1,7 @@
 <template>
-  <main v-if="project" :class="['page work-detail-page', workDetailPageClasses, activeDetailSlideClass]">
+  <main v-if="project" :class="['page work-detail-page', workDetailPageClasses]" :style="workDetailPageStyle">
     <div class="page-scroll" ref="pageScrollRef">
-      <article class="work-track">
+      <article class="work-track" :style="workTrackStyle">
         <WorkProjectHero :project="project" />
         <WorkChallenge :project="project" />
         <WorkSolution :project="project" />
@@ -19,16 +19,37 @@ const slug = computed(() => String(route.params.slug || ''));
 const project = computed(() => getWorkProjectBySlug(slug.value));
 const nextProject = computed(() => project.value ? getNextWorkProject(project.value.slug) : null);
 const pageScrollRef = ref(null);
-const activeDetailSlideIndex = ref(0);
+const pageScrollSkew = ref(0);
 const pageTransitionState = useState('menu-transition-state', () => 'detail');
+const pageTransitionDirection = useState('menu-transition-direction', () => 'idle');
+const detailRouteTransitionState = useState('detail-route-transition-state', () => 'idle');
 const workDetailPageClasses = computed(() => ({
   scaler: ['detail-enter', 'detail-leave', 'detail-leave-rotate'].includes(pageTransitionState.value),
-  cased: pageTransitionState.value === 'detail'
+  cased: pageTransitionState.value === 'detail',
+  'detail-to-home-leave': pageTransitionDirection.value === 'detail-to-home'
 }));
-const activeDetailSlideClass = computed(() => `detail-slide-${activeDetailSlideIndex.value}`);
+const workDetailPageStyle = computed(() => {
+  if (detailRouteTransitionState.value === 'detail-switch-leave') {
+    return {
+      opacity: '0',
+      transform: 'scale(1) translateX(-20vw)'
+    };
+  }
+
+  if (detailRouteTransitionState.value === 'detail-switch-enter') {
+    return {
+      opacity: '0',
+      transform: 'scale(1) translateX(20vw)'
+    };
+  }
+
+  return null;
+});
+const workTrackStyle = computed(() => ({
+  transform: `skewX(${pageScrollSkew.value}deg)`
+}));
 const siteUrl = 'https://seekanddeploy.com';
-let wheelSnapTimeout;
-let scrollFrame;
+let skewDecayFrame;
 
 if(!project.value) {
   throw createError({
@@ -62,15 +83,11 @@ useHead({
 
 onMounted(() => {
   pageScrollRef.value?.addEventListener('wheel', onPageScrollWheel, { passive: false });
-  pageScrollRef.value?.addEventListener('scroll', onPageScroll, { passive: true });
-  updateActiveDetailSlide();
 });
 
 onBeforeUnmount(() => {
   pageScrollRef.value?.removeEventListener('wheel', onPageScrollWheel);
-  pageScrollRef.value?.removeEventListener('scroll', onPageScroll);
-  clearTimeout(wheelSnapTimeout);
-  cancelAnimationFrame(scrollFrame);
+  cancelAnimationFrame(skewDecayFrame);
 });
 
 function onPageScrollWheel(e) {
@@ -84,103 +101,45 @@ function onPageScrollWheel(e) {
         deltaX = e.deltaX * multiplier,
         deltaY = e.deltaY * multiplier;
 
-  if(Math.abs(deltaX) >= Math.abs(deltaY)) {
+  if(Math.abs(deltaX) < 0.5 && Math.abs(deltaY) < 0.5) {
     return;
   }
 
-  if(scroller.classList.contains('is-snapping')) {
-    e.preventDefault();
-    return;
-  }
-
-  if(Math.abs(deltaY) < 4) {
-    return;
-  }
-
-  const snapTargets = getDetailSnapTargets(scroller);
+  const scrollDelta = Math.abs(deltaX) >= Math.abs(deltaY) ? deltaX : deltaY;
 
   e.preventDefault();
 
-  if(!snapTargets.length) {
+  scroller.scrollLeft += scrollDelta;
+  pulseScrollSkew(scrollDelta);
+}
+
+function pulseScrollSkew(delta) {
+  pageScrollSkew.value = clamp(pageScrollSkew.value + (delta / 30), -12, 12);
+  startSkewDecay();
+}
+
+function startSkewDecay() {
+  if(skewDecayFrame) {
     return;
   }
 
-  const direction = deltaY > 0 ? 1 : -1,
-        currentIndex = getClosestDetailSnapIndex(scroller, snapTargets),
-        nextIndex = Math.min(Math.max(currentIndex + direction, 0), snapTargets.length - 1),
-        nextTarget = snapTargets[nextIndex];
+  const decay = () => {
+    pageScrollSkew.value *= 0.88;
 
-  if(!nextTarget || nextIndex === currentIndex) {
-    return;
-  }
+    if(Math.abs(pageScrollSkew.value) < 0.01) {
+      pageScrollSkew.value = 0;
+      skewDecayFrame = null;
+      return;
+    }
 
-  clearTimeout(wheelSnapTimeout);
-  setActiveDetailSlide(nextTarget);
-  scroller.classList.add('is-snapping');
-  scroller.scrollTo({
-    left: nextTarget.left,
-    behavior: 'smooth'
-  });
-  wheelSnapTimeout = setTimeout(() => {
-    scroller.classList.remove('is-snapping');
-  }, 777);
+    skewDecayFrame = requestAnimationFrame(decay);
+  };
+
+  skewDecayFrame = requestAnimationFrame(decay);
 }
 
-function onPageScroll() {
-  cancelAnimationFrame(scrollFrame);
-  scrollFrame = requestAnimationFrame(updateActiveDetailSlide);
-}
-
-function updateActiveDetailSlide() {
-  const scroller = pageScrollRef.value;
-
-  if(!scroller) {
-    return;
-  }
-
-  const snapTargets = getDetailSnapTargets(scroller);
-
-  if(!snapTargets.length) {
-    return;
-  }
-
-  setActiveDetailSlide(snapTargets[getClosestDetailSnapIndex(scroller, snapTargets)]);
-}
-
-function setActiveDetailSlide(snapTarget) {
-  if(Number.isInteger(snapTarget?.slideIndex)) {
-    activeDetailSlideIndex.value = snapTarget.slideIndex;
-  }
-}
-
-function getDetailSnapTargets(scroller) {
-  const detailSlides = [...scroller.querySelectorAll('.detail-slide')];
-
-  return [...scroller.querySelectorAll('.detail-slide, .detail-snap')]
-    .filter((target) => target.getClientRects().length)
-    .map((target) => {
-      const slide = target.classList.contains('detail-slide') ? target : target.closest('.detail-slide');
-
-      return {
-        el: target,
-        slideIndex: detailSlides.indexOf(slide),
-        left: getDetailSnapTargetLeft(scroller, target)
-      };
-    })
-    .sort((a, b) => a.left - b.left);
-}
-
-function getClosestDetailSnapIndex(scroller, snapTargets) {
-  return snapTargets.reduce((closestIndex, target, index) => {
-    const closestDistance = Math.abs(snapTargets[closestIndex].left - scroller.scrollLeft),
-          targetDistance = Math.abs(target.left - scroller.scrollLeft);
-
-    return targetDistance < closestDistance ? index : closestIndex;
-  }, 0);
-}
-
-function getDetailSnapTargetLeft(scroller, target) {
-  return target.getBoundingClientRect().left - scroller.getBoundingClientRect().left + scroller.scrollLeft;
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 </script>
 
@@ -193,29 +152,19 @@ function getDetailSnapTargetLeft(scroller, target) {
   bottom: 0px;
   background-color: $black;
   overflow: hidden;
-
-  &.cased {
-    .page-scroll {
-      transform: scale(1);
-    }
-  }
-
-  &.page-leave-active {
-    .page-scroll {
-      transform: scale(0.9);
-    }
-  }
+  opacity: 1;
+  transform: translateX(0vw);
+  transition: opacity $speed-666 $ease-out, transform $speed-666 $ease-out;
+  will-change: opacity, transform;
 
   .page-scroll {
     @include abs-fill;
     overflow-x: auto;
     overflow-y: hidden;
-    transform-origin: 50% 50%;
     transform: scale(0.9);
+    transform-origin: 50% 50%;
     transition: transform $speed-666 $evil-ease;
     will-change: transform;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
@@ -231,68 +180,37 @@ function getDetailSnapTargetLeft(scroller, target) {
       min-width: 100%;
       height: 100%;
       display: inline-flex;
+      will-change: transform;
+    }
+  }
 
-      .detail-slide {
-        flex: 0 0 auto;
-      }
+  &.cased {
+    .page-scroll {
+      transform: scale(1);
+    }
+  }
 
-      .detail-slide,
-      .detail-snap {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-      }
+  &.scaler {
+    .page-scroll {
+      transform: scale(0.9);
+    }
+  }
+
+  &.detail-to-home-leave {
+    .page-scroll {
+      transform: scale(0.9);
+    }
+  }
+
+  &.detail-switch-leave,
+  &.detail-switch-enter {
+    .page-scroll {
+      transform: scale(1);
     }
   }
 
   @include respond-to($tablet) {
     left: $space-96;
-  }
-
-  @include respond-to($landscape) {
-    .page-scroll {
-      .work-track {
-        position: relative;
-        width: max-content;
-        min-width: 100%;
-        height: 100%;
-        display: inline-flex;
-
-        .detail-slide {
-          flex: 0 0 auto;
-
-          .title-block > *,
-          .media-holder,
-          .extra-media-holder,
-          .section-carousel,
-          .results-stat-block {
-            transform: skewX(-13deg);
-            transform-origin: 50% 50%;
-            transition: transform $speed-666 $ease-out;
-            will-change: transform;
-          }
-        }
-      }
-    }
-    
-    $slides: 10; // NOTE: 10 is arbitrary, but should be enough for most cases. If you have more than 10 slides, increase this number.
-
-    @for $i from 0 through $slides {
-      &.detail-slide-#{$i} {
-        .page-scroll {
-          .work-track {
-            > .detail-slide:nth-of-type(#{$i + 1}) {
-              .title-block > *,
-              .media-holder,
-              .extra-media-holder,
-              .section-carousel,
-              .results-stat-block {
-                transform: skewX(0deg);
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }
 </style>

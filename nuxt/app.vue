@@ -9,8 +9,10 @@ const route = useRoute();
 const router = useRouter();
 const menuTransitionState = useState('menu-transition-state', () => isHomePath(route.path) ? 'home' : 'detail');
 const menuTransitionDirection = useState('menu-transition-direction', () => 'idle');
+const detailRouteTransitionState = useState('detail-route-transition-state', () => 'idle');
 const transitionStepMs = 666;
 let detailLeaveRotationTimeout;
+let detailRouteEnterResetFrame;
 
 // Mounted
 onMounted(() => {
@@ -53,6 +55,10 @@ const pageTransition = {
         menuTransitionState.value = 'detail-leave-rotate';
       }, transitionStepMs);
     }
+
+    if (detailRouteTransitionState.value === 'detail-switch-leave' && isDetailPage(el)) {
+      clearDetailRouteEnterResetFrame();
+    }
   },
   onBeforeEnter(el) {
     if (menuTransitionDirection.value === 'home-to-detail' && isDetailPage(el)) {
@@ -62,9 +68,20 @@ const pageTransition = {
     if (menuTransitionDirection.value === 'detail-to-home' && isHomePage(el)) {
       menuTransitionState.value = 'home-enter';
     }
+
+    if (detailRouteTransitionState.value === 'detail-switch-leave' && isDetailPage(el)) {
+      detailRouteTransitionState.value = 'detail-switch-enter';
+      clearDetailRouteEnterResetFrame();
+      detailRouteEnterResetFrame = window.requestAnimationFrame(() => {
+        detailRouteTransitionState.value = 'idle';
+        detailRouteEnterResetFrame = null;
+      });
+    }
   },
   onAfterEnter(el) {
     clearDetailLeaveRotationTimeout();
+    clearDetailRouteEnterResetFrame();
+    detailRouteTransitionState.value = 'idle';
     menuTransitionState.value = isHomePage(el) ? 'home' : 'detail';
     menuTransitionDirection.value = 'idle';
   }
@@ -87,7 +104,14 @@ if (import.meta.client) {
       return;
     }
 
+    if (!fromHome && !toHome) {
+      menuTransitionDirection.value = 'idle';
+      detailRouteTransitionState.value = 'detail-switch-leave';
+      return;
+    }
+
     menuTransitionDirection.value = 'idle';
+    detailRouteTransitionState.value = 'idle';
     menuTransitionState.value = toHome ? 'home' : 'detail';
   });
 
@@ -112,6 +136,13 @@ function clearDetailLeaveRotationTimeout() {
   if (detailLeaveRotationTimeout) {
     window.clearTimeout(detailLeaveRotationTimeout);
     detailLeaveRotationTimeout = null;
+  }
+}
+
+function clearDetailRouteEnterResetFrame() {
+  if (detailRouteEnterResetFrame) {
+    window.cancelAnimationFrame(detailRouteEnterResetFrame);
+    detailRouteEnterResetFrame = null;
   }
 }
 </script>
