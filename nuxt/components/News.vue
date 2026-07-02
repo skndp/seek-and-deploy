@@ -129,19 +129,20 @@ export default {
   },
 
   mounted() {
-    this.assignRandomScreenData();
+    // TODO: random screen assignment should be passed in as a prop an calculated a level higher in @CoverSlide.vue
+    //this.assignRandomScreenData();
     this.handleTvLoad();
   },
 
   methods: {
-    assignRandomScreenData() {
-      const screenChoices = [1, 3, 4];
-      const randomScreen = screenChoices[Math.floor(Math.random() * screenChoices.length)];
+    // assignRandomScreenData() {
+    //   const screenChoices = [1, 3, 4];
+    //   const randomScreen = screenChoices[Math.floor(Math.random() * screenChoices.length)];
 
-      const screenTwoData = this.screenData[2];
-      this.screenData[2] = this.screenData[randomScreen];
-      this.screenData[randomScreen] = screenTwoData;
-    },
+    //   const screenTwoData = this.screenData[2];
+    //   this.screenData[2] = this.screenData[randomScreen];
+    //   this.screenData[randomScreen] = screenTwoData;
+    // },
 
     handleTvLoad() {
       if (this.tvLoaded) {
