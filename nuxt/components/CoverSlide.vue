@@ -23,6 +23,7 @@
       </div>
     </div>
     <News />
+    <News class="news-reflection" inert="true" aria-hidden="true" />
   </section>
 </template>
 
@@ -105,6 +106,15 @@ section.cover-slide {
     }
   }
 
+  .news-reflection {
+    pointer-events: none;
+    opacity: 0.35;
+    mask-image: linear-gradient(to bottom, transparent 80%, black 100%);
+    filter: blur(2px);
+    transform: translate(-50%, 50%) rotateX(180deg);
+    z-index: -1;
+  }
+
   @include respond-to($tablet) {
     .inner {
       .gutter {
@@ -145,6 +155,10 @@ section.cover-slide {
           margin-bottom: auto;
         }
       }
+    }
+
+    .news-reflection {
+      transform: translate(0%, 50%) rotateX(180deg);
     }
   }
 }
