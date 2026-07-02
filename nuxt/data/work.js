@@ -6,7 +6,7 @@ const caseStudyProjects = [
     url: "https://wearefleshandbones.com/",
     challenge: {
       image: "/images/work/flesh-and-bones.jpg",
-      copy: "Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter. Create a digital world that feels handmade, cinematic, and a little strange while still making the project easy to enter.",
+      copy: "Transform an aging studio website into a fast, cinematic brand experience with custom web design, motion-led storytelling, and a flexible CMS workflow that is easier for the client to manage.",
       extraImage: "/images/work/flesh-and-bones.jpg"
     },
     solution: {
@@ -14,19 +14,23 @@ const caseStudyProjects = [
       chapters: [
         {
           start: 0,
-          title: "Loading"
+          title: "Immersive video content anchors the digital experience"
         },
         {
-          start: 3.5,
-          title: "Transition"
+          start: 2,
+          title: "Hand-crafted interactions and transitions bring the brand to life"
+        },
+        {
+          start: 4,
+          title: "Structured in Sanity CMS for easy content management and updates"
         }
       ]
     },
     results: {
       resultsStats: [
-        "Identity",
-        "Experience",
-        "Launch"
+        "Winner, FWA - SOTD",
+        "Significant Performance Improvements",
+        "Traffic and Engagement Increased"
       ]
     }
   },
@@ -37,17 +41,31 @@ const caseStudyProjects = [
     url: "https://futuristicfilms.com/",
     challenge: {
       image: "/images/work/futuristic.jpg",
-      copy: "Give a production studio portfolio the speed of a reel and the structure of a serious body of work.",
+      copy: "Refresh a film production studio website with a stronger brand presence, clearer content structure, and a portfolio experience built to showcase the work first.",
       extraImage: "/images/work/futuristic.jpg"
     },
     solution: {
-      image: "/images/work/futuristic.jpg"
+      video: "/videos/work/fnb-fpo.mp4",
+      chapters: [
+        {
+          start: 0,
+          title: "Brand, work, and culture are woven throughout the experience"
+        },
+        {
+          start: 2,
+          title: "Case studies lead the homepage and guide the narrative"
+        },
+        {
+          start: 4,
+          title: "Structured in Sanity CMS for easy content updates and control"
+        }
+      ]
     },
     results: {
       resultsStats: [
-        "Reel",
-        "Projects",
-        "Studio"
+        "Significant Performance Improvements",
+        "Traffic and Engagement Increased",
+        "Flexible Sanity CMS for easier ongoing updates"
       ]
     }
   },
