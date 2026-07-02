@@ -76,17 +76,35 @@ const caseStudyProjects = [
     url: "https://claytoncotterell.com/",
     challenge: {
       image: "/images/work/clayton-cotterell.jpg",
-      copy: "Present a photographer's work with enough restraint for the images to lead and enough attitude to feel authored.",
+      copy: "Create an immersive portfolio while giving the client complete creative control over highly customized project layouts through an intuitive CMS.",
       extraImage: "/images/work/clayton-cotterell.jpg"
     },
     solution: {
-      image: "/images/work/clayton-cotterell.jpg"
+      video: "/videos/work/fnb-fpo.mp4",
+      chapters: [
+        {
+          start: 0,
+          title: "Crafted interactions create a memorable portfolio experience"
+        },
+        {
+          start: 2,
+          title: "Unique layouts designed to keep the photography front and center"
+        },
+        {
+          start: 4,
+          title: "Built to showcase work for global brands including Nike, Airbnb, and The New York Times"
+        },
+        {
+          start: 6,
+          title: "Custom Sanity CMS powers flexible photo and video grid layouts"
+        }
+      ]
     },
     results: {
       resultsStats: [
-        "Archive",
-        "Editorial",
-        "Portfolio"
+        "Honorable Mention - Awwwards",
+        "Highly engaging portfolio experience",
+        "Flexible Sanity CMS for easier ongoing updates"
       ]
     }
   }
