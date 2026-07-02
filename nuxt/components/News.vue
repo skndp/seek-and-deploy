@@ -11,26 +11,87 @@
         " />
       </clipPath>
     </svg>
-    <div class="news-screen">
-      <div class="news-content">        
-        <div class="news-picture">
-          <a href="https://wearefleshandbones.com" target="_blank" rel="noreferrer noopener">
-            <img src="/images/flesh-and-bones.webp" alt="We launched Flesh & Bones." />
-          </a>
-        </div>
-        <div class="marquee fs-sm" aria-label="BREAKING NEWS">
-          <div class="marquee-track">
-            <span>BREAKING NEWS - WE LAUNCHED FLESH & BONES!</span>
-            <span aria-hidden="true">BREAKING NEWS - WE LAUNCHED FLESH & BONES!</span>
+    <div class="news-screens">
+      <div class="news-screen news-screen-1">
+        <div class="news-content">        
+          <div class="news-picture">
+            <a
+              :href="screenData[1].href"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <img :src="screenData[1].imageSrc" :alt="screenData[1].imageAlt" />
+            </a>
+          </div>
+          <div class="marquee fs-sm" aria-label="BREAKING NEWS">
+            <div class="marquee-track">
+              <span>{{ screenData[1].headline }}</span>
+              <span aria-hidden="true">{{ screenData[1].headline }}</span>
+            </div>
           </div>
         </div>
+        <div class="news-screen-reflection"></div>
+      </div>
+      <div class="news-screen news-screen-2">
+        <div class="news-content">        
+          <div class="news-picture">
+            <img :src="screenData[2].imageSrc" :alt="screenData[2].imageAlt" />
+          </div>
+          <div class="marquee fs-sm" aria-label="BREAKING NEWS">
+            <div class="marquee-track">
+              <span>{{ screenData[2].headline }}</span>
+              <span aria-hidden="true">{{ screenData[2].headline }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="news-screen-reflection"></div>
+      </div>
+      <div class="news-screen news-screen-3">
+        <div class="news-content">        
+          <div class="news-picture">
+            <a
+              :href="screenData[3].href"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <img :src="screenData[3].imageSrc" :alt="screenData[3].imageAlt" />
+            </a>
+          </div>
+          <div class="marquee fs-sm" aria-label="BREAKING NEWS">
+            <div class="marquee-track">
+              <span>{{ screenData[3].headline }}</span>
+              <span aria-hidden="true">{{ screenData[3].headline }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="news-screen-reflection"></div>
+      </div>
+      <div class="news-screen news-screen-4">
+        <div class="news-content">        
+          <div class="news-picture">
+            <a
+              :href="screenData[4].href"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <img :src="screenData[4].imageSrc" :alt="screenData[4].imageAlt" />
+            </a>
+          </div>
+          <div class="marquee fs-sm" aria-label="BREAKING NEWS">
+            <div class="marquee-track">
+              <span>{{ screenData[4].headline }}</span>
+              <span aria-hidden="true">{{ screenData[4].headline }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="news-screen-reflection"></div>
       </div>
     </div>
     <div class="news-foreground">
       <img
         ref="tvImage"
-        src="/images/tv.png"
-        alt="A TV from the ancient times displaying our latest news."
+        src="/images/tv-pile.png"
+        alt="A pile of TVs from the ancient times displaying our latest news."
         fetchpriority="high"
         loading="eager"
         @load="handleTvLoad"
@@ -40,18 +101,48 @@
 </template>
 
 <script>
+const fleshAndBonesScreen = {
+  href: 'https://wearefleshandbones.com',
+  imageSrc: '/images/flesh-and-bones.webp',
+  imageAlt: 'We launched Flesh & Bones.',
+  headline: 'BREAKING NEWS - WE LAUNCHED FLESH & BONES!',
+};
+
+const marvScreen = {
+  href: null,
+  imageSrc: '/images/marv.webp',
+  imageAlt: 'Marv.',
+  headline: 'BREAKING NEWS - STICKY BANDITS CAUGHT AGAIN!',
+};
+
 export default {
   data() {
     return {
       tvLoaded: false,
+      screenData: {
+        1: { ...fleshAndBonesScreen },
+        2: { ...marvScreen },
+        3: { ...fleshAndBonesScreen },
+        4: { ...fleshAndBonesScreen },
+      },
     };
   },
 
   mounted() {
+    this.assignRandomScreenData();
     this.handleTvLoad();
   },
 
   methods: {
+    assignRandomScreenData() {
+      const screenChoices = [1, 3, 4];
+      const randomScreen = screenChoices[Math.floor(Math.random() * screenChoices.length)];
+
+      const screenTwoData = this.screenData[2];
+      this.screenData[2] = this.screenData[randomScreen];
+      this.screenData[randomScreen] = screenTwoData;
+    },
+
     handleTvLoad() {
       if (this.tvLoaded) {
         return;
@@ -146,96 +237,159 @@ export default {
 
 .news-wrapper {
   position: absolute;
-  top: 50%;
+  top: 36%;
   left: 50%;
-  width: 100%;
-  margin-top: -$space-48;
-  margin-left: -10%;
+  width: 80%;
   aspect-ratio: 1/1;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
 
   &.loaded {
-    .news-screen {
-      visibility: visible;
+    .news-screens {
+      .news-screen {
+        visibility: visible;
+      }
     }
   }
 
   .slide-0-active &.loaded {
-    .news-screen {
-      .news-content {
-        transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 1);
-        transition: transform 333ms $ease-out 333ms;
+    .news-screens {
+      .news-screen-1 {
+        .news-content {
+          transform: scale(1, 1);
+          transition: transform 333ms $ease-out 333ms;
+        }
+      }
+
+      .news-screen-2 {
+        .news-content {
+          transform: scale(1, 1);
+          transition: transform 333ms $ease-out 666ms;
+        }
+      }
+
+      .news-screen-3 {
+        .news-content {
+          transform: scale(1, 1);
+          transition: transform 333ms $ease-out 444ms;
+        }
+      }
+
+      .news-screen-4 {
+        .news-content {
+          transform: scale(1, 1);
+          transition: transform 333ms $ease-out 999ms;
+        }
       }
     }
   }
 
-  .news-screen {
+  .news-screens {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 42%;
-    aspect-ratio: 11/9;
-    overflow: hidden;
-    background: #121010;
-    perspective: 2000px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    perspective: 1500px;
     transform-style: preserve-3d;
-    transform: translate(-50%, -50%);
-    visibility: hidden;
 
-    &:after {
-      content: "";
+    .news-screen {
       position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 50%;
-      background: linear-gradient(210deg,rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0) 100%);
-      transform: rotate(3deg);
-      clip-path: url("#tvClip");
-      pointer-events: none;
-    }
+      overflow: hidden;
+      background: #121010;
+      visibility: hidden;
 
-    .news-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background-color: $black;
-      transform: rotateX(-3deg) rotateY(-9deg) rotateZ(3.5deg) scale(1, 0);
-      transition: transform 333ms $ease-out;
+      &.news-screen-1 {
+        top: 10.75%;
+        left: 46.2%;
+        width: 16.75%;
+        aspect-ratio: 5/4;
+        transform-origin: 0px 0px;
+        transform: rotateY(37deg) rotateZ(5deg);
 
-      &:before {
-        content: " ";
-        display: block;
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-        z-index: 2;
-        background-size: 100% 2px, 3px 100%;
-        pointer-events: none;
+        .marquee {
+          font-size: 0.25em;
+        }
       }
 
-      &:after {
-        content: " ";
-        display: block;
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
-        background: rgba(18, 16, 16, 0.1);
-        opacity: 0;
-        z-index: 2;
-        pointer-events: none;
-        animation: flicker 0.15s infinite;
+      &.news-screen-2 {
+        top: 33.083%;
+        left: 31.25%;
+        width: 29.917%;
+        aspect-ratio: 359/268;
+
+        .marquee {
+          font-size: 0.45em;
+        }
       }
 
-      .news-picture {
+      &.news-screen-3 {
+        top: 69%;
+        left: 4.583%;
+        width: 23.5%;
+        aspect-ratio: 14 / 15;
+        transform-origin: 0px 0px;
+        transform: rotateX(20deg) rotateY(-16deg) rotateZ(-2.4deg);
+
+        .marquee {
+          font-size: 0.56em;
+        }
+      }
+
+      &.news-screen-4 {
+        top: 62%;
+        left: 54.583%;
+        width: 37%;
+        aspect-ratio: 4 / 3;
+        transform-origin: 0px 0px;
+        transform: rotateX(7deg) rotateY(15deg) rotateZ(3deg);
+
+        .marquee {
+          font-size: 0.66em;
+        }
+      }
+
+      .news-content {
+        position: relative;
         width: 100%;
         height: 100%;
-        opacity: 0.65;
-        
-        a {
+        background-color: $black;
+        transform: scale(1, 0);
+        transition: transform 333ms $ease-out;
+
+        &:before {
+          content: " ";
           display: block;
+          position: absolute;
+          top: 0; left: 0; bottom: 0; right: 0;
+          background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                      linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+          z-index: 2;
+          background-size: 100% 2px, 3px 100%;
+          pointer-events: none;
+        }
+
+        &:after {
+          content: " ";
+          display: block;
+          position: absolute;
+          top: 0; left: 0; bottom: 0; right: 0;
+          background: rgba(18, 16, 16, 0.1);
+          opacity: 0;
+          z-index: 2;
+          pointer-events: none;
+          animation: flicker 0.15s infinite;
+        }
+
+        .news-picture {
           width: 100%;
           height: 100%;
+          opacity: 0.85;
+          
+          a {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
 
           img {
             width: 100%;
@@ -243,67 +397,79 @@ export default {
             object-fit: cover;
           }
         }
-      }
 
-      .marquee {
-        position: absolute;
-        bottom: 20%;
-        left: 0px;
-        width: 100%;
-        line-height: 1.5em;
-        color: $white;
-        background-color: rgba($black, 0.65);
-        overflow: hidden;
+        .marquee {
+          position: absolute;
+          bottom: 20%;
+          left: 0px;
+          width: 100%;
+          line-height: 1.5em;
+          color: $white;
+          background-color: rgba($black, 0.65);
+          overflow: hidden;
 
-        .marquee-track {
-          display: flex;
-          width: max-content;
-          white-space: nowrap;
-          animation: marquee 16s linear infinite;
+          .marquee-track {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: marquee 16s linear infinite;
 
-          span {
-            flex: 0 0 auto;
-            padding-right: 2rem;
-            text-shadow:
-              -1px 0 0 rgba(255, 0, 72, 0.85),
-              1px 0 0 rgba(0, 170, 255, 0.85),
-              0 0 6px rgba(255, 255, 255, 0.08);
+            span {
+              flex: 0 0 auto;
+              padding-right: 2rem;
+              text-shadow:
+                -1px 0 0 rgba(255, 0, 72, 0.85),
+                1px 0 0 rgba(0, 170, 255, 0.85),
+                0 0 6px rgba(255, 255, 255, 0.08);
+            }
           }
         }
+      }
+
+      .news-screen-reflection {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(210deg,rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0) 100%);
+        clip-path: url("#tvClip");
+        pointer-events: none;
       }
     }
   }
 
   .news-foreground {
-    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
     }
   }
 
   @include respond-to($tablet) {
-    width: 75%;
-    margin-left: -16%;
-    margin-top: -150px;
+    top: 33%;
+    width: 55%;
   }
 
   @include respond-to($large-tablet) {
-    left: 0px;
-    width: 62.5%;
-    margin-top: 0px;
-    margin-left: 0px;
-    transform: translateX(-8.333%) translateY(-50%);
+    top: 50%;
+    left: 128px;
+    width: 42%;
+    transform: translate(0, -50%);
   }
 
   @include respond-to($average-desktop) {
-    width: 50%;
-  }
-
-  @include respond-to($macbook) {
-    width: 800px;
+    top: 50%;
+    width: 40%;
   }
 }
 </style>
