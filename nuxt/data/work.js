@@ -76,7 +76,7 @@ const caseStudyProjects = [
     url: "https://claytoncotterell.com/",
     challenge: {
       image: "/images/work/clayton-cotterell.jpg",
-      copy: "Create an immersive portfolio while giving the client complete creative control over highly customized project layouts through an intuitive CMS.",
+      copy: "Create an immersive portfolio that showcases a world-class photographer's work while giving them complete creative control over highly customized project layouts.",
       extraImage: "/images/work/clayton-cotterell.jpg"
     },
     solution: {
@@ -84,18 +84,14 @@ const caseStudyProjects = [
       chapters: [
         {
           start: 0,
-          title: "Crafted interactions create a memorable portfolio experience"
+          title: "Crafted interactions and unique layouts create a memorable portfolio experience"
         },
         {
           start: 2,
-          title: "Unique layouts designed to keep the photography front and center"
-        },
-        {
-          start: 4,
           title: "Built to showcase work for global brands including Nike, Airbnb, and The New York Times"
         },
         {
-          start: 6,
+          start: 4,
           title: "Custom Sanity CMS powers flexible photo and video grid layouts"
         }
       ]
