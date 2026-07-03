@@ -28,9 +28,18 @@ const caseStudyProjects = [
     },
     results: {
       resultsStats: [
-        "Winner, FWA - SOTD",
-        "Significant Performance Improvements",
-        "Traffic and Engagement Increased"
+        {
+          label: "Winner - FWA SOTD",
+          icon: "fwa"
+        },
+        {
+          label: "Significant Performance Improvements",
+          icon: "startup"
+        },
+        {
+          label: "Increased Traffic and Engagement",
+          icon: "fortune"
+        }
       ]
     }
   },
@@ -63,9 +72,18 @@ const caseStudyProjects = [
     },
     results: {
       resultsStats: [
-        "Significant Performance Improvements",
-        "Traffic and Engagement Increased",
-        "Flexible Sanity CMS for easier ongoing updates"
+        {
+          label: "Significant Performance Improvements",
+          icon: "startup"
+        },
+        {
+          label: "Increased Traffic and Engagement",
+          icon: "fortune"
+        },
+        {
+          label: "Full Site Control Reduced Recurring Costs",
+          icon: "share"
+        }
       ]
     }
   },
@@ -98,9 +116,18 @@ const caseStudyProjects = [
     },
     results: {
       resultsStats: [
-        "Honorable Mention - Awwwards",
-        "Highly engaging portfolio experience",
-        "Flexible Sanity CMS for easier ongoing updates"
+        {
+          label: "Honorable Mention - Awwwards",
+          icon: "awwwards"
+        },
+        {
+          label: "Increased Traffic and Engagement",
+          icon: "fortune"
+        },
+        {
+          label: "Full Site Control Reduced Recurring Costs",
+          icon: "share"
+        }
       ]
     }
   }
