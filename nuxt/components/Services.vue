@@ -220,6 +220,11 @@ section.slide.services {
                   transform: translate(-50%, -50%) scale(1, 1);
                   transition: transform 5s $ease-out;
                 }
+
+                &:after {
+                  transform: translate(-50%, -50%) rotateY(90deg) scale(1, 1);
+                  transition: transform 5s $ease-out;
+                }
               }
             }
           }
@@ -271,7 +276,8 @@ section.slide.services {
               transform-origin: center center;
               will-change: transform;
 
-              &:before {
+              &:before,
+              &:after {
                 content: "";
                 position: absolute;
                 top: 0;
@@ -284,6 +290,10 @@ section.slide.services {
                 backface-visibility: visible;
                 animation: flicker 100ms linear infinite;
                 transition: transform 1s $ease-out;
+              }
+
+              &:after {
+                transform: translate(-50%, -50%) rotateY(90deg) scale(1, 0);
               }
 
               .service {
