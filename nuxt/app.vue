@@ -2,6 +2,9 @@
   <Background />
   <Menu />
   <NuxtPage :transition="pageTransition" />
+  <transition name="boot-loader">
+    <div v-if="showBootLoader" class="boot-loader" aria-hidden="true" />
+  </transition>
 </template>
 
 <script setup>
@@ -11,6 +14,7 @@ const menuTransitionState = useState('menu-transition-state', () => isHomePath(r
 const menuTransitionDirection = useState('menu-transition-direction', () => 'idle');
 const detailRouteTransitionState = useState('detail-route-transition-state', () => 'idle');
 const transitionStepMs = 666;
+const showBootLoader = ref(true);
 let detailLeaveRotationTimeout;
 let detailRouteEnterResetFrame;
 
@@ -21,6 +25,10 @@ onMounted(() => {
 
   nextTick(() => {
     window.dispatchEvent(new Event('app-ready'))
+  });
+
+  requestAnimationFrame(() => {
+    showBootLoader.value = false;
   });
 });
 
@@ -146,3 +154,31 @@ function clearDetailRouteEnterResetFrame() {
   }
 }
 </script>
+
+<style lang="scss">
+.boot-loader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: $black;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.boot-loader-enter-active,
+.boot-loader-leave-active {
+  transition: opacity $speed-666 linear $speed-333;
+}
+
+.boot-loader-enter-from,
+.boot-loader-leave-to {
+  opacity: 0;
+}
+
+.boot-loader-enter-to,
+.boot-loader-leave-from {
+  opacity: 1;
+}
+</style>
