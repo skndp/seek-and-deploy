@@ -9,7 +9,7 @@ const caseStudyProjects = [
       "url": "https://www.aaronjray.com/"
     },
     challenge: {
-      video: "/videos/work/flesh-and-bones-square.mp4",
+      image: "/images/work/flesh-and-bones-brand-card.png",
       copy: "Transform an aging studio website into a fast, cinematic brand experience with custom web design, motion-led storytelling, and a flexible CMS workflow that is easier for the client to manage.",
       squareVideo: "/videos/work/flesh-and-bones-square.mp4"
     },
@@ -57,7 +57,7 @@ const caseStudyProjects = [
       "url": "https://www.consumeandcreate.co/"
     },
     challenge: {
-      video: "/videos/work/futuristic-square.mp4",
+      image: "/images/work/futuristic-brand-card.png",
       copy: "Refresh a film production studio website with a stronger brand presence, clearer content structure, and a portfolio experience built to showcase the work first.",
       squareVideo: "/videos/work/futuristic-square.mp4"
     },
@@ -69,11 +69,11 @@ const caseStudyProjects = [
           title: "Brand, work, and culture are woven throughout the experience"
         },
         {
-          start: 7,
+          start: 9.5,
           title: "Case studies lead the homepage and guide the narrative"
         },
         {
-          start: 13,
+          start: 16,
           title: "Structured in Sanity CMS for easy content updates and control"
         }
       ]
@@ -105,23 +105,23 @@ const caseStudyProjects = [
       "url": "https://midnightsea.studio/"
     },
     challenge: {
-      video: "/videos/work/cotterell-square.mp4",
+      image: "/images/work/clayton-cotterell-brand-card.png",
       copy: "Create an immersive portfolio that showcases a world-class photographer's work while giving them complete creative control over highly customized project layouts.",
       squareVideo: "/videos/work/cotterell-square.mp4"
     },
     solution: {
-      video: "/videos/work/flesh-and-bones-highlights.mp4",
+      video: "/videos/work/clayton-cotterell-highlights.mp4",
       chapters: [
         {
           start: 0,
           title: "Crafted interactions and unique layouts create a memorable portfolio experience"
         },
         {
-          start: 9.5,
+          start: 10,
           title: "Built to showcase work for global brands including Nike, Airbnb, and The New York Times"
         },
         {
-          start: 16,
+          start: 21.45,
           title: "Custom Sanity CMS powers flexible photo and video grid layouts"
         }
       ]

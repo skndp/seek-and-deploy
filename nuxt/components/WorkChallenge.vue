@@ -7,6 +7,10 @@
     </div>
     <div class="media-block">
       <div class="media-holder">
+        <img
+          v-if="project.challenge?.image"
+          :src="project.challenge.image" :alt="project.title"
+        />
         <video
           v-if="project.challenge?.video"
           :src="project.challenge.video"
@@ -92,7 +96,7 @@ section.project-challenge {
       video {
         @include abs-fill;
         object-fit: contain;
-        object-position: 50% 50%;
+        object-position: 0% 50%;
       }
     }
   }
