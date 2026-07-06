@@ -13,11 +13,13 @@
 
 <script setup>
 import { getNextWorkProject, getWorkProjectBySlug } from '~/data/work';
+import { useSiteStore } from '~/stores/store';
 
 const route = useRoute();
 const slug = computed(() => String(route.params.slug || ''));
 const project = computed(() => getWorkProjectBySlug(slug.value));
 const nextProject = computed(() => project.value ? getNextWorkProject(project.value.slug) : null);
+const store = useSiteStore();
 const pageScrollRef = ref(null);
 const pageScrollSkew = ref(0);
 const pageTransitionState = useState('menu-transition-state', () => 'detail');
@@ -82,6 +84,11 @@ useHead({
 });
 
 onMounted(() => {
+  if (store.initialSlide && store.slideActiveState === 'slide-0-active') {
+    store.setInitialSlide(false);
+    store.setSlideActiveState('slide-3-active');
+  }
+
   pageScrollRef.value?.addEventListener('wheel', onPageScrollWheel, { passive: false });
 });
 

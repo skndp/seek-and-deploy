@@ -144,7 +144,7 @@ const lastSlideIndex = slides.length;
 
 // Mounted
 onMounted(() => {
-  if(pageRef.value) {
+  if (pageRef.value) {
     disableBodyScroll(pageRef.value);
   }
 
