@@ -308,6 +308,7 @@ section.slide.services {
           }
 
           .value {
+            text-wrap: pretty;
             flex-grow: 0;
             text-align: center;
             line-height: 1.2em;

@@ -114,7 +114,7 @@ function onPageScrollWheel(e) {
 }
 
 function pulseScrollSkew(delta) {
-  pageScrollSkew.value = clamp(pageScrollSkew.value + (delta / 40), -8, 8);
+  pageScrollSkew.value = clamp(pageScrollSkew.value + (delta / 32), -8, 8);
   startSkewDecay();
 }
 
@@ -124,7 +124,7 @@ function startSkewDecay() {
   }
 
   const decay = () => {
-    pageScrollSkew.value *= 0.84;
+    pageScrollSkew.value *= 0.8;
 
     if(Math.abs(pageScrollSkew.value) < 0.01) {
       pageScrollSkew.value = 0;

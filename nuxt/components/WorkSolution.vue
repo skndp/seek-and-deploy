@@ -20,7 +20,6 @@
         />
       </div>
       <div v-if="project.solution?.video && currentChapter" class="video-chapter-title">
-        <span>{{ String(currentChapterIndex + 1).padStart(2, '0') }}.</span>
         {{ currentChapter.title }}
       </div>
     </div>
@@ -79,13 +78,13 @@ section.project-solution {
     .media-holder {
       position: relative;
       width: 100%;
-      aspect-ratio: 1/1;
+      aspect-ratio: 16/9;
       overflow: hidden;
   
       img,
       video {
         @include abs-fill;
-        object-fit: cover;
+        object-fit: contain;
         object-position: 50% 50%;
       }
     }
@@ -94,6 +93,7 @@ section.project-solution {
       position: relative;
       text-align: center;
       margin-top: $space-16;
+      text-wrap: pretty;
 
       span {
         font-weight: 700;

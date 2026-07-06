@@ -4,24 +4,28 @@ const caseStudyProjects = [
     slug: "flesh-and-bones",
     image: "/images/work/flesh-and-bones.jpg",
     url: "https://wearefleshandbones.com/",
+    with: {
+      "name": "Aaron Ray",
+      "url": "https://www.aaronjray.com/"
+    },
     challenge: {
-      image: "/images/work/flesh-and-bones.jpg",
+      video: "/videos/work/flesh-and-bones-square.mp4",
       copy: "Transform an aging studio website into a fast, cinematic brand experience with custom web design, motion-led storytelling, and a flexible CMS workflow that is easier for the client to manage.",
-      extraImage: "/images/work/flesh-and-bones.jpg"
+      squareVideo: "/videos/work/flesh-and-bones-square.mp4"
     },
     solution: {
-      video: "/videos/work/fnb-fpo.mp4",
+      video: "/videos/work/flesh-and-bones-highlights.mp4",
       chapters: [
         {
           start: 0,
           title: "Immersive video content anchors the digital experience"
         },
         {
-          start: 2,
+          start: 7,
           title: "Hand-crafted interactions and transitions bring the brand to life"
         },
         {
-          start: 4,
+          start: 13,
           title: "Structured in Sanity CMS for easy content management and updates"
         }
       ]
@@ -33,7 +37,7 @@ const caseStudyProjects = [
           icon: "fwa"
         },
         {
-          label: "Significant Performance Improvements",
+          label: "Improved Performance and SEO",
           icon: "startup"
         },
         {
@@ -48,24 +52,28 @@ const caseStudyProjects = [
     slug: "futuristic-films",
     image: "/images/work/futuristic.jpg",
     url: "https://futuristicfilms.com/",
+    with: {
+      "name": "Consume & Create",
+      "url": "https://www.consumeandcreate.co/"
+    },
     challenge: {
-      image: "/images/work/futuristic.jpg",
+      video: "/videos/work/futuristic-square.mp4",
       copy: "Refresh a film production studio website with a stronger brand presence, clearer content structure, and a portfolio experience built to showcase the work first.",
-      extraImage: "/images/work/futuristic.jpg"
+      squareVideo: "/videos/work/futuristic-square.mp4"
     },
     solution: {
-      video: "/videos/work/fnb-fpo.mp4",
+      video: "/videos/work/futuristic-highlights.mp4",
       chapters: [
         {
           start: 0,
           title: "Brand, work, and culture are woven throughout the experience"
         },
         {
-          start: 2,
+          start: 7,
           title: "Case studies lead the homepage and guide the narrative"
         },
         {
-          start: 4,
+          start: 13,
           title: "Structured in Sanity CMS for easy content updates and control"
         }
       ]
@@ -73,7 +81,7 @@ const caseStudyProjects = [
     results: {
       resultsStats: [
         {
-          label: "Significant Performance Improvements",
+          label: "Improved Performance and SEO",
           icon: "startup"
         },
         {
@@ -92,24 +100,28 @@ const caseStudyProjects = [
     slug: "clayton-cotterell",
     image: "/images/work/clayton-cotterell.jpg",
     url: "https://claytoncotterell.com/",
+    with: {
+      "name": "Midnight Sea",
+      "url": "https://midnightsea.studio/"
+    },
     challenge: {
-      image: "/images/work/clayton-cotterell.jpg",
+      video: "/videos/work/cotterell-square.mp4",
       copy: "Create an immersive portfolio that showcases a world-class photographer's work while giving them complete creative control over highly customized project layouts.",
-      extraImage: "/images/work/clayton-cotterell.jpg"
+      squareVideo: "/videos/work/cotterell-square.mp4"
     },
     solution: {
-      video: "/videos/work/fnb-fpo.mp4",
+      video: "/videos/work/flesh-and-bones-highlights.mp4",
       chapters: [
         {
           start: 0,
           title: "Crafted interactions and unique layouts create a memorable portfolio experience"
         },
         {
-          start: 2,
+          start: 9.5,
           title: "Built to showcase work for global brands including Nike, Airbnb, and The New York Times"
         },
         {
-          start: 4,
+          start: 16,
           title: "Custom Sanity CMS powers flexible photo and video grid layouts"
         }
       ]

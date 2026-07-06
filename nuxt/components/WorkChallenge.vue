@@ -6,13 +6,29 @@
       <p class="copy">{{ project.challenge.copy }}</p>
     </div>
     <div class="media-block">
-      <figure class="media-holder">
-        <img :src="project.challenge.image" :alt="`Challenge for ${project.title}`" />
-      </figure>
+      <div class="media-holder">
+        <video
+          v-if="project.challenge?.video"
+          :src="project.challenge.video"
+          ref="video"
+          autoplay
+          muted
+          loop
+          playsinline
+        />
+      </div>
     </div>
-    <figure class="extra-media-holder">
-      <img :src="project.challenge.extraImage" :alt="`Extra image for ${project.title}`" />
-    </figure>
+    <div class="extra-media-holder">
+      <video
+        v-if="project.challenge?.squareVideo"
+        :src="project.challenge.squareVideo"
+        ref="video"
+        autoplay
+        muted
+        loop
+        playsinline
+      />
+    </div>
   </section>
 </template>
 
@@ -57,6 +73,7 @@ section.project-challenge {
     .copy {
       margin-right: span(2);
       width: calc(50% - span(4));
+      text-wrap: pretty;
     }
   }
 
@@ -68,12 +85,13 @@ section.project-challenge {
     .media-holder {
       position: relative;
       width: 100%;
-      aspect-ratio: 3/2;
+      aspect-ratio: 16/9;
       overflow: hidden;
 
-      img {
+      img,
+      video {
         @include abs-fill;
-        object-fit: cover;
+        object-fit: contain;
         object-position: 50% 50%;
       }
     }
