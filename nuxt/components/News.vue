@@ -112,7 +112,7 @@ const marvScreen = {
   href: null,
   imageSrc: '/images/marv.webp',
   imageAlt: 'Marv.',
-  headline: 'BREAKING NEWS - STICKY BANDITS CAUGHT AGAIN!',
+  headline: 'BZZZZZZ AAARRRGGGHOOOOOOOHHHHHHEEEEEEEEEE!',
 };
 
 export default {
