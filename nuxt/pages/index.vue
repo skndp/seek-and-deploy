@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { disableBodyScroll } from 'body-scroll-lock';
+import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import { useSiteStore } from '~/stores/store';
 import Manifesto from '~/components/Manifesto.vue'
 import Team from '~/components/Team.vue'
@@ -156,6 +156,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTimeout(scrollTimeout);
   cancelAnimationFrame(restoreScrollFrame);
+  clearAllBodyScrollLocks();
   window.removeEventListener('app-ready', initScrollSnap);
   pageRef.value?.removeEventListener('scroll', onPageScroll);
   window.removeEventListener('resize', onResize);

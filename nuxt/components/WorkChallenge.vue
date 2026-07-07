@@ -165,6 +165,13 @@ section.project-challenge {
         aspect-ratio: 1/1;
         overflow: hidden;
         display: flex;
+
+        img,
+        video {
+          @include abs-fill;
+          object-fit: contain;
+          object-position: 50% 50%;
+        }
       }
     }
 

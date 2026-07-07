@@ -14,6 +14,7 @@
 <script setup>
 import { getNextWorkProject, getWorkProjectBySlug } from '~/data/work';
 import { useSiteStore } from '~/stores/store';
+import { clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 const route = useRoute();
 const slug = computed(() => String(route.params.slug || ''));
@@ -84,6 +85,8 @@ useHead({
 });
 
 onMounted(() => {
+  clearAllBodyScrollLocks();
+
   if (store.initialSlide && store.slideActiveState === 'slide-0-active') {
     store.setInitialSlide(false);
     store.setSlideActiveState('slide-3-active');
@@ -168,6 +171,7 @@ function clamp(value, min, max) {
     @include abs-fill;
     overflow-x: auto;
     overflow-y: hidden;
+    touch-action: pan-x;
     transform: scale(0.9);
     transform-origin: 50% 50%;
     transition: transform $speed-666 $evil-ease;
