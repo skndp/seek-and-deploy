@@ -5,7 +5,7 @@
       <div
         v-for="(result, index) in project.results.resultsStats"
         :key="result.label || index"
-        class="results-stat-block"
+        class="results-stat-block detail-fade"
       >
         <span class="result-icon" aria-hidden="true">
           <template v-if="result.icon === 'fortune'">
@@ -57,8 +57,8 @@
       </div>
     </div>
     <div class="title-block">
-      <h2 class="section-title h3-mid">The Results</h2>
-      <p class="fs-sm">
+      <h2 class="section-title h3-mid detail-fade">The Results</h2>
+      <p class="fs-sm detail-fade">
         Next:
         <NuxtLink v-if="nextProject" class="next-project" :to="nextProject.path">{{ nextProject.title }}</NuxtLink>
       </p>

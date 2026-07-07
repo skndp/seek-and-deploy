@@ -2,10 +2,10 @@
   <section class="project-challenge detail-slide">
     <div class="detail-snap detail-snap-half" aria-hidden="true" />
     <div class="title-block">
-      <h2 class="section-title h3-mid">The Challenge</h2>
-      <p class="copy">{{ project.challenge.copy }}</p>
+      <h2 class="section-title h3-mid detail-fade">The Challenge</h2>
+      <p class="copy detail-fade">{{ project.challenge.copy }}</p>
     </div>
-    <div class="media-block">
+    <div class="media-block detail-fade">
       <div class="media-holder">
         <img
           v-if="project.challenge?.image"
@@ -22,7 +22,7 @@
         />
       </div>
     </div>
-    <div class="extra-media-holder">
+    <div class="extra-media-holder detail-fade">
       <video
         v-if="project.challenge?.squareVideo"
         :src="project.challenge.squareVideo"
