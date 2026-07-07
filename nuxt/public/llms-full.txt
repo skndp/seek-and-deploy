@@ -16,6 +16,28 @@ Seek and Deploy is not positioned as a high-volume generalist agency. The studio
 - Campaign microsites
 - Branded digital experiences
 
+## Case studies
+### Flesh and Bones
+- Partner: Aaron Ray
+- Focus: fast, cinematic brand experience with motion-led storytelling and easier content management
+- Signals: FWA SOTD, improved performance and SEO, increased traffic and engagement
+
+### Futuristic Films
+- Partner: Consume & Create
+- Focus: refreshed film production site with stronger brand presence and a work-first portfolio structure
+- Signals: improved performance and SEO, increased traffic and engagement, full site control that reduced recurring costs
+
+### Clayton Cotterell
+- Partner: Midnight Sea
+- Focus: immersive photographer portfolio with highly customized project layouts and CMS flexibility
+- Signals: Awwwards honorable mention, increased traffic and engagement, full site control that reduced recurring costs
+
+## Archive work
+- Nike: 15 Years of Dunk
+- Coca-Cola: Building of Memories
+- Domino's: IFTTT
+- Fruit of the Loom: Tuck Effect
+
 ## Geography
 - Primary location: Denver, CO
 - Address: 1305 Osage St., Denver, CO 80204
@@ -47,11 +69,12 @@ Seek and Deploy is a fit for clients that want:
 - High design sensitivity and strong front-end craft
 
 ## Notable public work examples linked from the site
-- 15 Years of Dunk
-- Domino’s + IFTTT
-- Tuck Effect
+- Flesh and Bones
+- Futuristic Films
 - Clayton Cotterell
-- Legwork is Dead
+- Nike: 15 Years of Dunk
+- Domino's: IFTTT
+- Tuck Effect
 
 ## Canonical URLs
 - Homepage: https://seekanddeploy.com/

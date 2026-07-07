@@ -68,25 +68,66 @@ useHead({
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        '@id': `${siteUrl}/#organization`,
-        name: 'Seek and Deploy',
-        url: siteUrl,
-        image: ogImage,
-        description: pageDescription,
-        telephone: '+1-720-219-7096',
-        email: 'hello@seekanddeploy.com',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: '1305 Osage St.',
-          addressLocality: 'Denver',
-          addressRegion: 'CO',
-          postalCode: '80204',
-          addressCountry: 'US'
-        },
-        areaServed: 'Denver, CO',
-        sameAs: [
-          'https://www.linkedin.com/company/seek-and-deploy/'
+        '@graph': [
+          {
+            '@type': 'LocalBusiness',
+            '@id': `${siteUrl}/#organization`,
+            name: 'Seek and Deploy',
+            url: siteUrl,
+            image: ogImage,
+            description: pageDescription,
+            telephone: '+1-720-219-7096',
+            email: 'hello@seekanddeploy.com',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: '1305 Osage St.',
+              addressLocality: 'Denver',
+              addressRegion: 'CO',
+              postalCode: '80204',
+              addressCountry: 'US'
+            },
+            areaServed: 'Denver, CO',
+            sameAs: [
+              'https://www.linkedin.com/company/seek-and-deploy/'
+            ]
+          },
+          {
+            '@type': 'WebSite',
+            '@id': `${siteUrl}/#website`,
+            name: 'Seek and Deploy',
+            url: siteUrl,
+            description: pageDescription,
+            publisher: {
+              '@id': `${siteUrl}/#organization`
+            }
+          },
+          {
+            '@type': 'ItemList',
+            '@id': `${siteUrl}/#case-studies`,
+            name: 'Case Studies',
+            itemListOrder: 'https://schema.org/ItemListOrderAscending',
+            numberOfItems: 3,
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Flesh and Bones',
+                url: `${siteUrl}/flesh-and-bones`
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Futuristic Films',
+                url: `${siteUrl}/futuristic-films`
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'Clayton Cotterell',
+                url: `${siteUrl}/clayton-cotterell`
+              }
+            ]
+          }
         ]
       })
     }
@@ -116,7 +157,7 @@ const slides = [
   {
     component: Team,
     id: "team",
-    title: "Juuust the two of us (and an intern)"
+    title: "Who's flying the plane?"
   },
   {
     component: Work,

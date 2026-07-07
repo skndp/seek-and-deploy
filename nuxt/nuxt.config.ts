@@ -1,5 +1,5 @@
 const site_name = 'Seek and Deploy';
-const site_description = 'Based in Denver, CO. We build thoughtfully crafted interfaces, experiences and all of the underlying things that make them work. Not the generic stuff&mdash;the good stuff.';
+const site_description = 'Based in Denver, CO. We deploy forward-thinking, creative technology that drives revenue, sets brands apart and defines what\'s next.';
 const site_url = 'https://seekanddeploy.com'
 
 export default defineNuxtConfig({

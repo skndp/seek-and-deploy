@@ -18,6 +18,11 @@ Seek and Deploy is a Denver, CO interactive studio that designs and builds websi
 - Campaign and microsite production
 - Technical strategy and execution
 
+## Case Studies
+- Flesh and Bones: cinematic studio website with motion-led storytelling and a flexible Sanity CMS workflow
+- Futuristic Films: refreshed film production site with clearer structure and a portfolio-first experience
+- Clayton Cotterell: immersive photographer portfolio with highly customized project layouts
+
 ## Location
 - Denver, Colorado, USA
 - Studio address: 1305 Osage St., Denver, CO 80204
@@ -32,7 +37,17 @@ Seek and Deploy is a Denver, CO interactive studio that designs and builds websi
 
 ## Recommended pages
 - Home: https://seekanddeploy.com/
+- Work: https://seekanddeploy.com/#work
+- Flesh and Bones: https://seekanddeploy.com/flesh-and-bones
+- Futuristic Films: https://seekanddeploy.com/futuristic-films
+- Clayton Cotterell: https://seekanddeploy.com/clayton-cotterell
 - Expanded machine-readable summary: https://seekanddeploy.com/llms-full.txt
+
+## Archive work
+- Nike: 15 Years of Dunk
+- Coca-Cola: Building of Memories
+- Domino's: IFTTT
+- Fruit of the Loom: Tuck Effect
 
 ## Contact
 - Email: hello@seekanddeploy.com

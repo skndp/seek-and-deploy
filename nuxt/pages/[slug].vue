@@ -52,6 +52,52 @@ const workTrackStyle = computed(() => ({
   transform: `skewX(${pageScrollSkew.value}deg)`
 }));
 const siteUrl = 'https://seekanddeploy.com';
+const projectJsonLd = computed(() => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${siteUrl}${project.value.path}#breadcrumbs`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: siteUrl
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Work',
+          item: `${siteUrl}/#work`
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: project.value.title,
+          item: `${siteUrl}${project.value.path}`
+        }
+      ]
+    },
+    {
+      '@type': 'CreativeWork',
+      '@id': `${siteUrl}${project.value.path}#creativework`,
+      name: project.value.title,
+      description: project.value.challenge.copy,
+      image: `${siteUrl}${project.value.image}`,
+      url: `${siteUrl}${project.value.path}`,
+      author: {
+        '@id': `${siteUrl}/#organization`
+      },
+      publisher: {
+        '@id': `${siteUrl}/#organization`
+      },
+      isPartOf: {
+        '@id': `${siteUrl}/#website`
+      }
+    }
+  ]
+}));
 let skewDecayFrame;
 
 if(!project.value) {
@@ -64,14 +110,14 @@ if(!project.value) {
 
 useSeoMeta({
   title: () => `${project.value.title} | Seek and Deploy`,
-  description: () => project.value.challenge,
+  description: () => project.value.challenge.copy,
   ogTitle: () => `${project.value.title} | Seek and Deploy`,
-  ogDescription: () => project.value.challenge,
+  ogDescription: () => project.value.challenge.copy,
   ogImage: () => `${siteUrl}${project.value.image}`,
   ogType: 'article',
   twitterCard: 'summary_large_image',
   twitterTitle: () => `${project.value.title} | Seek and Deploy`,
-  twitterDescription: () => project.value.challenge,
+  twitterDescription: () => project.value.challenge.copy,
   twitterImage: () => `${siteUrl}${project.value.image}`
 });
 
@@ -80,6 +126,12 @@ useHead({
     {
       rel: 'canonical',
       href: () => `${siteUrl}${project.value.path}`
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: projectJsonLd
     }
   ]
 });
