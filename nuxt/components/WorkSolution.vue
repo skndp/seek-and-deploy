@@ -1,7 +1,7 @@
 <template>
   <section class="project-solution detail-slide">
-    <h2 class="section-title h3-mid">The Solution</h2>
-    <div class="media-block">
+    <h2 class="section-title h3-mid detail-fade">The Solution</h2>
+    <div class="media-block detail-fade">
       <div class="media-holder">
         <img
           v-if="project.solution?.image"
@@ -19,7 +19,7 @@
           @timeupdate="updateChapter"
         />
       </div>
-      <div v-if="project.solution?.video && currentChapter" class="video-chapter-title">
+      <div v-if="project.solution?.video && currentChapter" class="video-chapter-title detail-fade">
         {{ currentChapter.title }}
       </div>
     </div>

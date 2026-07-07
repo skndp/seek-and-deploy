@@ -1,15 +1,15 @@
 <template>
   <section class="project-hero detail-slide">
-    <div class="title-block">
+    <div class="title-block detail-fade">
       <h1 class="h3-lg">{{ project.title }}</h1>
       <NuxtLink class="fs-sm" :href="project.url" target="_blank">View Site</NuxtLink>
     </div>
-    <div class="media-block">
+    <div class="media-block detail-fade">
       <figure class="media-holder">
         <img :src="project.image" :alt="project.title" />
       </figure>
     </div>
-    <div v-if="project?.with?.name && project?.with?.url" class="made-with fs-sm">
+    <div v-if="project?.with?.name && project?.with?.url" class="made-with fs-sm detail-fade">
       Made with <NuxtLink :href="project.with.url" target="_blank">{{ project.with.name }}</NuxtLink>
     </div>
   </section>
