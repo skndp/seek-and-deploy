@@ -292,12 +292,16 @@ export default {
     height: 100%;
     perspective: 1500px;
     transform-style: preserve-3d;
+    pointer-events: none;
 
     .news-screen {
       position: absolute;
       overflow: hidden;
       background: #121010;
       visibility: hidden;
+      backface-visibility: hidden;
+      will-change: visibility;
+      pointer-events: all;
 
       &.news-screen-1 {
         top: 10.75%;
@@ -356,6 +360,7 @@ export default {
         background-color: $black;
         transform: scale(1, 0);
         transition: transform 333ms $ease-out;
+        will-change: transform;
 
         &:before {
           content: " ";
