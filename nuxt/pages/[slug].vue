@@ -1,7 +1,7 @@
 <template>
   <main v-if="project" :class="['page work-detail-page', workDetailPageClasses]" :style="workDetailPageStyle">
     <div class="page-scroll" ref="pageScrollRef">
-      <article class="work-track" :style="workTrackStyle">
+      <article class="work-track">
         <WorkProjectHero :project="project" />
         <WorkChallenge :project="project" />
         <WorkSolution :project="project" />
@@ -22,10 +22,10 @@ const project = computed(() => getWorkProjectBySlug(slug.value));
 const nextProject = computed(() => project.value ? getNextWorkProject(project.value.slug) : null);
 const store = useSiteStore();
 const pageScrollRef = ref(null);
-const pageScrollSkew = ref(0);
 const pageTransitionState = useState('menu-transition-state', () => 'detail');
 const pageTransitionDirection = useState('menu-transition-direction', () => 'idle');
 const detailRouteTransitionState = useState('detail-route-transition-state', () => 'idle');
+let detailRevealFrame;
 const workDetailPageClasses = computed(() => ({
   scaler: ['detail-enter', 'detail-leave', 'detail-leave-rotate'].includes(pageTransitionState.value),
   cased: pageTransitionState.value === 'detail',
@@ -48,9 +48,6 @@ const workDetailPageStyle = computed(() => {
 
   return null;
 });
-const workTrackStyle = computed(() => ({
-  transform: `skewX(${pageScrollSkew.value}deg)`
-}));
 const siteUrl = 'https://seekanddeploy.com';
 const projectJsonLd = computed(() => JSON.stringify({
   '@context': 'https://schema.org',
@@ -98,7 +95,6 @@ const projectJsonLd = computed(() => JSON.stringify({
     }
   ]
 }));
-let skewDecayFrame;
 
 if(!project.value) {
   throw createError({
@@ -145,63 +141,62 @@ onMounted(() => {
   }
 
   pageScrollRef.value?.addEventListener('wheel', onPageScrollWheel, { passive: false });
+  pageScrollRef.value?.addEventListener('scroll', onPageScroll, { passive: true });
+  nextTick(() => {
+    updateDetailRevealState();
+  });
 });
 
 onBeforeUnmount(() => {
   pageScrollRef.value?.removeEventListener('wheel', onPageScrollWheel);
-  cancelAnimationFrame(skewDecayFrame);
+  pageScrollRef.value?.removeEventListener('scroll', onPageScroll);
+  clearDetailRevealFrame();
 });
 
 function onPageScrollWheel(e) {
-  const scroller = pageScrollRef.value;
-
-  if(!scroller) {
-    return;
-  }
-
-  const multiplier = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : e.deltaMode === WheelEvent.DOM_DELTA_PAGE ? window.innerHeight : 1,
-        deltaX = e.deltaX * multiplier,
-        deltaY = e.deltaY * multiplier;
-
-  if(Math.abs(deltaX) < 0.5 && Math.abs(deltaY) < 0.5) {
-    return;
-  }
-
-  const scrollDelta = Math.abs(deltaX) >= Math.abs(deltaY) ? deltaX : deltaY;
+  const scrollDelta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
 
   e.preventDefault();
-
-  scroller.scrollLeft += scrollDelta;
-  pulseScrollSkew(scrollDelta);
+  e.currentTarget.scrollLeft += scrollDelta;
 }
 
-function pulseScrollSkew(delta) {
-  pageScrollSkew.value = clamp(pageScrollSkew.value + (delta / 32), -8, 8);
-  startSkewDecay();
-}
-
-function startSkewDecay() {
-  if(skewDecayFrame) {
+function onPageScroll() {
+  if (detailRevealFrame) {
     return;
   }
 
-  const decay = () => {
-    pageScrollSkew.value *= 0.8;
-
-    if(Math.abs(pageScrollSkew.value) < 0.01) {
-      pageScrollSkew.value = 0;
-      skewDecayFrame = null;
-      return;
-    }
-
-    skewDecayFrame = requestAnimationFrame(decay);
-  };
-
-  skewDecayFrame = requestAnimationFrame(decay);
+  detailRevealFrame = window.requestAnimationFrame(() => {
+    updateDetailRevealState();
+    detailRevealFrame = null;
+  });
 }
 
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
+function updateDetailRevealState() {
+  const root = pageScrollRef.value;
+
+  if (!root) {
+    return;
+  }
+
+  const rootRect = root.getBoundingClientRect();
+  const targets = root.querySelectorAll('.detail-fade');
+
+  targets.forEach((target) => {
+    const targetRect = target.getBoundingClientRect();
+
+    if (targetRect.left < rootRect.right) {
+      target.classList.add('is-visible');
+    } else {
+      target.classList.remove('is-visible');
+    }
+  });
+}
+
+function clearDetailRevealFrame() {
+  if (detailRevealFrame) {
+    window.cancelAnimationFrame(detailRevealFrame);
+    detailRevealFrame = null;
+  }
 }
 </script>
 
@@ -231,7 +226,6 @@ function clamp(value, min, max) {
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
 
     &::-webkit-scrollbar {
       display: none;
@@ -274,6 +268,26 @@ function clamp(value, min, max) {
 
   @include respond-to($tablet) {
     left: $space-96;
+  }
+}
+
+.detail-fade {
+  opacity: 0;
+  transform: skewX(8deg) translateY($space-24);
+  transition: opacity 1s $ease-out, transform 1s $ease-out;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: skewX(0deg) translateY(0px);
+  }
+
+  @include respond-to($tablet) {
+    transform: skewX(13deg) translateY($space-48);
+
+    &.is-visible {
+      transform: skewX(0deg) translateY(0px);
+    }
   }
 }
 </style>
