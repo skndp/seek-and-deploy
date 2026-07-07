@@ -221,13 +221,21 @@ function clearDetailRevealFrame() {
 
 .detail-fade {
   opacity: 0;
-  transform: skewX(13deg) translateY(50px);
+  transform: skewX(8deg) translateY($space-24);
   transition: opacity 1s $ease-out, transform 1s $ease-out;
   will-change: opacity, transform;
 
   &.is-visible {
     opacity: 1;
     transform: skewX(0deg) translateY(0px);
+  }
+
+  @include respond-to($tablet) {
+    transform: skewX(13deg) translateY($space-48);
+
+    &.is-visible {
+      transform: skewX(0deg) translateY(0px);
+    }
   }
 }
 </style>
