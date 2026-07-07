@@ -40,12 +40,18 @@ import { useSiteStore } from '~/stores/store';
 const store = useSiteStore();
 const route = useRoute();
 const isHomeRoute = computed(() => route.path === '/');
+const isOldSafariDesktop = ref(false);
 const menuTransitionState = useState('menu-transition-state', () => isHomeRoute.value ? 'home' : 'detail');
 const menuTransitionClasses = computed(() => ({
   scaler: ['home-leave', 'detail-enter', 'detail-leave', 'detail-leave-rotate'].includes(menuTransitionState.value),
   rotato: ['detail-enter', 'detail', 'detail-leave'].includes(menuTransitionState.value),
-  cased: menuTransitionState.value === 'detail'
+  cased: menuTransitionState.value === 'detail',
+  'old-safari': isOldSafariDesktop.value
 }));
+
+onMounted(() => {
+  isOldSafariDesktop.value = detectOldSafariDesktop();
+});
 
 // Methods
 function onLogoClick(e) {
@@ -81,6 +87,20 @@ function setNextSlide() {
 
     window.dispatchEvent(e);
   }
+}
+
+function detectOldSafariDesktop() {
+  if (!import.meta.client) {
+    return false;
+  }
+
+  const ua = navigator.userAgent;
+  const isSafari = /Safari/i.test(ua) && !/(Chrome|Chromium|CriOS|FxiOS|EdgiOS|OPR|Android)/i.test(ua);
+  const isMobile = /(Mobile|iPhone|iPad|iPod)/i.test(ua);
+  const versionMatch = ua.match(/Version\/(\d+)/i);
+  const majorVersion = versionMatch ? Number(versionMatch[1]) : 0;
+
+  return isSafari && !isMobile && majorVersion > 0 && majorVersion < 18;
 }
 </script>
 
@@ -196,7 +216,74 @@ function setNextSlide() {
 
   &.cased {
     .menu-stage {
-      transform: rotateY(-90deg);
+      transform: scale(1.0) rotateY(-90deg);
+    }
+  }
+
+  &.old-safari {
+    perspective: none;
+    overflow: hidden;
+
+    .menu-stage {
+      width: 200%;
+      transform-style: flat;
+      transform-origin: 0 50%;
+      transition: transform $speed-666 $evil-ease;
+    }
+
+    nav {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      flex: 0 0 50%;
+      width: 50%;
+      height: 100%;
+      backface-visibility: visible;
+      transform: none;
+    }
+
+    &.scaler {
+      .menu-stage {
+        transform: scale(0.9) translateX(0);
+      }
+    }
+
+    &.rotato {
+      .menu-stage {
+        transform: scale(0.9) translateX(-50%);
+      }
+
+      nav {
+        &.primary-nav {
+          pointer-events: none;
+        }
+
+        &.sub-page-nav {
+          pointer-events: auto;
+        }
+      }
+    }
+
+    &.cased {
+      .menu-stage {
+        transform: scale(1) translateX(-50%);
+      }
+    }
+
+    &.detail-leave,
+    &.detail-leave-rotate {
+      .menu-stage {
+        transform: scale(0.9) translateX(0);
+      }
+    }
+
+    &.home-enter,
+    &.home {
+      .menu-stage {
+        transform: scale(1) translateX(0);
+      }
     }
   }
 
@@ -207,6 +294,7 @@ function setNextSlide() {
     transform-style: preserve-3d;
     transform-origin: 50% 50% -#{$space-32};
     transition: transform $speed-666 $evil-ease;
+    will-change: transform;
   }
 
   nav {
@@ -429,6 +517,23 @@ function setNextSlide() {
         &:after {
           width: $space-32;
           @include down-arrow($black, 3);
+        }
+      }
+    }
+
+    &.old-safari {
+      .menu-stage {
+        transform-origin: 0 50%;
+      }
+
+      nav {
+        &.primary-nav,
+        &.sub-page-nav {
+          width: 50%;
+        }
+
+        &.sub-page-nav {
+          transform: none;
         }
       }
     }
