@@ -5,6 +5,7 @@
         <WorkProjectHero :project="project" />
         <WorkChallenge :project="project" />
         <WorkSolution :project="project" />
+        <WorkBuild :project="project" />
         <WorkResults :project="project" :next-project="nextProject" />
       </article>
     </div>

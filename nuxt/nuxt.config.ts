@@ -38,7 +38,8 @@ export default defineNuxtConfig({
   //
   site: {
     url: site_url,
-    name: site_name
+    name: site_name,
+    trailingSlash: true
   },
   //
   // App

@@ -30,6 +30,38 @@ const caseStudyProjects = [
         }
       ]
     },
+    build: {
+      buildList: [
+        {
+          label: "Framework",
+          value: "Vue/Nuxt"
+        },
+        {
+          label: "Source Control",
+          value: "GitHub"
+        },
+        {
+          label: "CMS",
+          value: "Sanity"
+        },
+        {
+          label: "Hosting",
+          value: "Netlify"
+        },
+        {
+          label: "Video",
+          value: "Vimeo API"
+        },
+        {
+          label: "Performance",
+          value: "99 Lighthouse"
+        },
+        {
+          label: "Accessibility",
+          value: "WCAG AA"
+        }
+      ]
+    },
     results: {
       resultsStats: [
         {
@@ -78,6 +110,38 @@ const caseStudyProjects = [
         }
       ]
     },
+    build: {
+      buildList: [
+        {
+          label: "Framework",
+          value: "Vue/Nuxt"
+        },
+        {
+          label: "Source Control",
+          value: "GitHub"
+        },
+        {
+          label: "CMS",
+          value: "Sanity"
+        },
+        {
+          label: "Hosting",
+          value: "Netlify"
+        },
+        {
+          label: "Video",
+          value: "Vimeo API"
+        },
+        {
+          label: "Performance",
+          value: "99 Lighthouse"
+        },
+        {
+          label: "Accessibility",
+          value: "WCAG AA"
+        }
+      ]
+    },
     results: {
       resultsStats: [
         {
@@ -123,6 +187,38 @@ const caseStudyProjects = [
         {
           start: 21.45,
           title: "Custom Sanity CMS powers flexible photo and video grid layouts"
+        }
+      ]
+    },
+    build: {
+      buildList: [
+        {
+          label: "Framework",
+          value: "Vue/Nuxt"
+        },
+        {
+          label: "Source Control",
+          value: "GitHub"
+        },
+        {
+          label: "CMS",
+          value: "Sanity"
+        },
+        {
+          label: "Hosting",
+          value: "Netlify"
+        },
+        {
+          label: "Video",
+          value: "Vimeo API"
+        },
+        {
+          label: "Performance",
+          value: "99 Lighthouse"
+        },
+        {
+          label: "Accessibility",
+          value: "WCAG AA"
         }
       ]
     },
