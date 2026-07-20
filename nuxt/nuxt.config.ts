@@ -1,6 +1,7 @@
 const site_name = 'Seek and Deploy';
 const site_description = 'Based in Denver, CO. We deploy forward-thinking, creative technology that drives revenue, sets brands apart and defines what\'s next.';
 const site_url = 'https://seekanddeploy.com'
+const google_tag_manager_id = 'GTM-PCFNNHCH';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-04-30',
@@ -68,6 +69,12 @@ export default defineNuxtConfig({
         { rel: 'shortcut icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' }
+      ],
+      script: [
+        {
+          innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${google_tag_manager_id}');`,
+          tagPriority: 'critical'
+        },
       ]
     },
     pageTransition: {
